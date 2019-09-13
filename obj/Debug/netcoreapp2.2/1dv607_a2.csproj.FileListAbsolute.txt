@@ -1,0 +1,11 @@
+C:\Users\Administratör\Documents\programming\1dv607_a2\bin\Debug\netcoreapp2.2\1dv607_a2.deps.json
+C:\Users\Administratör\Documents\programming\1dv607_a2\bin\Debug\netcoreapp2.2\1dv607_a2.runtimeconfig.json
+C:\Users\Administratör\Documents\programming\1dv607_a2\bin\Debug\netcoreapp2.2\1dv607_a2.runtimeconfig.dev.json
+C:\Users\Administratör\Documents\programming\1dv607_a2\bin\Debug\netcoreapp2.2\1dv607_a2.dll
+C:\Users\Administratör\Documents\programming\1dv607_a2\bin\Debug\netcoreapp2.2\1dv607_a2.pdb
+C:\Users\Administratör\Documents\programming\1dv607_a2\obj\Debug\netcoreapp2.2\1dv607_a2.csprojAssemblyReference.cache
+C:\Users\Administratör\Documents\programming\1dv607_a2\obj\Debug\netcoreapp2.2\1dv607_a2.csproj.CoreCompileInputs.cache
+C:\Users\Administratör\Documents\programming\1dv607_a2\obj\Debug\netcoreapp2.2\1dv607_a2.AssemblyInfoInputs.cache
+C:\Users\Administratör\Documents\programming\1dv607_a2\obj\Debug\netcoreapp2.2\1dv607_a2.AssemblyInfo.cs
+C:\Users\Administratör\Documents\programming\1dv607_a2\obj\Debug\netcoreapp2.2\1dv607_a2.dll
+C:\Users\Administratör\Documents\programming\1dv607_a2\obj\Debug\netcoreapp2.2\1dv607_a2.pdb
