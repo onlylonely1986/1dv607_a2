@@ -12,15 +12,9 @@ namespace Register
     class Boat
     {
         private int boatId;
-        private BoatType<string> boatType;
+        // private BoatType<string> boatType;
 
         private int lengthInFeet;
         private int berthId;
-
-        
-        public void Boat()
-        {
-
-        }
     }
 }

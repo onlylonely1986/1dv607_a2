@@ -7,21 +7,17 @@ namespace Register
      */
     class BoatType
     {
-        private List<string> type = new List<string>()
-        {
-            "sailboat", 
-            "motorsailer", 
-            "kayak/canoe", 
-            "other"
-        };
+        // private List<string> type = new List<string>()
+        // {
+        //     "sailboat", 
+        //     "motorsailer", 
+        //     "kayak/canoe", 
+        //     "other"
+        // };
 
-        public getType ()
-        {
-            return this.type;
-        }
-        public void BoatType()
-        {
+        // public void BoatType()
+        // {
             
-        }
+        // }
     }
 }

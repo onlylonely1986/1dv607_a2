@@ -7,52 +7,53 @@ namespace Register
 {
     class Member
     {
-        private string firstName;
+        private string firstName {get; set;}
 
-        private string lastName;
+        private string lastName {get; set;}
 
-        private int personalNum;
+        private string personalNum {get; set;}
 
-        private int memberId;
+        // private int memberId;
 
-        private List<Boat> boats;
+        // private List<Boat> boats;
 
-        private int memberSince;
+        // private int memberSince;
 
-        public string getName()
+        // public string getName()
+        // {
+
+        // }
+
+        // public int getPersonalNum()
+        // {
+
+        // }
+
+        // public int getMemberId()
+        // {
+
+        // }
+
+        // public List<Boat> getBoats()
+        // {
+
+        // }
+
+        // public int getMemberSince()
+        // {
+
+        // }
+
+       public Member(string firstName, string lastName, string personalNum)
         {
-
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.personalNum =  personalNum;
         }
 
-        public int getPersonalNum()
+        public override string ToString()
         {
-
-        }
-
-        public int getMemberId()
-        {
-
-        }
-
-        public List<Boat> getBoats()
-        {
-
-        }
-
-        public int getMemberSince()
-        {
-
-        }
-
-       public void Member(string firstName, string lastName, int personalNum, int memberId, List<Boat> boats, int memberSince)
-        {
-            last = lastName;
-            first = firstName;
-        }
-
-        public ToString()
-        {
-
+            return this.firstName + ", " + this.lastName + ", " + this.personalNum;
         }
     }
 }

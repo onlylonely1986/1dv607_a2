@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-namespace _1dv607_a2
+namespace Register
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Member member = new Register.Member.Member("Ida", "Larsson", 600101-8000,);
+            MemberRegister memberRegister = new MemberRegister();
+            memberRegister.RegistryMember("Ida", "Larsson", "600101-8000");
+            // Member member = new Member("Ida", "Larsson", "600101-8000");
+            // Console.WriteLine(member.ToString());
             // string filePath = @"C:\SaveData\members.txt";
             // Console.WriteLine(File.Exists(filePath) ? "File exists." : "File does not exist.");
             // List<string> lines = File.ReadAllLines(filePath).ToList();
