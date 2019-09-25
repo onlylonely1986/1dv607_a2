@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-namespace Register
+namespace Model
 {
     class MemberRegister
     {
-        private Member member;
+        private Member _member;
 
         private DateTime dateTimeNow = DateTime.Now;
 
-        public void RegistryMember(string firstName, string lastName, string personalNum)
+        public void RegistryMember(Member member)
         {
-            this.member = new Member(firstName, lastName, personalNum);
             string filePath = @"C:\SaveData\members.txt";
             List<string> lines = File.ReadAllLines(filePath).ToList();
-            lines.Add($"{this.member.firstName}, {this.member.lastName}, {this.member.personalNum}, {this.dateTimeNow}");
+            lines.Add($"{member.FirstName}, {member.LastName}, {member.PersonalNum}, {this.dateTimeNow}");
             File.WriteAllLines(filePath, lines);
         }
 
