@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-namespace Model
+namespace model
 {
     class MemberRegister
     {
-        private Member _member;
+        // private Member _member;
 
         private string _filePath;
 
@@ -25,57 +25,64 @@ namespace Model
         }
         public void RegistryMember(Member member)
         {
+            // Member member = new Member();
+            // member.ToString();
+            // memberRegister.RegistryMember("Ida", "Larsson", "600101-8000");
+
             // string filePath = @"C:\SaveData\members.txt";
             // List<string> lines = File.ReadAllLines(filePath).ToList();
             // lines.Add($"{member.FirstName}, {member.LastName}, {member.PersonalNum}, {this.dateTimeNow}");
             // File.WriteAllLines(filePath, lines);
         }
 
+        /**
+        *   Method checking for exisisting directory and file, and creating them 
+        *   if they not exist.
+         */
         public void CreateNewRegister ()
         {
-            this.CreateNewDir();
-            this.CreateNewFile();
+            try 
+            {
+            string dirPath = this.CreateNewDir();
+            this.CreateNewFile(dirPath);
+            } catch (Exception e) 
+            {
+                Console.WriteLine("Something went wrong when trying to create a new directory: {0}", e.ToString());
+            }
+
         }
 
-         private void CreateNewDir ()
+         private string CreateNewDir ()
          {
-            // DirectoryInfo Dir = new DirectoryInfo(@"c:\RegisterData");
-            try 
+            string _filePath = $@"{_dir}\";
+
+            if (_dir.Exists) 
             {
-                if (_dir.Exists) 
-                {
-                    // Indicate that the directory already exists.
-                    // Console.WriteLine("That path exists already.");
-                    string _filePath = $@"{_dir}\members.txt";
- 
-                }
-                else
-                {
-                    // Try to create the directory.
-                    _dir.Create();
-                    Console.WriteLine("The directory was created successfully.");
-                } 
+                return _filePath;
             }
-            catch (Exception e) 
+            else
             {
-                Console.WriteLine("The process failed: {0}", e.ToString());
+                _dir.Create();
+                return _filePath;
             }
         }
 
-        private void CreateNewFile ()
+        private void CreateNewFile (string dirPath)
         {
-            StreamWriter file = new StreamWriter(FilePath);
+            string newFile = "members.txt";
+            _filePath = $"{dirPath}{newFile}";
+            StreamWriter file = new StreamWriter(_filePath);
             try 
             {
-                if (File.Exists(FilePath))
+                if (File.Exists(_filePath))
                 {
-                    System.Console.WriteLine("File exists.");
+                    return;
                 }
                 
             } 
             catch
             {
-                System.Console.WriteLine("File does not exist.");
+                System.Console.WriteLine("Something went wrong when creating the file.");
             }
         }
 

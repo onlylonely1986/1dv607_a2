@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-namespace Register
+namespace register
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Model.MemberRegister memberRegister = new Model.MemberRegister();
-            // View.Menu menu = new View.Menu();
-            // menu.runMenu();
-            memberRegister.CreateNewRegister();
+            model.MemberRegister memberRegister = new model.MemberRegister();
+            // memberRegister.CreateNewRegister();
+            view.ConsoleView view = new view.ConsoleView();
+
+            controller.User user = new controller.User();
+            user.runProgram(view);
             // Console.WriteLine(member.ToString());
             // string filePath = @"C:\SaveData\members.txt";
             // Console.WriteLine(File.Exists(filePath) ? "File exists." : "File does not exist.");
