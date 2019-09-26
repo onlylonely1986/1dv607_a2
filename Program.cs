@@ -10,9 +10,9 @@ namespace Register
         static void Main(string[] args)
         {
             Model.MemberRegister memberRegister = new Model.MemberRegister();
-            View.Menu menu = new View.Menu();
-            menu.runMenu();
-            
+            // View.Menu menu = new View.Menu();
+            // menu.runMenu();
+            memberRegister.CreateNewRegister();
             // Console.WriteLine(member.ToString());
             // string filePath = @"C:\SaveData\members.txt";
             // Console.WriteLine(File.Exists(filePath) ? "File exists." : "File does not exist.");
