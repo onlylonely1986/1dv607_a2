@@ -18,22 +18,19 @@ namespace view
 			SearchMember,
 			NewBoat,
 			Quit
-		} // TODO imlement using these
+		}
 
         private List<string> _inputs = new List<string>();
 
         public void showConsole()
         {
-            // do
-            // {
-                Console.WriteLine("Welcome to the boatclub register:");
-                System.Console.WriteLine("  ");
-                Console.WriteLine("1. Add a new member.");
-                Console.WriteLine("2. Add a new boat.");
-                Console.WriteLine("3. Search for members.");
-                Console.WriteLine("4. Quit application.");
-                System.Console.WriteLine("  ");
-            // } while (WantsToContinueProgram());
+            Console.WriteLine("Welcome to the boatclub register:");
+            System.Console.WriteLine("  ");
+            Console.WriteLine("1. Add a new member.");
+            Console.WriteLine("2. Add a new boat.");
+            Console.WriteLine("3. Search for members.");
+            Console.WriteLine("4. Quit application.");
+            System.Console.WriteLine("  ");
         }
 
         public bool WantsToContinueProgram()
@@ -81,6 +78,7 @@ namespace view
             Console.WriteLine("Please enter your first name.");
             input1 = Console.ReadLine();
 
+            // TODO nån slags felhantering av användaren input
             // Console.WriteLine("Your name must be longer than one character, try to enter your first name again.");
             // input1 = Console.ReadLine();
             _inputs.Add(input1);

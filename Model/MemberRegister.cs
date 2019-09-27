@@ -50,23 +50,23 @@ namespace model
 
             Member  m = new Member(firstName, lastName, persNum);
             System.Console.WriteLine(" -------   ");
-            // m.ToString;
-            // Member.FirstName = firstName;
-            // if (_filePath == $"{_dir}members.txt")
-            // {
-                // List<string> lines = new List<>;
-            StreamWriter sw = new StreamWriter(@"../register.txt");
-            StreamWriter sw1 = new StreamWriter(@"member.txt");
+
+            StreamWriter sw = new StreamWriter(@"register.txt");
+            
             // lines.Add($"{m.FirstName}, nilsson, 551212-0101, {this.dateTimeNow}");
-                // File.WriteAllLines(_filePath, lines);
-                // string info = $"{new Member(firstName, "Nilsson", "551212-0101")}, {this.dateTimeNow}";
-            sw.WriteLine(m.FirstName);
-            sw1.WriteLine(m.FirstName);
+            // File.WriteAllLines(_filePath, lines);
+            // string info = $"{new Member(firstName, "Nilsson", "551212-0101")}, {this.dateTimeNow}";
+
+            // TODO 
+            // enbart första argumentet skrivs in, kolla om man ska parsa en array med json för att 
+            // skicka in en hel medlem
+            // Medlem: ID, förnamn, efternamn, personNr, datum, båtar[]
+            sw.WriteLine(m.FirstName, m.LastName, m.PersonalNum);
+            sw.Close();
+
                 // string json = File.ReadAllText(args[0]);
                 // int[] data = JsonConvert.DeserializeObject<int[]>(json);
 
-            // }
-            // string filePath = @"C:\SaveData\members.txt";
         }
 
         public Member AddNewMember()
