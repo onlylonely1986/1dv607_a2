@@ -7,13 +7,26 @@ namespace model
 {
     class MemberRegister
     {
-        // private Member _member;
-
         private string _filePath;
 
-        private DirectoryInfo _dir = new DirectoryInfo(@"c:\RegisterData");
-
+        // StreamWriter file = new StreamWriter(_filePath); // members.txt
         private DateTime dateTimeNow = DateTime.Now;
+        // private DirectoryInfo _dir = new DirectoryInfo(@"c:\RegisterData\");
+        private Member _member;
+
+        // TODO implement this
+        private int _uniqueID;
+
+        // TODO justera detta senare!
+        // ej korrekt inkapslad
+        public Member Member
+        {
+            get {return _member;}
+            set {
+                _member = value;
+            }
+
+        }
 
         public string FilePath
         {
@@ -23,68 +36,27 @@ namespace model
                 _filePath = value;
             }
         }
-        public void RegistryMember(Member member)
-        {
-            // Member member = new Member();
-            // member.ToString();
-            // memberRegister.RegistryMember("Ida", "Larsson", "600101-8000");
 
+        public void RegistryMember(string firstName)
+        {
+            // memberRegister.RegistryMember(new Member());
+            // Member = new Member(firstName, "Nilsson", "551212-0101");
+            // Member.FirstName = firstName;
+            // if (_filePath == $"{_dir}members.txt")
+            // {
+                // List<string> lines = new List<>;
+                StreamWriter sw = new StreamWriter("member.txt");
+                // lines.Add($"{Member.FirstName}, nilsson, 551212-0101, {this.dateTimeNow}");
+                // File.WriteAllLines(_filePath, lines);
+                // string info = $"{new Member(firstName, "Nilsson", "551212-0101")}, {this.dateTimeNow}";
+                sw.WriteLine(firstName);
+                // string json = File.ReadAllText(args[0]);
+                // int[] data = JsonConvert.DeserializeObject<int[]>(json);
+
+            // }
             // string filePath = @"C:\SaveData\members.txt";
-            // List<string> lines = File.ReadAllLines(filePath).ToList();
-            // lines.Add($"{member.FirstName}, {member.LastName}, {member.PersonalNum}, {this.dateTimeNow}");
-            // File.WriteAllLines(filePath, lines);
         }
 
-        /**
-        *   Method checking for exisisting directory and file, and creating them 
-        *   if they not exist.
-         */
-        public void CreateNewRegister ()
-        {
-            try 
-            {
-            string dirPath = this.CreateNewDir();
-            this.CreateNewFile(dirPath);
-            } catch (Exception e) 
-            {
-                Console.WriteLine("Something went wrong when trying to create a new directory: {0}", e.ToString());
-            }
-
-        }
-
-         private string CreateNewDir ()
-         {
-            string _filePath = $@"{_dir}\";
-
-            if (_dir.Exists) 
-            {
-                return _filePath;
-            }
-            else
-            {
-                _dir.Create();
-                return _filePath;
-            }
-        }
-
-        private void CreateNewFile (string dirPath)
-        {
-            string newFile = "members.txt";
-            _filePath = $"{dirPath}{newFile}";
-            StreamWriter file = new StreamWriter(_filePath);
-            try 
-            {
-                if (File.Exists(_filePath))
-                {
-                    return;
-                }
-                
-            } 
-            catch
-            {
-                System.Console.WriteLine("Something went wrong when creating the file.");
-            }
-        }
 
         public void PrintOutAll()
         {
