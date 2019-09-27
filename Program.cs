@@ -14,6 +14,7 @@ namespace register
             // run.runProgram();
 
             Application  a = new Application();
+            a.RunProgram();
         }
     }
 }

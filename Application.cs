@@ -13,22 +13,22 @@ namespace register
     {
         public Application()
         {
-            model.MemberRegister memberRegister = new model.MemberRegister();
-            view.ConsoleView view = new view.ConsoleView();
+            
+            
 
             // memberRegister.CreateNewRegister();
             
             // view.showConsole();
             // memberRegister.RegistryMember(input);
+            // view.showConsole();
+            // view.userMakesChoice(memberReg.AddNewMember());
 
-            // a_game.AddSubscriber(this);
-			// m_view.DisplayInstructions();
-
-            while(view.WantsToContinueProgram())
+            // while(view.WantsToContinueProgram())
             // user wants to continue the session
-            {
-                view.showConsole();
-            }
+            // {
+            //    view.showConsole();
+            //}
+
 			// while (m_view.WantsToPlay())
 			// {
 			// 	m_view.DisplayInstructions();
@@ -36,7 +36,37 @@ namespace register
 			// 	m_view.DisplayResult(a_game.Play());
 				
 			// }
+        }
+
+        public bool RunProgram()
+        {
+            model.MemberRegister m = new model.MemberRegister();
+            view.ConsoleView v = new view.ConsoleView();
+            view.ConsoleView.Event e;
             
+            v.showConsole();
+            e = v.GetEvent();
+            if (e == view.ConsoleView.Event.Quit)
+            {
+                return false;
+            }
+            if (e == view.ConsoleView.Event.NewMember)
+            {
+                List<string> inputs = v.AskForMemberDetails();
+                m.RegistryMember(inputs);
+            }
+            if (e == view.ConsoleView.Event.SearchMember)
+            {
+                // a_game.Hit();
+                System.Console.WriteLine("söka på medlemmar jaha");
+            }
+            if (e == view.ConsoleView.Event.NewBoat)
+            {
+                // a_game.Stand();
+                System.Console.WriteLine("ny båt okej");
+            }
+            
+            return true;
         }
     }
 }

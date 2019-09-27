@@ -37,24 +37,43 @@ namespace model
             }
         }
 
-        public void RegistryMember(string firstName)
+        public void RegistryMember(List<string> inputs)
         {
-            // memberRegister.RegistryMember(new Member());
-            // Member = new Member(firstName, "Nilsson", "551212-0101");
+            string firstName = inputs[0];
+            string lastName = inputs[1];
+            string persNum = inputs[2];
+
+            foreach (string input in inputs)
+            {
+                // System.Console.WriteLine($"du har skrivit in:  {input} ");
+            }
+
+            Member  m = new Member(firstName, lastName, persNum);
+            System.Console.WriteLine(" -------   ");
+            // m.ToString;
             // Member.FirstName = firstName;
             // if (_filePath == $"{_dir}members.txt")
             // {
                 // List<string> lines = new List<>;
-                StreamWriter sw = new StreamWriter("member.txt");
-                // lines.Add($"{Member.FirstName}, nilsson, 551212-0101, {this.dateTimeNow}");
+            StreamWriter sw = new StreamWriter(@"../register.txt");
+            StreamWriter sw1 = new StreamWriter(@"member.txt");
+            // lines.Add($"{m.FirstName}, nilsson, 551212-0101, {this.dateTimeNow}");
                 // File.WriteAllLines(_filePath, lines);
                 // string info = $"{new Member(firstName, "Nilsson", "551212-0101")}, {this.dateTimeNow}";
-                sw.WriteLine(firstName);
+            sw.WriteLine(m.FirstName);
+            sw1.WriteLine(m.FirstName);
                 // string json = File.ReadAllText(args[0]);
                 // int[] data = JsonConvert.DeserializeObject<int[]>(json);
 
             // }
             // string filePath = @"C:\SaveData\members.txt";
+        }
+
+        public Member AddNewMember()
+        {
+            _member = new Member("Lone", "Nilsson", "551212-0101");
+            System.Console.WriteLine("nu körs denna");
+            return _member;
         }
 
 
