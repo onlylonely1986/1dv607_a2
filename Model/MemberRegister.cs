@@ -58,7 +58,7 @@ namespace model
             // string info = $"{new Member(firstName, "Nilsson", "551212-0101")}, {this.dateTimeNow}";
 
             // TODO 
-            // enbart första argumentet skrivs in, kolla om man ska parsa en array med json för att 
+            // enbart första argumentet skrivs in, kolla om man ska parsa ett objekt?  med json för att 
             // skicka in en hel medlem
             // Medlem: ID, förnamn, efternamn, personNr, datum, båtar[]
             sw.WriteLine(m.FirstName, m.LastName, m.PersonalNum);

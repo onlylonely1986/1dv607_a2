@@ -5,58 +5,33 @@ using System.IO;
 
 namespace model
 {
-    class Member
+    class Member : Person
     {
-        private string _firstName;
 
-        private string _lastName;
+        private int _memberId;
 
-        private string _personalNum;
+        private List<Boat> _boats;
 
-        // private int memberId;
+        private int _memberSince;
 
-        // private List<Boat> boats;
-
-        // private int memberSince;
-
-        public string FirstName
+        public int MemberId
         {
-            get { return _firstName;}
+            get { return _memberId;}
             set
             {
-                if (value.Length < 2 || value.Length > 20)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                _firstName = value;
+                _memberId = value;
             }
         }
 
-        public string LastName
+        public List<Boat> Boats
         {
-            get { return _lastName;}
+            get { return _boats;}
             set
             {
-                if (value.Length < 2 || value.Length > 20)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                _lastName = value;
+                _boats = value;
             }
         }
 
-         public string PersonalNum
-        {
-            get { return _personalNum;}
-            set
-            {
-                if (value.Length != 11)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                _personalNum = value;
-            }
-        }
         // public int getPersonalNum()
         // {
 
@@ -77,16 +52,9 @@ namespace model
 
         // }
 
-       public Member(string firstName, string lastName, string personalNum)
+       public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            PersonalNum =  personalNum;
-        }
-
-        public override string ToString()
-        {
-            return _firstName + ", " + _lastName + ", " + _personalNum;
+ 
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-namespace another // Register
+namespace model
 {
     /**
     * Represents the boat-object.
@@ -11,10 +11,24 @@ namespace another // Register
      */
     class Boat
     {
-        // private int boatId;
-        // private BoatType<string> boatType;
+        public enum BoatType {
+			Sailboat,
+			Motorsailer,
+			KayakorCanoe,
+			Other
+		}
 
-        // private int lengthInFeet;
-        // private int berthId;
+        private int _boatId;
+
+        private BoatType _boatType;
+
+        private int _lengthInFeet;
+
+        private int _berthId;
+
+        public Boat()
+        {
+
+        }
     }
 }
