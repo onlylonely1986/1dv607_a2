@@ -31,7 +31,6 @@ namespace model
             set {
                 _members = value;
             }
-
         }
 
         public void RegistryMember(List<string> inputs)

@@ -14,28 +14,6 @@ namespace register
         public Application()
         {
             
-            
-
-            // memberRegister.CreateNewRegister();
-            
-            // view.showConsole();
-            // memberRegister.RegistryMember(input);
-            // view.showConsole();
-            // view.userMakesChoice(memberReg.AddNewMember());
-
-            // while(view.WantsToContinueProgram())
-            // user wants to continue the session
-            // {
-            //    view.showConsole();
-            //}
-
-			// while (m_view.WantsToPlay())
-			// {
-			// 	m_view.DisplayInstructions();
-
-			// 	m_view.DisplayResult(a_game.Play());
-				
-			// }
         }
 
         public bool RunProgram()
@@ -56,15 +34,31 @@ namespace register
                 inputs = v.AskForMemberDetails();
                 m.RegistryMember(inputs);
             }
-            if (e == view.ConsoleView.Event.SearchMember)
+            if (e == view.ConsoleView.Event.ListMembers)
             {
-                // a_game.Hit();
-                // System.Console.WriteLine("söka på medlemmar jaha");
-                m.PrintAllMembersCompact();
+                view.ConsoleView.Event e2 = v.AskForAccuracy();
+                if (e2 == view.ConsoleView.Event.CompactList)
+                {
+                    m.PrintAllMembersCompact();
+                }
+                if (e2 == view.ConsoleView.Event.VerboseList)
+                {
+                    
+                    // m.PrintAllMembersVerbose();
+                }
+                if (e2 == view.ConsoleView.Event.SearchMember)
+                {
+                    
+                    // m.PrintAllMembersVerbose();
+                }
+                if (e2 == view.ConsoleView.Event.Quit)
+                {
+                    return false;
+                }
+                return true;
             }
             if (e == view.ConsoleView.Event.NewBoat)
             {
-                // a_game.Stand();
                 System.Console.WriteLine("ny båt okej");
             }
             

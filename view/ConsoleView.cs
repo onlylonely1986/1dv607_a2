@@ -15,9 +15,12 @@ namespace view
         public enum Event {
 			None,
 			NewMember,
-			SearchMember,
+            ListMembers,
 			NewBoat,
-			Quit
+			Quit,
+            CompactList,
+            VerboseList,
+            SearchMember
 		}
 
         private List<string> _inputs = new List<string>();
@@ -58,7 +61,7 @@ namespace view
 			}
 			if (c == "3")
 			{
-				return Event.SearchMember;
+				return Event.ListMembers;
 			}
 			
 			return Event.None;
@@ -87,6 +90,36 @@ namespace view
             input3 = Console.ReadLine();
             _inputs.Add(input3);
             return _inputs;
+        }
+
+        public Event AskForAccuracy()
+        {
+            Console.WriteLine("\n\n1. Show a compact list of members.");
+            Console.WriteLine("2. Show a verbose list of members");
+            Console.WriteLine("3. Search for members.");
+            Console.WriteLine("4. Quit application.\n");
+            string c = System.Console.ReadLine();
+            if (c == "1") {
+                System.Console.WriteLine("Compact list:\n");
+				return Event.CompactList;
+			}
+
+            if (c == "2") {
+                System.Console.WriteLine("Verbose list:\n");
+				return Event.VerboseList;
+			}
+
+            if (c == "3") {
+                System.Console.WriteLine("Search members:\n");
+				return Event.SearchMember;
+			}
+
+			if (c == "4")
+			{
+                System.Console.WriteLine("Good bye, have a nice day!\n");
+				return Event.Quit;
+			}
+            return Event.None;
         }
     }
 }
