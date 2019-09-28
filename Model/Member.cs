@@ -7,7 +7,6 @@ namespace model
 {
     class Member : Person
     {
-        // private DateTime dateTimeNow = DateTime.Now;
         private int _memberId;
 
         private List<Boat> _boats;
@@ -60,7 +59,7 @@ namespace model
 
         // }
 
-       public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
+        public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
         {
  
         }

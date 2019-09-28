@@ -52,7 +52,8 @@ namespace register
             }
             if (e == view.ConsoleView.Event.NewMember)
             {
-                List<string> inputs = v.AskForMemberDetails();
+                List<string> inputs = new List<string>();
+                inputs = v.AskForMemberDetails();
                 m.RegistryMember(inputs);
             }
             if (e == view.ConsoleView.Event.SearchMember)

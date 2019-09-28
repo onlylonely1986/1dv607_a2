@@ -8,7 +8,7 @@ namespace model
 {
     class MemberRegister
     {
-        private List<Member> _members;
+        private List<Member> _members = new List<Member>();
         
         private Member _member;
 
@@ -28,7 +28,11 @@ namespace model
 
         public List<Member> Members
         {
-            get; set;
+            get {return _members;}
+            set {
+                _members = value;
+            }
+
         }
 
         public void RegistryMember(List<string> inputs)
@@ -37,32 +41,16 @@ namespace model
             string lastName = inputs[1];
             string persNum = inputs[2];
 
-            foreach (string input in inputs)
-            {
-                // System.Console.WriteLine($"du har skrivit in:  {input} ");
-            }
-
             Member  m = new Member(firstName, lastName, persNum);
-            System.Console.WriteLine(" -------   ");
+            System.Console.WriteLine(" ------- ");
 
-            StreamWriter sw = new StreamWriter(@"register.txt");
-            
-            // lines.Add($"{m.FirstName}, nilsson, 551212-0101, {this.dateTimeNow}");
-            // File.WriteAllLines(_filePath, lines);
-            // string info = $"{new Member(firstName, "Nilsson", "551212-0101")}, {this.dateTimeNow}";
+            Members.Add(m);
+            string jsonData = JsonConvert.SerializeObject(Members);
 
-            // TODO 
-            // enbart första argumentet skrivs in, kolla om man ska parsa ett objekt?  med json för att 
-            // skicka in en hel medlem
-            // Medlem: ID, förnamn, efternamn, personNr, datum, båtar[]
-            string result = JsonConvert.SerializeObject(m);
-            sw.WriteLine(result);
-            System.Console.WriteLine(result);
-            sw.Close();
-
-                // string json = File.ReadAllText(args[0]);
-                // int[] data = JsonConvert.DeserializeObject<int[]>(json);
-
+            using (StreamWriter sw = new StreamWriter("register.txt"))
+            {
+                sw.WriteLine(jsonData);
+            }
         }
 
         public Member AddNewMember()
@@ -74,13 +62,48 @@ namespace model
 
 
         public void ReadAllMembersFromFile()
-        {
+        {   
+            string jsonFromFile;
+            using (StreamReader sr = new StreamReader("register.txt")) 
+            {
+                jsonFromFile = sr.ReadToEnd();
+                System.Console.WriteLine(jsonFromFile);
 
+                // List<Member> readData = JsonConvert.DeserializeObject<List<Member>>(jsonFromFile);
+                // Members = readData;
+                
+                // System.Console.WriteLine(Members);
+                // System.Console.WriteLine(savedMembers);
+                // List<Member> Members;
+                
+                // // Read and display lines from the file until the end of 
+                // // the file is reached.
+                // while ((line = sr.ReadLine()) != null) 
+                // {
+                //    Console.WriteLine(line[0]);
+                //     // List<Member> Members;
+                    // Member m = new Member(line[0].);
+                    // JsonConvert.DeserializeObject<List<Member>>(list);
+
+                    // System.Console.WriteLine(line);
+                //     // members = JsonConvert.DeserializeObject<List<Member>>(line);
+                
+                //     foreach(string line in sr.ReadLine())
+                //     {
+                //         System.Console.WriteLine(item);
+                //     //    System.Console.WriteLine("Id: " + m.MemberId + "\t First name: " + m.FirstName + "\t Last name: " + m.LastName + "\t Personal number: " + m.PersNum + "\t Boats: " + m.Boats + "\t Member since: " + m.MemberSince);
+                //     }
+                //}
+                // sr.Close();
+            }
+            
+            // StreamReader sr = new StreamReader(@"register.txt");
+            // 
         }
 
-        public override string ToString()
+        public MemberRegister()
         {
-            return "You have been registred a new member";
+            this.ReadAllMembersFromFile();
         }
     }
 }
