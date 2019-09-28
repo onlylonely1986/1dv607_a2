@@ -43,8 +43,23 @@ namespace register
                 }
                 if (e2 == view.ConsoleView.Event.SearchMember)
                 {
-                    
-                    // m.PrintAllMembersVerbose();
+                    // TODO: fundera på var man ska kunna ändra/ta bort medlem/ kanske på samma ställe man söker efter medlem?
+                    view.ConsoleView.Event e3 = v.AskForSearch();
+                    if (e3 == view.ConsoleView.Event.SearchCompactList)
+                    {
+                        // TODO: implement this
+                        // m.SearchMemberCompact();
+                    }
+                    if (e3 == view.ConsoleView.Event.SearchVerboseList)
+                    {
+                        // TODO: implement this
+                        // m.SearchMemberVerbose();
+                    }
+                     if (e3 == view.ConsoleView.Event.Quit)
+                    {
+                        return false;
+                    }
+                    return true;
                 }
                 if (e2 == view.ConsoleView.Event.Quit)
                 {
@@ -66,14 +81,14 @@ namespace register
     // requirements vad ska user kunna göra/anropa?
 
     // lägga till medlem -> metod i medlemsregister                 -> Check
-    // hantera/ändra medlemsinformation -> metod i medlemsregister
-    // visa medlems information -> metod i medlemsregister
-    // ta bort medlem -> metod i medlemsregister
+    // hantera/ändra medlemsinformation -> metod i medlemsregister  ->
+    // visa medlems information -> metod i medlemsregister          ->
+    // ta bort medlem -> metod i medlemsregister                    ->
 
 
     // visa lista på medlemmar compact list -> metod i listMembers  -> Check
-    // visa lista på medlemmar verbose list -> metod i listMembers
+    // visa lista på medlemmar verbose list -> metod i listMembers  -> Check
 
-    // lägga till en båt för en medlem -> i båtregister
-    // ta bort en båt
-    // ändra på båtinfo
+    // lägga till en båt för en medlem -> i båtregister             ->
+    // ta bort en båt                                               ->
+    // ändra på båtinfo                                             -> 

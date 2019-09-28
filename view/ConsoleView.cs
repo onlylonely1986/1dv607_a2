@@ -20,7 +20,10 @@ namespace view
 			Quit,
             CompactList,
             VerboseList,
-            SearchMember
+            SearchMember,
+            SearchCompactList,
+            SearchVerboseList
+
 		}
 
         private List<string> _inputs = new List<string>();
@@ -119,6 +122,30 @@ namespace view
                 System.Console.WriteLine("Good bye, have a nice day!\n");
 				return Event.Quit;
 			}
+            return Event.None;
+        }
+
+        public Event AskForSearch()
+        {
+            Console.WriteLine("\n\n1. Search for members, show them compact.");
+            Console.WriteLine("2. Search for members, show them verbose.");
+            Console.WriteLine("3. Quit application.\n");
+            string c = System.Console.ReadLine();
+            if (c == "1") {
+                System.Console.WriteLine("Search by name:\n");
+				return Event.SearchCompactList;
+			}
+
+            if (c == "2") {
+                System.Console.WriteLine("Search by name:\n");
+				return Event.SearchVerboseList;
+			}
+
+            if (c == "3") {
+                System.Console.WriteLine("Good bye, have a nice day!\n");
+				return Event.Quit;
+			}
+
             return Event.None;
         }
     }

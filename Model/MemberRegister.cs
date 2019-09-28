@@ -11,9 +11,6 @@ namespace model
         
         private Member _member;
 
-        // TODO implement this
-        private int _uniqueID;
-
         // TODO justera detta senare!
         // ej korrekt inkapslad
         public Member Member
@@ -40,8 +37,9 @@ namespace model
             string persNum = inputs[2];
 
             Member  m = new Member(firstName, lastName, persNum);
-            System.Console.WriteLine(" ------- ");
-            
+            int mId = Members.Count;
+            mId++;
+            m.MemberId = mId;
             Members.Add(m);
             string jsonData = JsonConvert.SerializeObject(Members);
 
@@ -83,12 +81,12 @@ namespace model
                 
                 if (m.Boats != null)
                 {
-                    System.Console.WriteLine($"Id: {m.MemberId} Name: {m.FirstName} {m.LastName} Personal number: {m.PersNum} Boats: {m.Boats}");
+                    System.Console.WriteLine($"Id: {m.MemberId} Name: {m.FirstName} {m.LastName} Personal number: {m.PersNum} Boats: {m.Boats} Member since: {m.MemberSince}");
                 }
                 else
                 {
                     string boats = "No boats added yet";
-                    System.Console.WriteLine($"Id: {m.MemberId} Name: {m.FirstName} {m.LastName} Personal number: {m.PersNum} Boats: {boats}");
+                    System.Console.WriteLine($"Id: {m.MemberId} Name: {m.FirstName} {m.LastName} Personal number: {m.PersNum} Boats: {boats} Member since: {m.MemberSince}");
                 }
                 
             }
