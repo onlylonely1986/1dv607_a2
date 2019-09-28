@@ -15,14 +15,14 @@ namespace view
         public enum Event {
 			None,
 			NewMember,
-            ListMembers,
+            SearchMemberName,
+            SearchMemberId,
 			NewBoat,
 			Quit,
             CompactList,
             VerboseList,
-            SearchMember,
-            SearchCompactList,
-            SearchVerboseList
+            SearchWordGiven,
+            GoBack
 
 		}
 
@@ -31,10 +31,12 @@ namespace view
         public void showConsole()
         {
             Console.WriteLine("\n\nWelcome to the boatclub register\n");
-            Console.WriteLine("1. Add a new member.");
-            Console.WriteLine("2. Add a new boat.");
-            Console.WriteLine("3. View members.");
-            Console.WriteLine("4. Quit application.\n");
+            Console.WriteLine("[1] Add a new member.");
+            Console.WriteLine("[2] Search member by name.");
+            Console.WriteLine("[3] Search member by member-id.");
+            Console.WriteLine("[4] Show compact list of all members.");
+            Console.WriteLine("[5] Show verbose list of all members.");
+            Console.WriteLine("[6] Quit application.\n");
         }
 
         public bool WantsToContinueProgram()
@@ -50,7 +52,7 @@ namespace view
         public Event GetEvent()
         {
             string c = System.Console.ReadLine();
-			if (c == "4") {
+			if (c == "6") {
                 System.Console.WriteLine("Good bye, have a nice day!");
 				return Event.Quit;
 			}
@@ -60,11 +62,21 @@ namespace view
 			}
             if (c == "2")
 			{
-				return Event.NewBoat;
+				return Event.SearchMemberName;
 			}
-			if (c == "3")
+            if (c == "3")
 			{
-				return Event.ListMembers;
+				return Event.SearchMemberId;
+			}
+            if (c == "4")
+			{
+                System.Console.WriteLine("Compact list:\n");
+				return Event.CompactList;
+			}
+			if (c == "5")
+			{
+                System.Console.WriteLine("Verbose list:\n");
+				return Event.VerboseList;
 			}
 			
 			return Event.None;
@@ -97,8 +109,8 @@ namespace view
 
         public Event AskForAccuracy()
         {
-            Console.WriteLine("\n\n1. Show a compact list of members.");
-            Console.WriteLine("2. Show a verbose list of members");
+            Console.WriteLine("\n\n1. Show a compact list of all members.");
+            Console.WriteLine("2. Show a verbose list of all members");
             Console.WriteLine("3. Search for members.");
             Console.WriteLine("4. Quit application.\n");
             string c = System.Console.ReadLine();
@@ -114,7 +126,7 @@ namespace view
 
             if (c == "3") {
                 System.Console.WriteLine("Search members:\n");
-				return Event.SearchMember;
+				return Event.SearchMemberName;
 			}
 
 			if (c == "4")
@@ -133,12 +145,12 @@ namespace view
             string c = System.Console.ReadLine();
             if (c == "1") {
                 System.Console.WriteLine("Search by name:\n");
-				return Event.SearchCompactList;
+				return Event.CompactList;
 			}
 
             if (c == "2") {
                 System.Console.WriteLine("Search by name:\n");
-				return Event.SearchVerboseList;
+				return Event.VerboseList;
 			}
 
             if (c == "3") {
@@ -147,6 +159,32 @@ namespace view
 			}
 
             return Event.None;
+        }
+
+        public Event ShowSearchMenu()
+        {
+
+            // TODO implementera denna klart
+            Console.WriteLine("\n\n1. Search for members by name.");
+            Console.WriteLine("2. Go Back To Start Menu.\n");
+            string c = System.Console.ReadLine();
+            if (c == "1") {
+                System.Console.WriteLine("Search by name:\n");
+				return Event.SearchWordGiven;
+			}
+            if (c == "2") {
+                // System.Console.WriteLine("Good bye, have a nice day!\n");
+				return Event.GoBack;
+			}
+
+            return Event.None;   
+        }
+
+        public string AskForSearchWord()
+        {
+            Console.WriteLine("Write a name or a character in a name you want to find...\n");
+            string searchWord = System.Console.ReadLine();
+            return searchWord;
         }
     }
 }

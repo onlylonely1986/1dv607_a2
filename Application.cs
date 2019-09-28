@@ -29,51 +29,38 @@ namespace register
                 inputs = v.AskForMemberDetails();
                 m.RegistryMember(inputs);
             }
-            if (e == view.ConsoleView.Event.ListMembers)
+            if (e == view.ConsoleView.Event.SearchMemberName)
             {
-                view.ConsoleView.Event e2 = v.AskForAccuracy();
-                if (e2 == view.ConsoleView.Event.CompactList)
+                string word;
+                // word = v.AskForSearchWord();
+                // m.SearchByName(word);
+                view.ConsoleView.Event e2 = v.ShowSearchMenu();
+                if (e2 == view.ConsoleView.Event.SearchWordGiven)
                 {
-                    m.PrintAllMembersCompact();
+                    word = v.AskForSearchWord();
+                    m.SearchByName(word);
                 }
-                if (e2 == view.ConsoleView.Event.VerboseList)
-                {
-                    
-                    m.PrintAllMembersVerbose();
-                }
-                if (e2 == view.ConsoleView.Event.SearchMember)
-                {
-                    // TODO: fundera på var man ska kunna ändra/ta bort medlem/ kanske på samma ställe man söker efter medlem?
-                    view.ConsoleView.Event e3 = v.AskForSearch();
-                    if (e3 == view.ConsoleView.Event.SearchCompactList)
-                    {
-                        // TODO: implement this
-                        // m.SearchMemberCompact();
-                    }
-                    if (e3 == view.ConsoleView.Event.SearchVerboseList)
-                    {
-                        // TODO: implement this
-                        // m.SearchMemberVerbose();
-                    }
-                     if (e3 == view.ConsoleView.Event.Quit)
-                    {
-                        return false;
-                    }
-                    return true;
-                }
-                if (e2 == view.ConsoleView.Event.Quit)
+                if (e2 == view.ConsoleView.Event.GoBack)
                 {
                     return false;
                 }
-                return true;
             }
-            if (e == view.ConsoleView.Event.NewBoat)
+            if (e == view.ConsoleView.Event.SearchMemberId)
             {
-                System.Console.WriteLine("ny båt okej");
+                int id;
+                // id = v.AskForSearchId();
+                // m.SearchById(id);
             }
-            
+            if (e == view.ConsoleView.Event.CompactList)
+            {
+                m.PrintAllMembersCompact();
+            }
+            if (e == view.ConsoleView.Event.VerboseList)
+            {
+                m.PrintAllMembersVerbose();
+            }
             return true;
-        }
+        }  
     }
 }
 
@@ -82,7 +69,7 @@ namespace register
 
     // lägga till medlem -> metod i medlemsregister                 -> Check
     // hantera/ändra medlemsinformation -> metod i medlemsregister  ->
-    // visa medlems information -> metod i medlemsregister          ->
+    // visa medlems information -> metod i medlemsregister          -> Check
     // ta bort medlem -> metod i medlemsregister                    ->
 
 

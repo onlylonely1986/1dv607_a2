@@ -61,7 +61,7 @@ namespace model
 
         public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
         {
- 
+  
         }
     }
 }

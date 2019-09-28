@@ -55,9 +55,9 @@ namespace model
     
        public Person(string firstName, string lastName, string persNum)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            PersNum =  persNum;
+            _firstName = firstName;
+            _lastName = lastName;
+            _persNum =  persNum;
         }
     }
 }
