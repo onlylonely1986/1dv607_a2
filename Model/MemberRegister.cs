@@ -67,11 +67,8 @@ namespace model
         {
             foreach(Member m in Members)
             {
-                int nrOfBoats;
-                if (m.Boats == null)
-                {
-                    nrOfBoats = 0;
-                } else 
+                int nrOfBoats = 0;
+                if (m.Boats != null)
                 {
                     nrOfBoats = m.Boats.Count;
                 }
@@ -79,10 +76,27 @@ namespace model
             }
         }
 
+        public void PrintAllMembersVerbose()
+        {
+            foreach(Member m in Members)
+            {
+                
+                if (m.Boats != null)
+                {
+                    System.Console.WriteLine($"Id: {m.MemberId} Name: {m.FirstName} {m.LastName} Personal number: {m.PersNum} Boats: {m.Boats}");
+                }
+                else
+                {
+                    string boats = "No boats added yet";
+                    System.Console.WriteLine($"Id: {m.MemberId} Name: {m.FirstName} {m.LastName} Personal number: {m.PersNum} Boats: {boats}");
+                }
+                
+            }
+        }
+
         public MemberRegister()
         {
             this.ReadAllMembersFromFile();
-            this.PrintAllMembersCompact();
         }
     }
 }

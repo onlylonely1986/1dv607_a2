@@ -11,11 +11,6 @@ namespace register
     */
     public class Application
     {
-        public Application()
-        {
-            
-        }
-
         public bool RunProgram()
         {
             model.MemberRegister m = new model.MemberRegister();
@@ -44,7 +39,7 @@ namespace register
                 if (e2 == view.ConsoleView.Event.VerboseList)
                 {
                     
-                    // m.PrintAllMembersVerbose();
+                    m.PrintAllMembersVerbose();
                 }
                 if (e2 == view.ConsoleView.Event.SearchMember)
                 {
@@ -70,15 +65,15 @@ namespace register
 
     // requirements vad ska user kunna göra/anropa?
 
-    // lägga till medlem -> metod i medlemsregister
+    // lägga till medlem -> metod i medlemsregister                 -> Check
     // hantera/ändra medlemsinformation -> metod i medlemsregister
     // visa medlems information -> metod i medlemsregister
     // ta bort medlem -> metod i medlemsregister
 
 
-    // visa lista på medlemmar compact list -> metod i listMembers
+    // visa lista på medlemmar compact list -> metod i listMembers  -> Check
     // visa lista på medlemmar verbose list -> metod i listMembers
 
-    // lägga till en båt för en medlem ( båten ska ha typ (enum) och length) -> i medlemsregister? eller båtregister?
+    // lägga till en båt för en medlem -> i båtregister
     // ta bort en båt
     // ändra på båtinfo
