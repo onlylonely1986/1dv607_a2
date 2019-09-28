@@ -32,9 +32,8 @@ namespace register
             if (e == view.ConsoleView.Event.SearchMemberName)
             {
                 string word;
-                // word = v.AskForSearchWord();
-                // m.SearchByName(word);
-                view.ConsoleView.Event e2 = v.ShowSearchMenu();
+                string focusName = "name";
+                view.ConsoleView.Event e2 = v.ShowSearchMenu(focusName);
                 if (e2 == view.ConsoleView.Event.SearchWordGiven)
                 {
                     word = v.AskForSearchWord();
@@ -47,9 +46,18 @@ namespace register
             }
             if (e == view.ConsoleView.Event.SearchMemberId)
             {
-                int id;
-                // id = v.AskForSearchId();
-                // m.SearchById(id);
+                string id;
+                string focusId = "id";
+                view.ConsoleView.Event e2 = v.ShowSearchMenu(focusId);
+                if (e2 == view.ConsoleView.Event.SearchWordGiven)
+                {
+                    id = v.AskForSearchId();
+                    m.SearchById(id);
+                }
+                if (e2 == view.ConsoleView.Event.GoBack)
+                {
+                    return false;
+                }
             }
             if (e == view.ConsoleView.Event.CompactList)
             {

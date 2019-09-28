@@ -161,11 +161,9 @@ namespace view
             return Event.None;
         }
 
-        public Event ShowSearchMenu()
+        public Event ShowSearchMenu(string focus)
         {
-
-            // TODO implementera denna klart
-            Console.WriteLine("\n\n1. Search for members by name.");
+            Console.WriteLine($"\n\n1. Search for members by {focus}.");
             Console.WriteLine("2. Go Back To Start Menu.\n");
             string c = System.Console.ReadLine();
             if (c == "1") {
@@ -173,7 +171,6 @@ namespace view
 				return Event.SearchWordGiven;
 			}
             if (c == "2") {
-                // System.Console.WriteLine("Good bye, have a nice day!\n");
 				return Event.GoBack;
 			}
 
@@ -185,6 +182,13 @@ namespace view
             Console.WriteLine("Write a name or a character in a name you want to find...\n");
             string searchWord = System.Console.ReadLine();
             return searchWord;
+        }
+
+        public string AskForSearchId()
+        {
+            Console.WriteLine("Write a nr of an id to find a member...\n");
+            string searchNr = System.Console.ReadLine();
+            return searchNr;
         }
     }
 }

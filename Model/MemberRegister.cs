@@ -123,6 +123,40 @@ namespace model
             }
         }
 
+        public void SearchById(string searchNr)
+        {
+            // int searchNr = 4;
+            try
+            {
+                int res = Int32.Parse(searchNr);
+                Console.WriteLine(res);
+                List<Member> searchList = new List<Member>();
+                foreach(Member m in Members)
+                {
+                    if(m.MemberId == res)
+                    {
+                        searchList.Add(m);
+                    }
+                }
+                if (searchList.Count != 0)
+                {
+                    System.Console.WriteLine($"Members with the id: {searchNr} were found:");
+                    foreach(Member m in searchList)
+                    {
+                    System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Boats: 0"); // TODO obs bad practice to have cw in model
+                    }                
+                }
+                else
+                {
+                    System.Console.WriteLine($"No member with {searchNr} as id was found:");
+                }
+
+            } catch (FormatException)
+            {
+                System.Console.WriteLine("Exception");
+            }
+        }
+
         public MemberRegister()
         {
             this.ReadAllMembersFromFile();
