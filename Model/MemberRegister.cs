@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -43,7 +42,7 @@ namespace model
 
             Member  m = new Member(firstName, lastName, persNum);
             System.Console.WriteLine(" ------- ");
-
+            
             Members.Add(m);
             string jsonData = JsonConvert.SerializeObject(Members);
 
@@ -53,57 +52,38 @@ namespace model
             }
         }
 
-        public Member AddNewMember()
-        {
-            _member = new Member("Lone", "Nilsson", "551212-0101");
-            System.Console.WriteLine("nu körs denna");
-            return _member;
-        }
-
-
         public void ReadAllMembersFromFile()
         {   
             string jsonFromFile;
             using (StreamReader sr = new StreamReader("register.txt")) 
             {
                 jsonFromFile = sr.ReadToEnd();
-                System.Console.WriteLine(jsonFromFile);
+                // System.Console.WriteLine(jsonFromFile);
 
-                // List<Member> readData = JsonConvert.DeserializeObject<List<Member>>(jsonFromFile);
-                // Members = readData;
-                
-                // System.Console.WriteLine(Members);
-                // System.Console.WriteLine(savedMembers);
-                // List<Member> Members;
-                
-                // // Read and display lines from the file until the end of 
-                // // the file is reached.
-                // while ((line = sr.ReadLine()) != null) 
-                // {
-                //    Console.WriteLine(line[0]);
-                //     // List<Member> Members;
-                    // Member m = new Member(line[0].);
-                    // JsonConvert.DeserializeObject<List<Member>>(list);
-
-                    // System.Console.WriteLine(line);
-                //     // members = JsonConvert.DeserializeObject<List<Member>>(line);
-                
-                //     foreach(string line in sr.ReadLine())
-                //     {
-                //         System.Console.WriteLine(item);
-                //     //    System.Console.WriteLine("Id: " + m.MemberId + "\t First name: " + m.FirstName + "\t Last name: " + m.LastName + "\t Personal number: " + m.PersNum + "\t Boats: " + m.Boats + "\t Member since: " + m.MemberSince);
-                //     }
-                //}
-                // sr.Close();
+                Members = JsonConvert.DeserializeObject<List<Member>>(jsonFromFile);
             }
-            
-            // StreamReader sr = new StreamReader(@"register.txt");
-            // 
+        }
+
+        public void PrintAllMembersCompact()
+        {
+            foreach(Member m in Members)
+            {
+                int nrOfBoats;
+                if (m.Boats == null)
+                {
+                    nrOfBoats = 0;
+                } else 
+                {
+                    nrOfBoats = m.Boats.Count;
+                }
+                System.Console.WriteLine($"Id: {m.MemberId} Name: {m.FirstName} {m.LastName} Boats: {nrOfBoats}");
+            }
         }
 
         public MemberRegister()
         {
             this.ReadAllMembersFromFile();
+            this.PrintAllMembersCompact();
         }
     }
 }

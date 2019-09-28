@@ -24,13 +24,11 @@ namespace view
 
         public void showConsole()
         {
-            Console.WriteLine("Welcome to the boatclub register:");
-            System.Console.WriteLine("  ");
+            Console.WriteLine("\n\nWelcome to the boatclub register\n");
             Console.WriteLine("1. Add a new member.");
             Console.WriteLine("2. Add a new boat.");
-            Console.WriteLine("3. Search for members.");
-            Console.WriteLine("4. Quit application.");
-            System.Console.WriteLine("  ");
+            Console.WriteLine("3. View members.");
+            Console.WriteLine("4. Quit application.\n");
         }
 
         public bool WantsToContinueProgram()
@@ -54,15 +52,15 @@ namespace view
 			{
 				return Event.NewMember;
 			}
-			if (c == "2")
-			{
-				return Event.SearchMember;
-			}
-			if (c == "3")
+            if (c == "2")
 			{
 				return Event.NewBoat;
 			}
-
+			if (c == "3")
+			{
+				return Event.SearchMember;
+			}
+			
 			return Event.None;
         }
 

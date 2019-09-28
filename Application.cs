@@ -59,7 +59,8 @@ namespace register
             if (e == view.ConsoleView.Event.SearchMember)
             {
                 // a_game.Hit();
-                System.Console.WriteLine("söka på medlemmar jaha");
+                // System.Console.WriteLine("söka på medlemmar jaha");
+                m.PrintAllMembersCompact();
             }
             if (e == view.ConsoleView.Event.NewBoat)
             {
