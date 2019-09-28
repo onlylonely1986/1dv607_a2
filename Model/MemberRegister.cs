@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace model
 {
     class MemberRegister
     {
-        private string _filePath;
-
-        // StreamWriter file = new StreamWriter(_filePath); // members.txt
-        private DateTime dateTimeNow = DateTime.Now;
-        // private DirectoryInfo _dir = new DirectoryInfo(@"c:\RegisterData\");
+        private List<Member> _members;
+        
         private Member _member;
 
         // TODO implement this
@@ -28,13 +26,9 @@ namespace model
 
         }
 
-        public string FilePath
+        public List<Member> Members
         {
-            get {return _filePath;}
-            set
-            {
-                _filePath = value;
-            }
+            get; set;
         }
 
         public void RegistryMember(List<string> inputs)
@@ -61,7 +55,9 @@ namespace model
             // enbart första argumentet skrivs in, kolla om man ska parsa ett objekt?  med json för att 
             // skicka in en hel medlem
             // Medlem: ID, förnamn, efternamn, personNr, datum, båtar[]
-            sw.WriteLine(m.FirstName, m.LastName, m.PersonalNum);
+            string result = JsonConvert.SerializeObject(m);
+            sw.WriteLine(result);
+            System.Console.WriteLine(result);
             sw.Close();
 
                 // string json = File.ReadAllText(args[0]);
@@ -77,14 +73,9 @@ namespace model
         }
 
 
-        public void PrintOutAll()
+        public void ReadAllMembersFromFile()
         {
-            List<string> lines = File.ReadAllLines(_filePath).ToList();
 
-            foreach(string line in lines)
-            {
-                Console.WriteLine(line);
-            }
         }
 
         public override string ToString()

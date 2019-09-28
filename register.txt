@@ -1,1 +1,1 @@
-Jossan
+{"MemberId":0,"Boats":null,"MemberSince":"2019-09-28T11:30:15.9645919+02:00","FirstName":"usama","LastName":"binladen","PersonalNum":"123456-1234"}

@@ -7,12 +7,12 @@ namespace model
 {
     class Member : Person
     {
-
+        // private DateTime dateTimeNow = DateTime.Now;
         private int _memberId;
 
         private List<Boat> _boats;
 
-        private int _memberSince;
+        private DateTime _memberSince = DateTime.Now;
 
         public int MemberId
         {
@@ -32,6 +32,14 @@ namespace model
             }
         }
 
+        public DateTime MemberSince
+        {
+            get { return _memberSince;}
+            set
+            {
+                _memberSince = value;
+            }
+        }
         // public int getPersonalNum()
         // {
 

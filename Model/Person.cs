@@ -11,7 +11,7 @@ namespace model
 
         private string _lastName;
 
-        private string _personalNum;
+        private string _persNum;
 
 
         public string FirstName
@@ -40,29 +40,24 @@ namespace model
             }
         }
 
-         public string PersonalNum
+         public string PersNum
         {
-            get { return _personalNum;}
+            get { return _persNum;}
             set
             {
                 if (value.Length != 11)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                _personalNum = value;
+                _persNum = value;
             }
         }
     
-       public Person(string firstName, string lastName, string personalNum)
+       public Person(string firstName, string lastName, string persNum)
         {
             FirstName = firstName;
             LastName = lastName;
-            PersonalNum =  personalNum;
-        }
-
-        public override string ToString()
-        {
-            return _firstName + ", " + _lastName + ", " + _personalNum;
+            PersNum =  persNum;
         }
     }
 }
