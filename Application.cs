@@ -53,6 +53,11 @@ namespace register
                 {
                     id = v.AskForSearchId();
                     m.SearchById(id);
+                    view.ConsoleView.Event e3 = v.ShowMemberActivities();
+                    if(e3 == view.ConsoleView.Event.RemoveMember)
+                    {
+                        m.RemoveMember(id);
+                    }
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)
                 {

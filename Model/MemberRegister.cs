@@ -11,6 +11,8 @@ namespace model
         
         private Member _member;
 
+        private Member _pickedMember = null;
+
         // TODO justera detta senare!
         // ej korrekt inkapslad
         public Member Member
@@ -125,26 +127,20 @@ namespace model
 
         public void SearchById(string searchNr)
         {
-            // int searchNr = 4;
             try
             {
-                int res = Int32.Parse(searchNr);
-                Console.WriteLine(res);
-                List<Member> searchList = new List<Member>();
+                int id = Int32.Parse(searchNr);
                 foreach(Member m in Members)
                 {
-                    if(m.MemberId == res)
+                    if(m.MemberId == id)
                     {
-                        searchList.Add(m);
+                        _pickedMember = m;
                     }
                 }
-                if (searchList.Count != 0)
+                if (_pickedMember != null)
                 {
                     System.Console.WriteLine($"Members with the id: {searchNr} were found:");
-                    foreach(Member m in searchList)
-                    {
-                    System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Boats: 0"); // TODO obs bad practice to have cw in model
-                    }                
+                    System.Console.WriteLine($"Id: {_pickedMember.MemberId}, Name: {_pickedMember.FirstName} {_pickedMember.LastName}, Boats: 0"); // TODO obs bad practice to have cw in model               
                 }
                 else
                 {
@@ -154,6 +150,48 @@ namespace model
             } catch (FormatException)
             {
                 System.Console.WriteLine("Exception");
+            }
+        }
+
+        public void RemoveMember(string searchNr)
+        {
+            int id = Int32.Parse(searchNr);
+            if(_pickedMember != null)
+            {
+                if(_pickedMember.MemberId == id)
+                {
+                    Member deleteM = null;
+                    int index = 0;
+                    System.Console.WriteLine("member was found");
+                    foreach(Member m in Members)
+                    {
+                        if(m.MemberId == id)
+                        {
+                            deleteM = m;
+                            // System.Console.WriteLine("member was deleted successfully!");
+                            break;
+                        } else
+                        {
+                            System.Console.WriteLine("something went wrong");
+                        }
+                    }
+                    for (int i = 0; i < Members.Count; i++)
+                    {
+                        if (Members[i].MemberId == id)
+                        {
+                            // index = Members[i];
+                            System.Console.WriteLine(Members[i].FirstName);
+                        }
+                        
+                    }
+                    // TODO något sätt att radera en specifik medlem med utgångspunkt från id man sökt och hittat innan!
+                    string jsonData = JsonConvert.SerializeObject(Members);
+
+                    using (StreamWriter sw = new StreamWriter("register.txt"))
+                    {
+                        sw.WriteLine(jsonData);
+                    }
+                }
             }
         }
 

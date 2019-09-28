@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.IO;
 
 namespace view
 {
@@ -17,12 +15,16 @@ namespace view
 			NewMember,
             SearchMemberName,
             SearchMemberId,
-			NewBoat,
-			Quit,
+			ChangeMember,
+            ChangeBoat,
+            AddBoat,
+            RemoveBoat,
+            RemoveMember,
             CompactList,
             VerboseList,
             SearchWordGiven,
-            GoBack
+            GoBack,
+            Quit
 
 		}
 
@@ -33,7 +35,7 @@ namespace view
             Console.WriteLine("\n\nWelcome to the boatclub register\n");
             Console.WriteLine("[1] Add a new member.");
             Console.WriteLine("[2] Search member by name.");
-            Console.WriteLine("[3] Search member by member-id.");
+            Console.WriteLine("[3] Search member by member-id to change or remove");
             Console.WriteLine("[4] Show compact list of all members.");
             Console.WriteLine("[5] Show verbose list of all members.");
             Console.WriteLine("[6] Quit application.\n");
@@ -94,7 +96,7 @@ namespace view
             Console.WriteLine("Please enter your first name.");
             input1 = Console.ReadLine();
 
-            // TODO nån slags felhantering av användaren input
+            // TODO nån slags felhantering av användarens input
             // Console.WriteLine("Your name must be longer than one character, try to enter your first name again.");
             // input1 = Console.ReadLine();
             _inputs.Add(input1);
@@ -107,55 +109,40 @@ namespace view
             return _inputs;
         }
 
-        public Event AskForAccuracy()
+
+        public Event ShowMemberActivities()
         {
-            Console.WriteLine("\n\n1. Show a compact list of all members.");
-            Console.WriteLine("2. Show a verbose list of all members");
-            Console.WriteLine("3. Search for members.");
-            Console.WriteLine("4. Quit application.\n");
+            Console.WriteLine("\n\n[1] Change member information.");
+            Console.WriteLine("[2] Add a new boat to member.");
+            Console.WriteLine("[3] Change boat information.");
+            Console.WriteLine("[4] Remove boat from member.");
+            Console.WriteLine("[5] Remove member from register.");
+            Console.WriteLine("[6] Go back to main menu.\n");
             string c = System.Console.ReadLine();
             if (c == "1") {
-                System.Console.WriteLine("Compact list:\n");
-				return Event.CompactList;
+                System.Console.WriteLine("Change member information:\n");
+				return Event.ChangeMember;
 			}
 
             if (c == "2") {
-                System.Console.WriteLine("Verbose list:\n");
-				return Event.VerboseList;
+                System.Console.WriteLine("Add new boat to member:\n");
+				return Event.AddBoat;
 			}
 
             if (c == "3") {
-                System.Console.WriteLine("Search members:\n");
-				return Event.SearchMemberName;
+                System.Console.WriteLine("Change boat information:\n");
+				return Event.ChangeBoat;
 			}
-
-			if (c == "4")
-			{
-                System.Console.WriteLine("Good bye, have a nice day!\n");
-				return Event.Quit;
+            if (c == "4") {
+                System.Console.WriteLine("Remove boat from member:\n");
+				return Event.RemoveBoat;
 			}
-            return Event.None;
-        }
-
-        public Event AskForSearch()
-        {
-            Console.WriteLine("\n\n1. Search for members, show them compact.");
-            Console.WriteLine("2. Search for members, show them verbose.");
-            Console.WriteLine("3. Quit application.\n");
-            string c = System.Console.ReadLine();
-            if (c == "1") {
-                System.Console.WriteLine("Search by name:\n");
-				return Event.CompactList;
+            if (c == "5") {
+                System.Console.WriteLine("Remove member from register:\n");
+				return Event.RemoveMember;
 			}
-
-            if (c == "2") {
-                System.Console.WriteLine("Search by name:\n");
-				return Event.VerboseList;
-			}
-
-            if (c == "3") {
-                System.Console.WriteLine("Good bye, have a nice day!\n");
-				return Event.Quit;
+            if (c == "6") {
+				return Event.GoBack;
 			}
 
             return Event.None;
@@ -163,8 +150,8 @@ namespace view
 
         public Event ShowSearchMenu(string focus)
         {
-            Console.WriteLine($"\n\n1. Search for members by {focus}.");
-            Console.WriteLine("2. Go Back To Start Menu.\n");
+            Console.WriteLine($"\n\n[1] Search for members by {focus}.");
+            Console.WriteLine("[2] Go Back To Start Menu.\n");
             string c = System.Console.ReadLine();
             if (c == "1") {
                 System.Console.WriteLine("Search by name:\n");

@@ -63,5 +63,8 @@ namespace model
         {
   
         }
+
+
+        // TODO två olika tostring som skriver ut compact eller verbose att anropa från memberregister vid behov
     }
 }
