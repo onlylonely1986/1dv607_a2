@@ -10,11 +10,11 @@ namespace register
         static void Main(string[] args)
         {
             // TODO implement controller
-            // controller.RunProgram run = new controller.RunProgram();
-            // run.runProgram();
+            controller.RunProgram run = new controller.RunProgram();
+            run.runProgram();
 
-            Application  a = new Application();
-            a.RunProgram();
+            // Application  a = new Application();
+            // a.RunProgram();
         }
     }
 }
