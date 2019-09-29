@@ -64,7 +64,27 @@ namespace model
   
         }
 
+        public override string ToString()
+        {
+             if (Boats != null)
+            {
+                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {Boats.ToString()}, Member since: {MemberSince}";
+            } else
+            {
+                string boats = "No boats added yet";
+                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {boats}, Member since: {MemberSince}";
+            }
+            
+        }
 
-        // TODO två olika tostring som skriver ut compact eller verbose att anropa från memberregister vid behov
+        public string ToStringSmall()
+        {
+            int b = 0;
+            if (Boats != null)
+            {
+                b = Boats.Count;
+            }
+            return $"Id: {MemberId}, Name: {FirstName} {LastName}, Boats: {b}";
+        }
     }
 }

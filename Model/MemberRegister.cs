@@ -74,12 +74,7 @@ namespace model
         {            
             foreach(Member m in Members)
             {
-                int nrOfBoats = 0;
-                if (m.Boats != null)
-                {
-                    nrOfBoats = m.Boats.Count;
-                }
-                System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Boats: {nrOfBoats}");
+                System.Console.WriteLine(m.ToStringSmall());
             }
         }
 
@@ -87,23 +82,12 @@ namespace model
         {
             foreach(Member m in Members)
             {
-                
-                if (m.Boats != null)
-                {
-                    System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Personal number: {m.PersNum}, Boats: {m.Boats}, Member since: {m.MemberSince}");
-                }
-                else
-                {
-                    string boats = "No boats added yet";
-                    System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Personal number: {m.PersNum}, Boats: {boats}, Member since: {m.MemberSince}");
-                }
-                
+                System.Console.WriteLine(m.ToString());
             }
         }
 
         public void SearchByName(string search)
         {
-            // string searchWord = "u";
             List<Member> searchList = new List<Member>();
             foreach(Member m in Members)
             {
@@ -117,7 +101,7 @@ namespace model
                 System.Console.WriteLine($"This members with '{search}' in their name were found:");
                 foreach(Member m in searchList)
                 {
-                System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Boats: 0"); // TODO obs bad practice to have cw in model
+                System.Console.WriteLine(m.ToStringSmall()); 
                 }                
             }
             else
@@ -141,7 +125,7 @@ namespace model
                 if (_pickedMember != null)
                 {
                     System.Console.WriteLine($"Members with the id: {searchNr} were found:");
-                    System.Console.WriteLine($"Id: {_pickedMember.MemberId}, Name: {_pickedMember.FirstName} {_pickedMember.LastName}, Boats: 0"); // TODO obs bad practice to have cw in model               
+                    System.Console.WriteLine(_pickedMember.ToString());    
                 }
                 else
                 {
@@ -152,6 +136,20 @@ namespace model
             {
                 System.Console.WriteLine("Exception");
             }
+        }
+
+        public void ChangeMember(List<string> inputs)
+        {
+            _pickedMember.FirstName = inputs[0];
+            _pickedMember.LastName = inputs[1];
+            _pickedMember.PersNum = inputs[2];
+    
+            string jsonData = JsonConvert.SerializeObject(Members);
+            using (StreamWriter sw = new StreamWriter("register.txt"))
+            {
+                sw.WriteLine(jsonData);
+            }
+            System.Console.WriteLine("The members information is updated in the register.");
         }
 
         public void RemoveMember(string searchNr)

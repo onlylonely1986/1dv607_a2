@@ -79,14 +79,21 @@ namespace view
 			return Event.None;
         }
 
-        public List<string> AskForMemberDetails()
+        public List<string> AskForMemberDetails(string action)
         {
             string input1 = "";
             string input2 = "";
             string input3 = "";
 
-            
-            Console.WriteLine("Do you want to register a new member.");
+            if (action == "new")
+            {
+                Console.WriteLine("Do you want to register a new member.");
+            }
+            if (action == "change")
+            {
+                Console.WriteLine("Do you want to change a members information.");
+            }
+ 
             System.Console.WriteLine("  ");
             Console.WriteLine("Please enter your first name.");
             input1 = Console.ReadLine();
@@ -149,7 +156,7 @@ namespace view
             Console.WriteLine("[2] Go Back To Start Menu.\n");
             string c = System.Console.ReadLine();
             if (c == "1") {
-                System.Console.WriteLine("Search by name:\n");
+                System.Console.WriteLine("Search here:\n");
 				return Event.SearchWordGiven;
 			}
             if (c == "2") {
@@ -170,6 +177,15 @@ namespace view
                 Console.WriteLine("Write a nr of an id to find a member...\n");
             }
             return System.Console.ReadLine();
+        }
+
+        public string AskForDetailToChange()
+        {
+            Console.WriteLine("\n[1] Change first name.");
+            Console.WriteLine("[2] Change last name.");
+            Console.WriteLine("[3] Change personal number.");
+            string d = System.Console.ReadLine();
+            return d;
         }
     }
 }
