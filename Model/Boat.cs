@@ -13,11 +13,19 @@ namespace model
 			KayakorCanoe,
 			Other
 		}
-
+        private int _boatId;
         private BoatType _boatType;
 
         private int _lengthInFeet;
 
+        public int BoatId
+        {
+            get { return _boatId;}
+            set
+            {
+                _boatId = value;
+            }
+        }
         public Boat(BoatType boatType, int lengthInFeet)
         {
             _boatType = boatType;

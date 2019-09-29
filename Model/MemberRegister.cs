@@ -14,6 +14,8 @@ namespace model
 
         private Member _pickedMember = null;
 
+        private Boat _pickedBoat = null;
+
         private BoatRegister _boatRegister = new BoatRegister();
 
         // TODO justera detta senare!
@@ -185,6 +187,34 @@ namespace model
             }
             _boatRegister.RegistryBoat(_pickedMember, t, l);
             this.WriteToFile();
+        }
+
+        public string GetBoatInfo()
+        {
+            if(_pickedMember != null)
+            {
+                System.Console.WriteLine($"Pick the boat to change:");
+                int ind = 1;
+                string boats = String.Concat(_pickedMember.Boats.Select(b=> $"[{ind++}]: {b.ToString()}\n"));
+                return boats;
+            } 
+            return "";
+        }
+
+        public string SetPickedBoat(string pickedBoat)
+        {
+            int b = Int32.Parse(pickedBoat);
+            b--;
+            for (int i = 0; i < _pickedMember.Boats.Count; i++)
+            {
+                if(i == b)
+                {
+                    System.Console.WriteLine("båten hittades");
+                    _pickedBoat = _pickedMember.Boats[i];
+                }
+            }
+            
+            return "_pickedBoat.ToString()";
         }
 
         private void WriteToFile()

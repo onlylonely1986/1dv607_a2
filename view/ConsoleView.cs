@@ -35,7 +35,7 @@ namespace view
             Console.WriteLine("\n\nWelcome to the boatclub register\n");
             Console.WriteLine("[1] Add a new member.");
             Console.WriteLine("[2] Search member by name.");
-            Console.WriteLine("[3] Search member by member-id to change or remove");
+            Console.WriteLine("[3] Search member by member-id to change, remove or handle boats.");
             Console.WriteLine("[4] Show compact list of all members.");
             Console.WriteLine("[5] Show verbose list of all members.");
             Console.WriteLine("[6] Quit application.\n");
@@ -195,6 +195,13 @@ namespace view
             Console.WriteLine("\nPlease enter your boat length in feet:");
             string length = System.Console.ReadLine();
             return length;
+        }
+
+        public string ShowBoatInfo(string boats)
+        {
+            System.Console.WriteLine(boats);
+            string boatNr = System.Console.ReadLine();
+            return boatNr;
         }
 
 

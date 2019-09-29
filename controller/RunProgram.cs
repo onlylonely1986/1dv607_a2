@@ -21,6 +21,7 @@ namespace controller
             {
                 string action = "new";
                 List<string> inputs = new List<string>();
+                // TODO egna metoder för varje input från anv
                 inputs = v.AskForMemberDetails(action);
                 m.RegistryMember(inputs);
             }
@@ -67,6 +68,16 @@ namespace controller
                         string type = v.AskForBoatType();
                         string length = v.AskForBoatLength();
                         m.RegistryBoat(type, length);
+                    }
+                    if(e3 == view.ConsoleView.Event.ChangeBoat)
+                    {
+                        string boats = m.GetBoatInfo();
+                        string pickBoat = v.ShowBoatInfo(boats);
+                        m.SetPickedBoat(pickBoat);
+                        
+                        // string  = v.AskForBoatToChange();
+                        // string length = v.AskForBoatLength();
+                        // m.RegistryBoat(type, length);
                     }
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)
