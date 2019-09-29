@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace model
 {
@@ -158,40 +159,21 @@ namespace model
             int id = Int32.Parse(searchNr);
             if(_pickedMember != null)
             {
-                if(_pickedMember.MemberId == id)
-                {
-                    Member deleteM = null;
-                    int index = 0;
-                    System.Console.WriteLine("member was found");
-                    foreach(Member m in Members)
-                    {
-                        if(m.MemberId == id)
-                        {
-                            deleteM = m;
-                            // System.Console.WriteLine("member was deleted successfully!");
-                            break;
-                        } else
-                        {
-                            System.Console.WriteLine("something went wrong");
-                        }
-                    }
-                    for (int i = 0; i < Members.Count; i++)
-                    {
-                        if (Members[i].MemberId == id)
-                        {
-                            // index = Members[i];
-                            System.Console.WriteLine(Members[i].FirstName);
-                        }
-                        
-                    }
-                    // TODO något sätt att radera en specifik medlem med utgångspunkt från id man sökt och hittat innan!
-                    string jsonData = JsonConvert.SerializeObject(Members);
+                System.Console.WriteLine("Member was found");
+                Member _pickedMember = Members.SingleOrDefault(x => x.MemberId == id);
+                Members.Remove(_pickedMember);
 
-                    using (StreamWriter sw = new StreamWriter("register.txt"))
-                    {
-                        sw.WriteLine(jsonData);
-                    }
+                // write updated memberregister to file
+                string jsonData = JsonConvert.SerializeObject(Members);
+                using (StreamWriter sw = new StreamWriter("register.txt"))
+                {
+                    sw.WriteLine(jsonData);
                 }
+                System.Console.WriteLine("The member is removed from register.");
+            }
+            else
+            {
+                System.Console.WriteLine("Something went wrong.");
             }
         }
 

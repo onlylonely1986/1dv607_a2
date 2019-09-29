@@ -36,7 +36,7 @@ namespace register
                 view.ConsoleView.Event e2 = v.ShowSearchMenu(focusName);
                 if (e2 == view.ConsoleView.Event.SearchWordGiven)
                 {
-                    word = v.AskForSearchWord();
+                    word = v.AskForSearchWord(focusName);
                     m.SearchByName(word);
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)
@@ -51,7 +51,7 @@ namespace register
                 view.ConsoleView.Event e2 = v.ShowSearchMenu(focusId);
                 if (e2 == view.ConsoleView.Event.SearchWordGiven)
                 {
-                    id = v.AskForSearchId();
+                    id = v.AskForSearchWord(focusId);
                     m.SearchById(id);
                     view.ConsoleView.Event e3 = v.ShowMemberActivities();
                     if(e3 == view.ConsoleView.Event.RemoveMember)
@@ -83,7 +83,7 @@ namespace register
     // lägga till medlem -> metod i medlemsregister                 -> Check
     // hantera/ändra medlemsinformation -> metod i medlemsregister  ->
     // visa medlems information -> metod i medlemsregister          -> Check
-    // ta bort medlem -> metod i medlemsregister                    ->
+    // ta bort medlem -> metod i medlemsregister                    -> Check 
 
 
     // visa lista på medlemmar compact list -> metod i listMembers  -> Check

@@ -45,11 +45,6 @@ namespace view
         {
             return System.Console.ReadLine() != "4";
         }
-        public void userMakesChoice()
-        {   
-            // System.Console.WriteLine(memberReg);
-            return;
-        }
 
         public Event GetEvent()
         {
@@ -164,18 +159,17 @@ namespace view
             return Event.None;   
         }
 
-        public string AskForSearchWord()
+        public string AskForSearchWord(string focus)
         {
-            Console.WriteLine("Write a name or a character in a name you want to find...\n");
-            string searchWord = System.Console.ReadLine();
-            return searchWord;
-        }
-
-        public string AskForSearchId()
-        {
-            Console.WriteLine("Write a nr of an id to find a member...\n");
-            string searchNr = System.Console.ReadLine();
-            return searchNr;
+            if (focus == "name")
+            {
+                Console.WriteLine("Write a name or a character in a name you want to find...\n");
+            } 
+            if (focus == "id")
+            {
+                Console.WriteLine("Write a nr of an id to find a member...\n");
+            }
+            return System.Console.ReadLine();
         }
     }
 }
