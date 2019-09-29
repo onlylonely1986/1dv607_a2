@@ -68,17 +68,14 @@ namespace model
         {
              if (Boats != null)
             {
-                foreach(Boat b in Boats)
-                {
-                    b.ToString();
-                }
-                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {foreach(Boat b in Boats) => b.ToString()}, Member since: {MemberSince}";
+                
+                string boats = String.Concat(Boats.Select(b=>b.ToString()));
+                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats {Boats.Count}: {boats}";
             } else
             {
                 string boats = "No boats added yet";
-                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {boats}, Member since: {MemberSince}";
+                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {boats}";
             }
-            
         }
 
         public string ToStringSmall()

@@ -52,12 +52,7 @@ namespace model
             mId++; 
             m.MemberId = mId;
             Members.Add(m);
-            string jsonData = JsonConvert.SerializeObject(Members);
-
-            using (StreamWriter sw = new StreamWriter("register.txt"))
-            {
-                sw.WriteLine(jsonData);
-            }
+            this.WriteToFile();
         }
 
         public void ReadAllMembersFromFile()
@@ -66,8 +61,6 @@ namespace model
             using (StreamReader sr = new StreamReader("register.txt")) 
             {
                 jsonFromFile = sr.ReadToEnd();
-                // System.Console.WriteLine(jsonFromFile);
-
                 Members = JsonConvert.DeserializeObject<List<Member>>(jsonFromFile);
             }
         }
@@ -146,11 +139,7 @@ namespace model
             _pickedMember.LastName = inputs[1];
             _pickedMember.PersNum = inputs[2];
     
-            string jsonData = JsonConvert.SerializeObject(Members);
-            using (StreamWriter sw = new StreamWriter("register.txt"))
-            {
-                sw.WriteLine(jsonData);
-            }
+            this.WriteToFile();
             System.Console.WriteLine("The members information is updated in the register.");
         }
 
@@ -163,12 +152,7 @@ namespace model
                 Member _pickedMember = Members.SingleOrDefault(x => x.MemberId == id);
                 Members.Remove(_pickedMember);
 
-                // write updated memberregister to file
-                string jsonData = JsonConvert.SerializeObject(Members);
-                using (StreamWriter sw = new StreamWriter("register.txt"))
-                {
-                    sw.WriteLine(jsonData);
-                }
+                this.WriteToFile();
                 System.Console.WriteLine("The member is removed from register.");
             }
             else
@@ -186,30 +170,35 @@ namespace model
             int l = Int32.Parse(length);
             Boat.BoatType t = Boat.BoatType.Other;
             System.Console.WriteLine($"Type: {type} Length: {l}");
-            System.Console.WriteLine(Boat.BoatType.Sailboat);
             if (type == "1")
             {
                 t = Boat.BoatType.Sailboat;
-            }
-            if (type == "2")
+            } else if (type == "2")
             {
                 t = Boat.BoatType.Motorsailer;
-            }
-            if (type == "3")
+            } else if (type == "3")
             {
                 t = Boat.BoatType.KayakorCanoe;
-            }
-            if (type == "4")
+            } else if (type == "4")
             {
                 t = Boat.BoatType.Other;
             }
             _boatRegister.RegistryBoat(_pickedMember, t, l);
+            this.WriteToFile();
+        }
+
+        private void WriteToFile()
+        {
+            string jsonData = JsonConvert.SerializeObject(Members);
+            using (StreamWriter sw = new StreamWriter("register.txt"))
+            {
+                sw.WriteLine(jsonData);
+            }
         }
 
         public MemberRegister()
         {
             this.ReadAllMembersFromFile();
-            
         }
     }
 }

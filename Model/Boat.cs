@@ -26,7 +26,7 @@ namespace model
 
         public override string ToString()
         {
-            return $"Boattype: {_boatType}, Length: {_lengthInFeet} feet. ";
+            return $"[ Boattype: {_boatType}, Length: {_lengthInFeet} feet. ]";
         }
     }
 }
