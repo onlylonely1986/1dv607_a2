@@ -20,10 +20,10 @@ namespace controller
             if (e == view.ConsoleView.Event.NewMember)
             {
                 string action = "new";
-                List<string> inputs = new List<string>();
-                // TODO egna metoder för varje input från anv
-                inputs = v.AskForMemberDetails(action);
-                m.RegistryMember(inputs);
+                string fName = v.AskForMemberDetailName(action);
+                string lName = v.AskForMemberDetailLastName();
+                string persNum = v.AskForMemberDetailNum();
+                m.RegistryMember(fName, lName, persNum);
             }
             if (e == view.ConsoleView.Event.SearchMemberName)
             {
@@ -56,9 +56,10 @@ namespace controller
                     if(e3 == view.ConsoleView.Event.ChangeMember)
                     {
                         string action = "change";
-                        List<string> inputs = new List<string>();
-                        inputs = v.AskForMemberDetails(action);
-                        m.ChangeMember(inputs);
+                        string fName = v.AskForMemberDetailName(action);
+                        string lName = v.AskForMemberDetailLastName();
+                        string persNum = v.AskForMemberDetailNum();
+                        m.ChangeMember(fName, lName, persNum);
                     }
 
                     if(e3 == view.ConsoleView.Event.RemoveMember)
@@ -83,26 +84,40 @@ namespace controller
                     if(e3 == view.ConsoleView.Event.ChangeBoat)
                     {
                         string boats = m.GetBoatInfo();
-                        string pickBoat = v.ShowBoatInfo(boats);
-                        m.SetPickedBoat(pickBoat);
-                        string type = v.AskForBoatType();
-                        string length = v.AskForBoatLength();
-                        m.ChangeBoat(type, length);
+                        if (boats == "Sorry you have not added any boats to this member yet.")
+                        {
+                            System.Console.WriteLine(boats);
+                            return false;
+                        } else
+                        {
+                            string pickBoat = v.ShowBoatInfo(boats);
+                            m.SetPickedBoat(pickBoat);
+                            string type = v.AskForBoatType();
+                            string length = v.AskForBoatLength();
+                            m.ChangeBoat(type, length);
+                        }
                     }
 
                     if(e3 == view.ConsoleView.Event.RemoveBoat)
                     {
                         string boats = m.GetBoatInfo();
-                        string pickBoat = v.ShowBoatInfo(boats);
-                        m.SetPickedBoat(pickBoat);
-                        thing = "boat";
-                        bool ok = v.AskForOkey(thing);
-                        if(ok == false)
+                        if (boats == "Sorry you have not added any boats to this member yet.")
                         {
-                            return false; 
+                            System.Console.WriteLine(boats);
+                            return false;
                         } else
                         {
-                            m.RemoveBoat();
+                            string pickBoat = v.ShowBoatInfo(boats);
+                            m.SetPickedBoat(pickBoat);
+                            thing = "boat";
+                            bool ok = v.AskForOkey(thing);
+                            if(ok == false)
+                            {
+                                return false; 
+                            } else
+                            {
+                                m.RemoveBoat();
+                            }
                         }
                     }
                 }

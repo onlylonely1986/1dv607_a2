@@ -19,10 +19,10 @@ namespace model
             get { return _firstName;}
             set
             {
-                // if (value.Length < 2 || value.Length > 20)
-                // {
-                //     throw new ArgumentOutOfRangeException();
-                // }
+                if (value.Length < 2 || value.Length > 20)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
                 _firstName = value;
             }
         }

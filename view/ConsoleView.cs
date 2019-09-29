@@ -28,8 +28,6 @@ namespace view
 
 		}
 
-        private List<string> _inputs = new List<string>();
-
         public void showConsole()
         {
             Console.WriteLine("\n\nWelcome to the boatclub register\n");
@@ -79,12 +77,8 @@ namespace view
 			return Event.None;
         }
 
-        public List<string> AskForMemberDetails(string action)
+        public string AskForMemberDetailName(string action)
         {
-            string input1 = "";
-            string input2 = "";
-            string input3 = "";
-
             if (action == "new")
             {
                 Console.WriteLine("Do you want to register a new member.");
@@ -93,24 +87,55 @@ namespace view
             {
                 Console.WriteLine("Do you want to change a members information.");
             }
- 
             System.Console.WriteLine("  ");
             Console.WriteLine("Please enter your first name.");
-            input1 = Console.ReadLine();
-
-            // TODO nån slags felhantering av användarens input
-            // Console.WriteLine("Your name must be longer than one character, try to enter your first name again.");
-            // input1 = Console.ReadLine();
-            _inputs.Add(input1);
-            Console.WriteLine("Please enter your last name.");
-            input2 = Console.ReadLine();
-            _inputs.Add(input2);
-            Console.WriteLine("Please enter your personal number.");
-            input3 = Console.ReadLine();
-            _inputs.Add(input3);
-            return _inputs;
+            string input = this.WrongHandelingNameInput();
+            return input;
+            
         }
 
+        public string AskForMemberDetailLastName()
+        {
+            System.Console.WriteLine("  ");
+            Console.WriteLine("Please enter your last name.");
+            string input = this.WrongHandelingNameInput();
+            return input; 
+        }
+
+        private string WrongHandelingNameInput()
+        {
+            string input = Console.ReadLine();
+            if (input.Length > 2 && input.Length < 20)
+            {
+                return input;   
+            } else
+            {
+                while(input.Length < 2 || input.Length > 20)
+                {
+                    Console.WriteLine("Please enter a name between 2 and 20 characters length.");
+                    input = Console.ReadLine();
+                }
+                return input;
+            }
+        }
+
+        public string AskForMemberDetailNum()
+        {
+            Console.WriteLine("Please enter your personal number.");
+            string input = Console.ReadLine();
+            if (input.Length == 11)
+            {
+                return input;   
+            } else
+            {
+                while(input.Length != 11)
+                {
+                    Console.WriteLine("Please enter a personal num with 10 numbers (this format: XXXXXX-XXXX).");
+                    input = Console.ReadLine();
+                }
+                return input;
+            }
+        }
 
         public Event ShowMemberActivities()
         {
@@ -194,7 +219,18 @@ namespace view
         {
             Console.WriteLine("\nPlease enter your boat length in feet:");
             string length = System.Console.ReadLine();
-            return length;
+            if (length.Length > 2 && length.Length < 100)
+            {
+                return length;   
+            } else
+            {
+                while(length.Length < 2 || length.Length > 100)
+                {
+                    Console.WriteLine("You have to a enter reasonable length on your boat.");
+                    length = Console.ReadLine();
+                }
+                return length;
+            }
         }
 
         public string ShowBoatInfo(string boats)

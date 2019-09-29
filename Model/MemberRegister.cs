@@ -38,13 +38,13 @@ namespace model
             }
         }
 
-        public void RegistryMember(List<string> inputs)
+        public void RegistryMember(string fName, string lName, string persNum)
         {
-            string firstName = inputs[0];
-            string lastName = inputs[1];
-            string persNum = inputs[2];
+            // string firstName = inputs[0];
+            // string lastName = inputs[1];
+            // string persNum = inputs[2];
 
-            Member  m = new Member(firstName, lastName, persNum);
+            Member  m = new Member(fName, lName, persNum);
             
             int mId = 0;
             if (Members.Count != 0)
@@ -138,11 +138,11 @@ namespace model
             }
         }
 
-        public void ChangeMember(List<string> inputs)
+        public void ChangeMember(string fName, string lName, string persNum)
         {
-            _pickedMember.FirstName = inputs[0];
-            _pickedMember.LastName = inputs[1];
-            _pickedMember.PersNum = inputs[2];
+            _pickedMember.FirstName = fName;
+            _pickedMember.LastName = lName;
+            _pickedMember.PersNum = persNum;
     
             this.WriteToFile();
             System.Console.WriteLine("The members information is updated in the register.");
@@ -189,11 +189,12 @@ namespace model
                 string boats = String.Concat(_pickedMember.Boats.Select(b=> $"[{ind++}]: {b.ToString()}\n"));
                 return boats;
             } 
-            return "";
+            return "Sorry you have not added any boats to this member yet.";
         }
 
         public string SetPickedBoat(string pickedBoat)
         {
+
             int b = Int32.Parse(pickedBoat);
             b--;
             for (int i = 0; i < _pickedMember.Boats.Count; i++)
@@ -204,7 +205,14 @@ namespace model
                     _indexPickedBoat = i;
                 }
             }
-            return _pickedBoat.ToString();
+            if (_pickedBoat != null)
+            {
+                return _pickedBoat.ToString();
+            } else
+            {
+                return "You have to add a boat first.";
+            }
+            
         }
 
         public void ChangeBoat(string type, string length)
