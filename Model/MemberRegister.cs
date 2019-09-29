@@ -170,21 +170,9 @@ namespace model
                 System.Console.WriteLine(_pickedMember.ToStringSmall());
             }
             int l = Int32.Parse(length);
-            Boat.BoatType t = Boat.BoatType.Other;
-            System.Console.WriteLine($"Type: {type} Length: {l}");
-            if (type == "1")
-            {
-                t = Boat.BoatType.Sailboat;
-            } else if (type == "2")
-            {
-                t = Boat.BoatType.Motorsailer;
-            } else if (type == "3")
-            {
-                t = Boat.BoatType.KayakorCanoe;
-            } else if (type == "4")
-            {
-                t = Boat.BoatType.Other;
-            }
+
+            Boat.BoatType t = _boatRegister.PickBoatType(type);
+            
             _boatRegister.RegistryBoat(_pickedMember, t, l);
             this.WriteToFile();
         }
@@ -209,12 +197,19 @@ namespace model
             {
                 if(i == b)
                 {
-                    System.Console.WriteLine("båten hittades");
                     _pickedBoat = _pickedMember.Boats[i];
                 }
             }
             
             return "_pickedBoat.ToString()";
+        }
+
+        public void ChangeBoat(string type, string length)
+        {
+            int l = Int32.Parse(length);
+            Boat.BoatType t = _boatRegister.PickBoatType(type);
+            _boatRegister.ChangeBoat(_pickedBoat, t, l);
+            this.WriteToFile();
         }
 
         private void WriteToFile()

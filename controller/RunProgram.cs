@@ -74,10 +74,10 @@ namespace controller
                         string boats = m.GetBoatInfo();
                         string pickBoat = v.ShowBoatInfo(boats);
                         m.SetPickedBoat(pickBoat);
-                        
                         // string  = v.AskForBoatToChange();
-                        // string length = v.AskForBoatLength();
-                        // m.RegistryBoat(type, length);
+                        string type = v.AskForBoatType();
+                        string length = v.AskForBoatLength();
+                        m.ChangeBoat(type, length);
                     }
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)

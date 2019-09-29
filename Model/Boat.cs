@@ -18,12 +18,21 @@ namespace model
 
         private int _lengthInFeet;
 
-        public int BoatId
+        public BoatType Type
         {
-            get { return _boatId;}
+            get { return _boatType;}
             set
             {
-                _boatId = value;
+                _boatType = value;
+            }
+        }
+
+        public int LengthInFeet
+        {
+            get { return _lengthInFeet;}
+            set
+            {
+                _lengthInFeet = value;
             }
         }
         public Boat(BoatType boatType, int lengthInFeet)
