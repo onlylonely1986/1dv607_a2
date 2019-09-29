@@ -49,10 +49,12 @@ namespace model
             int mId = 0;
             if (Members.Count != 0)
             {
-                mId = Members.Count;
+                int nrOfM = Members.Count;
+                nrOfM--;
+                mId = Members[nrOfM].MemberId;
             }
 
-            mId++; 
+            mId++;
             m.MemberId = mId;
             Members.Add(m);
             this.WriteToFile();

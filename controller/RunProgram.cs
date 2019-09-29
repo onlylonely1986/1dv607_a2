@@ -46,6 +46,7 @@ namespace controller
                 // TODO egen metod för dessa alternativ
                 string id;
                 string focusId = "id";
+                string thing = "member";
                 view.ConsoleView.Event e2 = v.ShowSearchMenu(focusId);
                 if (e2 == view.ConsoleView.Event.SearchWordGiven)
                 {
@@ -59,10 +60,19 @@ namespace controller
                         inputs = v.AskForMemberDetails(action);
                         m.ChangeMember(inputs);
                     }
+
                     if(e3 == view.ConsoleView.Event.RemoveMember)
                     {
-                        m.RemoveMember(id);
+                        bool ok = v.AskForOkey(thing);
+                        if(ok == false)
+                        {
+                            return false; 
+                        } else
+                        {
+                            m.RemoveMember(id);
+                        }
                     }
+
                     if(e3 == view.ConsoleView.Event.AddBoat)
                     {
                         string type = v.AskForBoatType();
@@ -82,10 +92,10 @@ namespace controller
 
                     if(e3 == view.ConsoleView.Event.RemoveBoat)
                     {
-                        string thing = "boat";
                         string boats = m.GetBoatInfo();
                         string pickBoat = v.ShowBoatInfo(boats);
                         m.SetPickedBoat(pickBoat);
+                        thing = "boat";
                         bool ok = v.AskForOkey(thing);
                         if(ok == false)
                         {

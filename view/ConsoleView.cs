@@ -211,7 +211,6 @@ namespace view
             System.Console.WriteLine("Press enter if you are sure to remove, else press anything else.");
             ConsoleKeyInfo info = Console.ReadKey();
             if (info.Key != ConsoleKey.Enter)
-            // if (System.Console.ReadKey().Key != ConsoleKey.Enter)
             {
                 System.Console.WriteLine("Ups, let's go back...");
                 return ok;
