@@ -14,6 +14,8 @@ namespace model
 
         private Member _pickedMember = null;
 
+        private BoatRegister _boatRegister = new BoatRegister();
+
         // TODO justera detta senare!
         // ej korrekt inkapslad
         public Member Member
@@ -175,9 +177,39 @@ namespace model
             }
         }
 
+        public void RegistryBoat(string type, string length)
+        {
+            if(_pickedMember != null)
+            {
+                System.Console.WriteLine(_pickedMember.ToStringSmall());
+            }
+            int l = Int32.Parse(length);
+            Boat.BoatType t = Boat.BoatType.Other;
+            System.Console.WriteLine($"Type: {type} Length: {l}");
+            System.Console.WriteLine(Boat.BoatType.Sailboat);
+            if (type == "1")
+            {
+                t = Boat.BoatType.Sailboat;
+            }
+            if (type == "2")
+            {
+                t = Boat.BoatType.Motorsailer;
+            }
+            if (type == "3")
+            {
+                t = Boat.BoatType.KayakorCanoe;
+            }
+            if (type == "4")
+            {
+                t = Boat.BoatType.Other;
+            }
+            _boatRegister.RegistryBoat(_pickedMember, t, l);
+        }
+
         public MemberRegister()
         {
             this.ReadAllMembersFromFile();
+            
         }
     }
 }

@@ -9,7 +9,7 @@ namespace model
     {
         private int _memberId;
 
-        private List<Boat> _boats;
+        private List<Boat> _boats = new List<Boat>();
 
         private DateTime _memberSince = DateTime.Now;
 
@@ -61,14 +61,18 @@ namespace model
 
         public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
         {
-  
+            Boats = _boats;
         }
 
         public override string ToString()
         {
              if (Boats != null)
             {
-                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {Boats.ToString()}, Member since: {MemberSince}";
+                foreach(Boat b in Boats)
+                {
+                    b.ToString();
+                }
+                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {foreach(Boat b in Boats) => b.ToString()}, Member since: {MemberSince}";
             } else
             {
                 string boats = "No boats added yet";

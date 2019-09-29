@@ -179,13 +179,24 @@ namespace view
             return System.Console.ReadLine();
         }
 
-        public string AskForDetailToChange()
+        public string AskForBoatType()
         {
-            Console.WriteLine("\n[1] Change first name.");
-            Console.WriteLine("[2] Change last name.");
-            Console.WriteLine("[3] Change personal number.");
-            string d = System.Console.ReadLine();
-            return d;
+            Console.WriteLine("\nPick your boattype, it must be one of these (pick by number):");
+            Console.WriteLine($"[1] {model.Boat.BoatType.Sailboat}");
+            Console.WriteLine($"[2] {model.Boat.BoatType.Motorsailer}");
+            Console.WriteLine($"[3] {model.Boat.BoatType.KayakorCanoe}");          
+            Console.WriteLine($"[4] {model.Boat.BoatType.Other}");
+            string type = System.Console.ReadLine();
+            return type;
         }
+
+        public string AskForBoatLength()
+        {
+            Console.WriteLine("\nPlease enter your boat length in feet:");
+            string length = System.Console.ReadLine();
+            return length;
+        }
+
+
     }
 }

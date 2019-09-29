@@ -23,5 +23,10 @@ namespace model
             _boatType = boatType;
             _lengthInFeet = lengthInFeet;
         }
+
+        public override string ToString()
+        {
+            return $"Boattype: {_boatType}, Length: {_lengthInFeet} feet. ";
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace controller
     {
         public bool runProgram()
         {
-           model.MemberRegister m = new model.MemberRegister();
+            model.MemberRegister m = new model.MemberRegister();
             view.ConsoleView v = new view.ConsoleView();
             view.ConsoleView.Event e;
             
@@ -61,6 +61,12 @@ namespace controller
                     if(e3 == view.ConsoleView.Event.RemoveMember)
                     {
                         m.RemoveMember(id);
+                    }
+                    if(e3 == view.ConsoleView.Event.AddBoat)
+                    {
+                        string type = v.AskForBoatType();
+                        string length = v.AskForBoatLength();
+                        m.RegistryBoat(type, length);
                     }
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)
