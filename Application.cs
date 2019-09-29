@@ -13,8 +13,6 @@ namespace register
         }
     }
 }
-
-
     // requirements vad ska user kunna göra/anropa?
 
     // menyn ska fortsätta rulla till anv väljer quit

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
 
 namespace model
 {
@@ -18,17 +14,14 @@ namespace model
 			Other
 		}
 
-        private int _boatId;
-
         private BoatType _boatType;
 
         private int _lengthInFeet;
 
-        private int _berthId;
-
-        public Boat()
+        public Boat(BoatType boatType, int lengthInFeet)
         {
-
+            _boatType = boatType;
+            _lengthInFeet = lengthInFeet;
         }
     }
 }
