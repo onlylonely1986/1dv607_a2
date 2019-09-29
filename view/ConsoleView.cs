@@ -204,6 +204,24 @@ namespace view
             return boatNr;
         }
 
-
+        public bool AskForOkey(string thing)
+        {
+            bool ok = false;
+            System.Console.WriteLine($"Are you sure you want to remove the {thing}?");
+            System.Console.WriteLine("Press enter if you are sure to remove, else press anything else.");
+            ConsoleKeyInfo info = Console.ReadKey();
+            if (info.Key != ConsoleKey.Enter)
+            // if (System.Console.ReadKey().Key != ConsoleKey.Enter)
+            {
+                System.Console.WriteLine("Ups, let's go back...");
+                return ok;
+            }
+            else
+            {
+                System.Console.WriteLine("Removing...");
+                ok = true;
+                return ok;
+            }
+        }
     }
 }

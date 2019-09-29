@@ -13,7 +13,7 @@ namespace model
 			KayakorCanoe,
 			Other
 		}
-        private int _boatId;
+
         private BoatType _boatType;
 
         private int _lengthInFeet;

@@ -34,4 +34,4 @@ namespace register
 
     // lägga till en båt för en medlem -> i båtregister             -> Check
     // ta bort en båt                                               ->
-    // ändra på båtinfo                                             -> 
+    // ändra på båtinfo                                             -> Check

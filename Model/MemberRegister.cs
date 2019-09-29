@@ -8,6 +8,7 @@ namespace model
 {
     class MemberRegister
     {
+        private int _indexPickedBoat;
         private List<Member> _members = new List<Member>();
         
         private Member _member;
@@ -198,10 +199,10 @@ namespace model
                 if(i == b)
                 {
                     _pickedBoat = _pickedMember.Boats[i];
+                    _indexPickedBoat = i;
                 }
             }
-            
-            return "_pickedBoat.ToString()";
+            return _pickedBoat.ToString();
         }
 
         public void ChangeBoat(string type, string length)
@@ -210,6 +211,18 @@ namespace model
             Boat.BoatType t = _boatRegister.PickBoatType(type);
             _boatRegister.ChangeBoat(_pickedBoat, t, l);
             this.WriteToFile();
+        }
+
+        public void RemoveBoat()
+        {
+            if (_pickedBoat != null)
+            {
+                // Members.Remove(_pickedBoat);
+                _pickedMember.Boats.RemoveAt(_indexPickedBoat);
+                System.Console.WriteLine("The boat was successfully removed.");
+                _pickedBoat = null;
+                this.WriteToFile();
+            }
         }
 
         private void WriteToFile()

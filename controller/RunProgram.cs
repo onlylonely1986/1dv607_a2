@@ -69,15 +69,31 @@ namespace controller
                         string length = v.AskForBoatLength();
                         m.RegistryBoat(type, length);
                     }
+
                     if(e3 == view.ConsoleView.Event.ChangeBoat)
                     {
                         string boats = m.GetBoatInfo();
                         string pickBoat = v.ShowBoatInfo(boats);
                         m.SetPickedBoat(pickBoat);
-                        // string  = v.AskForBoatToChange();
                         string type = v.AskForBoatType();
                         string length = v.AskForBoatLength();
                         m.ChangeBoat(type, length);
+                    }
+
+                    if(e3 == view.ConsoleView.Event.RemoveBoat)
+                    {
+                        string thing = "boat";
+                        string boats = m.GetBoatInfo();
+                        string pickBoat = v.ShowBoatInfo(boats);
+                        m.SetPickedBoat(pickBoat);
+                        bool ok = v.AskForOkey(thing);
+                        if(ok == false)
+                        {
+                            return false; 
+                        } else
+                        {
+                            m.RemoveBoat();
+                        }
                     }
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)
