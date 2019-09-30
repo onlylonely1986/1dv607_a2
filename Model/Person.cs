@@ -22,8 +22,10 @@ namespace model
                 if (value.Length < 2 || value.Length > 20)
                 {
                     throw new ArgumentOutOfRangeException();
-                }
-                _firstName = value;
+                } else 
+                {
+                    _firstName = value;
+                }   
             }
         }
 
@@ -32,11 +34,13 @@ namespace model
             get { return _lastName;}
             set
             {
-                // if (value.Length < 2 || value.Length > 20)
-                // {
-                //     throw new ArgumentOutOfRangeException();
-                // }
-                _lastName = value;
+                if (value.Length < 2 || value.Length > 20)
+                {
+                    throw new ArgumentOutOfRangeException();
+                } else 
+                {
+                    _lastName = value;
+                }
             }
         }
 

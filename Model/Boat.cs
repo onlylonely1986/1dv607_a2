@@ -1,3 +1,4 @@
+using System;
 
 namespace model
 {
@@ -32,12 +33,35 @@ namespace model
             get { return _lengthInFeet;}
             set
             {
-                _lengthInFeet = value;
+                if(value > 2 && value < 100)
+                {
+                    _lengthInFeet = value;
+                }
+                else throw new ArgumentOutOfRangeException();
             }
         }
-        public Boat(BoatType boatType, int lengthInFeet)
+        public BoatType PickBoatType(string input)
         {
-            _boatType = boatType;
+            int typeNr = Int32.Parse(input);
+            Boat.BoatType t = Boat.BoatType.Other;
+            if (typeNr == 1)
+            {
+                t = Boat.BoatType.Sailboat;
+            } else if (typeNr == 2)
+            {
+                t = Boat.BoatType.Motorsailer;
+            } else if (typeNr == 3)
+            {
+                t = Boat.BoatType.KayakorCanoe;
+            } else if (typeNr == 4)
+            {
+                t = Boat.BoatType.Other;
+            }
+            return t;
+        }
+
+        public Boat(int lengthInFeet)
+        {
             _lengthInFeet = lengthInFeet;
         }
 

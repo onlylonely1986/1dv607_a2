@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 
 namespace model
 {
@@ -10,8 +9,6 @@ namespace model
         private int _memberId;
 
         private List<Boat> _boats = new List<Boat>();
-
-        private DateTime _memberSince = DateTime.Now;
 
         public int MemberId
         {
@@ -25,50 +22,51 @@ namespace model
         public List<Boat> Boats
         {
             get { return _boats;}
-            set
-            {
-                _boats = value;
-            }
         }
 
-        public DateTime MemberSince
+
+        public void AddBoat(string t, int l)
         {
-            get { return _memberSince;}
-            set
+            Boat b = new Boat(l);
+            Boat.BoatType type = b.PickBoatType(t);
+            b.Type = type;
+            if (_boats.Count < 100)
             {
-                _memberSince = value;
+                _boats.Add(b);
+            } else
+            {
+                throw new ArgumentOutOfRangeException("You have to many boots in your harbor.");
             }
         }
-        // public int getPersonalNum()
-        // {
 
-        // }
+        public void ChangeBoat(Boat b, string t, int l)
+        {
+            Boat.BoatType type = b.PickBoatType(t);
+            b.Type = type;
+            b.LengthInFeet = l;
+            
+        }
 
-        // public int getMemberId()
-        // {
+        public void RemoveBoat(Boat b)
+        {
+            _boats.Remove(b);   
+        }
 
-        // }
-
-        // public List<Boat> getBoats()
-        // {
-
-        // }
-
-        // public int getMemberSince()
-        // {
-
-        // }
+        public string GetBoatInfo()
+        {
+            int ind = 1;
+            string boats = String.Concat(_boats.Select(b=> $"[{ind++}]: {b.ToString()}\n"));
+            return boats;
+        }
 
         public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
         {
-            Boats = _boats;
         }
 
         public override string ToString()
         {
-             if (Boats != null)
+             if (_boats != null)
             {
-                
                 string boats = String.Concat(Boats.Select(b=>b.ToString()));
                 return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats {Boats.Count}: {boats}";
             } else
@@ -81,9 +79,9 @@ namespace model
         public string ToStringSmall()
         {
             int b = 0;
-            if (Boats != null)
+            if (_boats != null)
             {
-                b = Boats.Count;
+                b = _boats.Count;
             }
             return $"Id: {MemberId}, Name: {FirstName} {LastName}, Boats: {b}";
         }

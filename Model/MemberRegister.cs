@@ -15,7 +15,7 @@ namespace model
 
         private Boat _pickedBoat = null;
 
-        private BoatRegister _boatRegister;
+        // private BoatRegister _boatRegister;
 
         private TextFileSave _saveData;
 
@@ -143,28 +143,21 @@ namespace model
             }
         }
 
-        public void RegistryBoat(string type, string length)
+        public string RegistryBoat(string type, string length)
         {
-            if(_pickedMember != null)
-            {
-                System.Console.WriteLine(_pickedMember.ToStringSmall());
-            }
             int l = Int32.Parse(length);
-
-            Boat.BoatType t = _boatRegister.PickBoatType(type);
-            
-            _boatRegister.RegistryBoat(_pickedMember, t, l);
+            // Boat.BoatType t = 
+            //_boatRegister.PickBoatType(type);
+            _pickedMember.AddBoat(type, l);
             _saveData.WriteToFile(Members);
+            return "The boat was successfully registred.";
         }
 
         public string GetBoatInfo()
         {
             if(_pickedMember != null)
             {
-                System.Console.WriteLine($"Pick the boat to change:");
-                int ind = 1;
-                string boats = String.Concat(_pickedMember.Boats.Select(b=> $"[{ind++}]: {b.ToString()}\n"));
-                return boats;
+                return _pickedMember.GetBoatInfo();
             } 
             return "Sorry you have not added any boats to this member yet.";
         }
@@ -189,35 +182,38 @@ namespace model
             {
                 return "You have to add a boat first.";
             }
-            
         }
 
-        public void ChangeBoat(string type, string length)
-        {
-            int l = Int32.Parse(length);
-            Boat.BoatType t = _boatRegister.PickBoatType(type);
-            _boatRegister.ChangeBoat(_pickedBoat, t, l);
-            _saveData.WriteToFile(Members);
-        }
-
-        public void RemoveBoat()
+        public string ChangeBoat(string type, string length)
         {
             if (_pickedBoat != null)
             {
-                // Members.Remove(_pickedBoat);
-                _pickedMember.Boats.RemoveAt(_indexPickedBoat);
-                System.Console.WriteLine("The boat was successfully removed.");
+                int l = Int32.Parse(length);
+                // Boat.BoatType t = _boatRegister.PickBoatType(type);
+                _pickedMember.ChangeBoat(_pickedBoat, type, l);
+                _saveData.WriteToFile(Members);
+                return  "The boat was updated.";
+            } 
+            return "";
+        }
+
+        public string RemoveBoat()
+        {
+            if (_pickedBoat != null)
+            {
+                _pickedMember.RemoveBoat(_pickedBoat);
                 _pickedBoat = null;
                 _saveData.WriteToFile(Members);
+                return  "The boat was successfully removed.";
             }
+            return "";
         }
 
         public MemberRegister()
         {
-            
             _saveData = new TextFileSave();
             _members = _saveData.ReadAllMembersFromFile();
-            _boatRegister =  new BoatRegister();
+            // _boatRegister =  new BoatRegister();
         }
     }
 }

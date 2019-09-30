@@ -78,11 +78,14 @@ namespace controller
                     {
                         string type = v.AskForBoatType();
                         string length = v.AskForBoatLength();
-                        m.RegistryBoat(type, length);
+                        string respons = m.RegistryBoat(type, length);
+                        System.Console.WriteLine(respons);
                     }
 
                     if(e3 == view.ConsoleView.Event.ChangeBoat)
                     {
+                        string handle = "change";
+                        v.AskForBoatToPickText(handle);
                         string boats = m.GetBoatInfo();
                         if (boats == "Sorry you have not added any boats to this member yet.")
                         {
@@ -94,12 +97,15 @@ namespace controller
                             m.SetPickedBoat(pickBoat);
                             string type = v.AskForBoatType();
                             string length = v.AskForBoatLength();
-                            m.ChangeBoat(type, length);
+                            string respons = m.ChangeBoat(type, length);
+                            System.Console.WriteLine(respons);
                         }
                     }
 
                     if(e3 == view.ConsoleView.Event.RemoveBoat)
                     {
+                        string handle = "remove";
+                        v.AskForBoatToPickText(handle);
                         string boats = m.GetBoatInfo();
                         if (boats == "Sorry you have not added any boats to this member yet.")
                         {
@@ -116,7 +122,9 @@ namespace controller
                                 return false; 
                             } else
                             {
-                                m.RemoveBoat();
+                                string respons =  m.RemoveBoat();
+                                System.Console.WriteLine(respons);
+                                return true;
                             }
                         }
                     }
@@ -124,7 +132,7 @@ namespace controller
                 if (e2 == view.ConsoleView.Event.GoBack)
                 {
                     return false;
-                }
+                }   
             }
             if (e == view.ConsoleView.Event.CompactList)
             {
@@ -136,5 +144,6 @@ namespace controller
             }
             return true;
         }
-    }
+    }    
 }
+

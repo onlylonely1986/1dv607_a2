@@ -233,6 +233,11 @@ namespace view
             }
         }
 
+        public void AskForBoatToPickText(string handle)
+        {
+            System.Console.WriteLine($"Pick the boat to {handle}:");
+        }
+
         public string ShowBoatInfo(string boats)
         {
             System.Console.WriteLine(boats);
