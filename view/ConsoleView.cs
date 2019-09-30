@@ -263,5 +263,10 @@ namespace view
                 return ok;
             }
         }
+
+        public void ShowMessage(string message)
+        {
+            System.Console.WriteLine(message);
+        }
     }
 }

@@ -5,9 +5,8 @@ namespace register
     {
         static void Main(string[] args)
         {
-            controller.RunProgram run = new controller.RunProgram();
-            run.runProgram();
-
+            controller.Controller c = new controller.Controller();
+            c.RunProgram();
         }
     }
 }

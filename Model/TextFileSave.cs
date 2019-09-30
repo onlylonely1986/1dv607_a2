@@ -10,10 +10,11 @@ namespace model
      */
     class TextFileSave
     {
-        public List<Member> ReadAllMembersFromFile()
-        {   
+        private string _fileName = "register.txt";
+        public List<Member> ReadDataFromFile()
+        {
             string jsonFromFile;
-            using (StreamReader sr = new StreamReader("register.txt")) 
+            using (StreamReader sr = new StreamReader(_fileName)) 
             {
                 jsonFromFile = sr.ReadToEnd();
                 List<Member> members = new List<Member>();
@@ -25,9 +26,9 @@ namespace model
         public void WriteToFile(List<Member> members)
         {
             string jsonData = JsonConvert.SerializeObject(members);
-            using (StreamWriter sw = new StreamWriter("register.txt"))
+            using (StreamWriter sw = new StreamWriter(_fileName))
             {
-                sw.WriteLine(jsonData);
+                 sw.WriteLine(jsonData);
             }
         }
     }

@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 using System.Linq;
 
 namespace model
@@ -14,8 +12,6 @@ namespace model
         private Member _pickedMember = null;
 
         private Boat _pickedBoat = null;
-
-        // private BoatRegister _boatRegister;
 
         private TextFileSave _saveData;
 
@@ -189,7 +185,6 @@ namespace model
             if (_pickedBoat != null)
             {
                 int l = Int32.Parse(length);
-                // Boat.BoatType t = _boatRegister.PickBoatType(type);
                 _pickedMember.ChangeBoat(_pickedBoat, type, l);
                 _saveData.WriteToFile(Members);
                 return  "The boat was updated.";
@@ -212,8 +207,7 @@ namespace model
         public MemberRegister()
         {
             _saveData = new TextFileSave();
-            _members = _saveData.ReadAllMembersFromFile();
-            // _boatRegister =  new BoatRegister();
+            _members = _saveData.ReadDataFromFile();
         }
     }
 }

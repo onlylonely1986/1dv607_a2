@@ -2,17 +2,16 @@ using System.Collections.Generic;
 
 namespace controller 
 {
-
-    public class RunProgram
+    public class Controller
     {
-        public bool runProgram()
+        public bool RunProgram()
         {
             model.MemberRegister m = new model.MemberRegister();
             view.ConsoleView v = new view.ConsoleView();
             view.ConsoleView.Event e;
             
             v.showConsole();
-            e = v.GetEvent();             
+            e = v.GetEvent();            
             if (e == view.ConsoleView.Event.Quit)
             {
                 return false;
@@ -43,7 +42,6 @@ namespace controller
             }
             if (e == view.ConsoleView.Event.SearchMemberId)
             {
-                // TODO egen metod för dessa alternativ
                 string id;
                 string focusId = "id";
                 string thing = "member";
@@ -79,7 +77,7 @@ namespace controller
                         string type = v.AskForBoatType();
                         string length = v.AskForBoatLength();
                         string respons = m.RegistryBoat(type, length);
-                        System.Console.WriteLine(respons);
+                        v.ShowMessage(respons);
                     }
 
                     if(e3 == view.ConsoleView.Event.ChangeBoat)
@@ -98,7 +96,7 @@ namespace controller
                             string type = v.AskForBoatType();
                             string length = v.AskForBoatLength();
                             string respons = m.ChangeBoat(type, length);
-                            System.Console.WriteLine(respons);
+                            v.ShowMessage(respons);
                         }
                     }
 
@@ -109,7 +107,7 @@ namespace controller
                         string boats = m.GetBoatInfo();
                         if (boats == "Sorry you have not added any boats to this member yet.")
                         {
-                            System.Console.WriteLine(boats);
+                            v.ShowMessage(boats);
                             return false;
                         } else
                         {
@@ -123,7 +121,7 @@ namespace controller
                             } else
                             {
                                 string respons =  m.RemoveBoat();
-                                System.Console.WriteLine(respons);
+                                v.ShowMessage(respons);
                                 return true;
                             }
                         }
@@ -146,4 +144,3 @@ namespace controller
         }
     }    
 }
-
