@@ -10,25 +10,14 @@ namespace model
     {
         private int _indexPickedBoat;
         private List<Member> _members = new List<Member>();
-        
-        private Member _member;
 
         private Member _pickedMember = null;
 
         private Boat _pickedBoat = null;
 
-        private BoatRegister _boatRegister = new BoatRegister();
+        private BoatRegister _boatRegister;
 
-        // TODO justera detta senare!
-        // ej korrekt inkapslad
-        public Member Member
-        {
-            get {return _member;}
-            set {
-                _member = value;
-            }
-
-        }
+        private TextFileSave _saveData;
 
         public List<Member> Members
         {
@@ -40,10 +29,6 @@ namespace model
 
         public void RegistryMember(string fName, string lName, string persNum)
         {
-            // string firstName = inputs[0];
-            // string lastName = inputs[1];
-            // string persNum = inputs[2];
-
             Member  m = new Member(fName, lName, persNum);
             
             int mId = 0;
@@ -57,18 +42,10 @@ namespace model
             mId++;
             m.MemberId = mId;
             Members.Add(m);
-            this.WriteToFile();
+            _saveData.WriteToFile(Members);
         }
 
-        public void ReadAllMembersFromFile()
-        {   
-            string jsonFromFile;
-            using (StreamReader sr = new StreamReader("register.txt")) 
-            {
-                jsonFromFile = sr.ReadToEnd();
-                Members = JsonConvert.DeserializeObject<List<Member>>(jsonFromFile);
-            }
-        }
+        
 
         public void PrintAllMembersCompact()
         {            
@@ -144,7 +121,7 @@ namespace model
             _pickedMember.LastName = lName;
             _pickedMember.PersNum = persNum;
     
-            this.WriteToFile();
+            _saveData.WriteToFile(Members);
             System.Console.WriteLine("The members information is updated in the register.");
         }
 
@@ -157,7 +134,7 @@ namespace model
                 Member _pickedMember = Members.SingleOrDefault(x => x.MemberId == id);
                 Members.Remove(_pickedMember);
 
-                this.WriteToFile();
+                _saveData.WriteToFile(Members);
                 System.Console.WriteLine("The member is removed from register.");
             }
             else
@@ -177,7 +154,7 @@ namespace model
             Boat.BoatType t = _boatRegister.PickBoatType(type);
             
             _boatRegister.RegistryBoat(_pickedMember, t, l);
-            this.WriteToFile();
+            _saveData.WriteToFile(Members);
         }
 
         public string GetBoatInfo()
@@ -220,7 +197,7 @@ namespace model
             int l = Int32.Parse(length);
             Boat.BoatType t = _boatRegister.PickBoatType(type);
             _boatRegister.ChangeBoat(_pickedBoat, t, l);
-            this.WriteToFile();
+            _saveData.WriteToFile(Members);
         }
 
         public void RemoveBoat()
@@ -231,22 +208,16 @@ namespace model
                 _pickedMember.Boats.RemoveAt(_indexPickedBoat);
                 System.Console.WriteLine("The boat was successfully removed.");
                 _pickedBoat = null;
-                this.WriteToFile();
-            }
-        }
-
-        private void WriteToFile()
-        {
-            string jsonData = JsonConvert.SerializeObject(Members);
-            using (StreamWriter sw = new StreamWriter("register.txt"))
-            {
-                sw.WriteLine(jsonData);
+                _saveData.WriteToFile(Members);
             }
         }
 
         public MemberRegister()
         {
-            this.ReadAllMembersFromFile();
+            
+            _saveData = new TextFileSave();
+            _members = _saveData.ReadAllMembersFromFile();
+            _boatRegister =  new BoatRegister();
         }
     }
 }
