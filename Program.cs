@@ -12,8 +12,12 @@ namespace register
 }
     // TODO
     // Fel att lösa
+
     // menyn ska fortsätta rulla till anv väljer quit               ->
     // backa ett steg i menyn funkar ej                             ->
+    // båttyp visas ej i exe-filen                                  ->
+    // personnr är fel typ                                          ->
+
     // båtarna får alltid samma värden (sailboat, 0) ?              -> Check
     // felhantering av input från användaren                        -> Check
     // inkapsling av vissa data                                     ->

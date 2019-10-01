@@ -28,7 +28,7 @@ namespace view
 
 		}
 
-        public void showConsole()
+        public void ShowConsole()
         {
             Console.WriteLine("\n\nWelcome to the boatclub register\n");
             Console.WriteLine("[1] Add a new member.");

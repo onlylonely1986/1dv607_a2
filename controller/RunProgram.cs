@@ -10,7 +10,7 @@ namespace controller
             view.ConsoleView v = new view.ConsoleView();
             view.ConsoleView.Event e;
             
-            v.showConsole();
+            v.ShowConsole();
             e = v.GetEvent();            
             if (e == view.ConsoleView.Event.Quit)
             {
