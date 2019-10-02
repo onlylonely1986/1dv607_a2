@@ -159,16 +159,23 @@ namespace view
         {
             Console.WriteLine($"\n\n[1] Search for members by {focus}.");
             Console.WriteLine("[2] Go Back To Start Menu.\n");
-            int i = Convert.ToInt32(Console.ReadLine());
-            if (i == 1) {
-                System.Console.WriteLine("Search here:\n");
-				return Event.SearchWordGiven;
-			}
-            if (i == 2) {
-				return Event.GoBack;
-			}
-
-            return Event.None;   
+            string s = Console.ReadLine();
+            try
+            {
+                int i = Convert.ToInt32(s);
+                if (i == 1)
+                {
+                    System.Console.WriteLine("Search here:\n");
+                    return Event.SearchWordGiven;
+                } else
+                {
+                    return Event.GoBack;
+                }
+            } 
+            catch
+            {
+                throw new FormatException("Wrong input type");
+            }            
         }
 
         public string AskForSearchWord(string focus)
