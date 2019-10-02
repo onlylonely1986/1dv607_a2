@@ -4,6 +4,11 @@ namespace controller
 {
     public class Controller
     {
+
+        private string _action;
+
+        private string _result;
+
         public bool RunProgram()
         {
             model.MemberRegister m = new model.MemberRegister();
@@ -43,8 +48,8 @@ namespace controller
 
         private void EventNewMember(model.MemberRegister m, view.ConsoleView v)
         {
-            string action = "new";
-            string fName = v.AskForMemberDetailName(action);
+            _action = "new";
+            string fName = v.AskForMemberDetailName(_action);
             string lName = v.AskForMemberDetailLastName();
             string persNum = v.AskForMemberDetailNum();
             m.RegistryMember(fName, lName, persNum);
@@ -52,69 +57,67 @@ namespace controller
 
         private void EventSearchMemberName(model.MemberRegister m, view.ConsoleView v)
         {
-            string word;
-            string focusName = "name";
-            view.Event e2 = v.ShowSearchMenu(focusName);
+            _action = "name";
+            view.Event e2 = v.ShowSearchMenu(_action);
             if (e2 == view.Event.SearchWordGiven)
             {
-                word = v.AskForSearchWord(focusName);
-                string result = m.SearchByName(word);
-                v.ShowMessage(result);
+                string word = v.AskForSearchWord(_action);
+                _result = m.SearchByName(word);
+                v.ShowMessage(_result);
             }
         }
 
         private void EventSearchMemberId(model.MemberRegister m, view.ConsoleView v)
         {
-            string id;
-            string focusId = "id";
-            string thing = "member";
-            view.Event e = v.ShowSearchMenu(focusId);
+            _action = "id";
+            _action = "member";
+            view.Event e = v.ShowSearchMenu(_action);
             if (e == view.Event.SearchWordGiven)
             {
-                    id = v.AskForSearchWord(focusId);
-                    string result = m.SearchById(id);
-                    v.ShowMessage(result);
-                    view.Event e3 = v.ShowMemberActivities();
-                    if(e3 == view.Event.ChangeMember)
-                    {
-                       EventChangeMember(m, v);
-                    }
+                string id = v.AskForSearchWord(_action);
+                _result = m.SearchById(id);
+                v.ShowMessage(_result);
+                view.Event e3 = v.ShowMemberActivities();
+                if(e3 == view.Event.ChangeMember)
+                {
+                    EventChangeMember(m, v);
+                }
 
-                    if(e3 == view.Event.RemoveMember)
-                    {
-                        EventRemoveMember(m, v, id, thing);
-                    }
+                if(e3 == view.Event.RemoveMember)
+                {
+                    EventRemoveMember(m, v, id);
+                }
 
-                    if(e3 == view.Event.AddBoat)
-                    {
-                        EventAddBoat(m,v);
-                    }
+                if(e3 == view.Event.AddBoat)
+                {
+                    EventAddBoat(m,v);
+                }
 
-                    if(e3 == view.Event.ChangeBoat)
-                    {
-                        EventChangeBoat(m, v);
-                    }
+                if(e3 == view.Event.ChangeBoat)
+                {
+                    EventChangeBoat(m, v);
+                }
 
-                    if(e3 == view.Event.RemoveBoat)
-                    {
-                        EventRemoveBoat(m, v);
-                    }
+                if(e3 == view.Event.RemoveBoat)
+                {
+                    EventRemoveBoat(m, v);
+                }
             }  
         }
 
         private void EventChangeMember(model.MemberRegister m, view.ConsoleView v)
         {
-            string action = "change";
-            string fName = v.AskForMemberDetailName(action);
+            _action = "change";
+            string fName = v.AskForMemberDetailName(_action);
             string lName = v.AskForMemberDetailLastName();
             string persNum = v.AskForMemberDetailNum();
             m.ChangeMember(fName, lName, persNum);
         }
 
         
-        private void EventRemoveMember(model.MemberRegister m, view.ConsoleView v, string id, string thing)
+        private void EventRemoveMember(model.MemberRegister m, view.ConsoleView v, string id)
         {
-            if(v.AskForOkey(thing))
+            if(v.AskForOkey(_action))
             {
                 m.RemoveMember(id);
             }
@@ -125,14 +128,14 @@ namespace controller
             string t = m.GetBoatTypesListed();  
             string pickedType = v.AskForBoatType(t);
             string length = v.AskForBoatLength();
-            string respons = m.RegistryBoat(pickedType, length);
-            v.ShowMessage(respons);
+            _result = m.RegistryBoat(pickedType, length);
+            v.ShowMessage(_result);
         }
  
         private void EventChangeBoat(model.MemberRegister m, view.ConsoleView v)
         {
-            string handle = "change";
-            v.AskForBoatToPickText(handle);
+            _action = "change";
+            v.AskForBoatToPickText(_action);
             string boats = m.GetBoatInfo();
             if (boats == "Sorry you have not added any boats to this member yet.")
             {
@@ -145,15 +148,15 @@ namespace controller
                 string t = m.GetBoatTypesListed();  
                 string pickedType = v.AskForBoatType(t);
                 string length = v.AskForBoatLength();
-                string respons = m.ChangeBoat(pickedType, length);
-                v.ShowMessage(respons);
+                _result = m.ChangeBoat(pickedType, length);
+                v.ShowMessage(_result);
             }
         }  
         private void EventRemoveBoat(model.MemberRegister m, view.ConsoleView v)
         {
-            string handle = "remove";
+            _action = "remove";
             string thing = "boat";
-            v.AskForBoatToPickText(handle);
+            v.AskForBoatToPickText(_action);
             string boats = m.GetBoatInfo();
             if (boats == "Sorry you have not added any boats to this member yet.")
             {
@@ -165,8 +168,8 @@ namespace controller
                 m.SetPickedBoat(pickBoat);
                 if(v.AskForOkey(thing))
                 {
-                    string respons =  m.RemoveBoat();
-                    v.ShowMessage(respons);
+                    _result =  m.RemoveBoat();
+                    v.ShowMessage(_result);
                 }
             }
         }  
