@@ -43,25 +43,30 @@ namespace model
 
         
 
-        public void PrintAllMembersCompact()
-        {            
-            foreach(Member m in Members)
-            {
-                System.Console.WriteLine(m.ToStringSmall());
-            }
-        }
-
-        public void PrintAllMembersVerbose()
+        public string PrintAllMembersCompact()
         {
+            string ret = "";
             foreach(Member m in Members)
             {
-                System.Console.WriteLine(m.ToString());
+                ret += $"{m.ToStringSmall()}\n";
             }
+            return ret;
         }
 
-        public void SearchByName(string search)
+        public string PrintAllMembersVerbose()
+        {
+            string ret = "";
+            foreach(Member m in Members)
+            {
+                ret += $"{m.ToString()}\n";
+            }
+            return ret;
+        }
+
+        public string SearchByName(string search)
         {
             List<Member> searchList = new List<Member>();
+            string ret = "";
             foreach(Member m in Members)
             {
                 if(m.FirstName.ToLower().Contains(search.ToLower()) || m.LastName.ToLower().Contains(search.ToLower()))
@@ -71,20 +76,22 @@ namespace model
             }
             if (searchList.Count != 0)
             {
-                System.Console.WriteLine($"This members with '{search}' in their name were found:");
+                ret = $"This members with '{search}' in their name were found:";
                 foreach(Member m in searchList)
                 {
-                System.Console.WriteLine(m.ToStringSmall()); 
+                    ret += $"{m.ToStringSmall()}\n";
                 }                
             }
             else
             {
-                System.Console.WriteLine($"No member with {search} in their name was found:");
+                ret = $"No member with {search} in their name was found:";
             }
+            return ret;
         }
 
-        public void SearchById(string searchNr)
+        public string SearchById(string searchNr)
         {
+            string ret = "";
             try
             {
                 int id = Int32.Parse(searchNr);
@@ -97,46 +104,49 @@ namespace model
                 }
                 if (_pickedMember != null)
                 {
-                    System.Console.WriteLine($"Members with the id: {searchNr} were found:");
-                    System.Console.WriteLine(_pickedMember.ToString());    
+                    ret = $"Members with the id: {searchNr} were found:\n";
+                    ret += _pickedMember.ToString();    
                 }
                 else
                 {
-                    System.Console.WriteLine($"No member with {searchNr} as id was found:");
+                    ret = $"No member with {searchNr} as id was found...";
                 }
 
             } catch (FormatException)
             {
-                System.Console.WriteLine("Exception");
+                ret = "Something went wrong";
             }
+            return ret;
         }
 
-        public void ChangeMember(string fName, string lName, string persNum)
+        public string ChangeMember(string fName, string lName, string persNum)
         {
             _pickedMember.FirstName = fName;
             _pickedMember.LastName = lName;
             _pickedMember.PersNum = persNum;
     
             _saveData.WriteToFile(Members);
-            System.Console.WriteLine("The members information is updated in the register.");
+            return "The members information is updated in the register.";
         }
 
-        public void RemoveMember(string searchNr)
+        public string RemoveMember(string searchNr)
         {
             int id = Int32.Parse(searchNr);
+            string ret = "";
             if(_pickedMember != null)
             {
-                System.Console.WriteLine("Member was found");
+                ret = "Member was found\n";
                 Member _pickedMember = Members.SingleOrDefault(x => x.MemberId == id);
                 Members.Remove(_pickedMember);
 
                 _saveData.WriteToFile(Members);
-                System.Console.WriteLine("The member is removed from register.");
+                ret += "The member is removed from register.";
             }
             else
             {
-                System.Console.WriteLine("Something went wrong.");
+                ret = "Something went wrong.";
             }
+            return ret;
         }
 
         public string GetBoatTypesListed()

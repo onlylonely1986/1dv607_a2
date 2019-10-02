@@ -10,7 +10,6 @@ namespace view
     */
     public class ConsoleView
     {
-        private bool _programIsOn = true;
 
         public void ShowMenu()
         {
@@ -23,17 +22,12 @@ namespace view
             Console.WriteLine("[6] Quit application.\n");
         }
 
-        public bool GetBoolProgramIsOn()
-        {
-            return _programIsOn;
-        }
 
         public Event GetEvent()
         {
             int i = Convert.ToInt32(Console.ReadLine());
 			if (i == 6) {
                 System.Console.WriteLine("Good bye, have a nice day!");
-                this._programIsOn = false;
 				return Event.Quit;
 			}
 			if (i == 1)
@@ -130,30 +124,31 @@ namespace view
             Console.WriteLine("[4] Remove boat from member.");
             Console.WriteLine("[5] Remove member from register.");
             Console.WriteLine("[6] Go back to main menu.\n");
-            string c = System.Console.ReadLine();
-            if (c == "1") {
+
+            int i = Convert.ToInt32(Console.ReadLine());
+            if (i == 1) {
                 System.Console.WriteLine("Change member information:\n");
 				return Event.ChangeMember;
 			}
 
-            if (c == "2") {
+            if (i == 2) {
                 System.Console.WriteLine("Add new boat to member:\n");
 				return Event.AddBoat;
 			}
 
-            if (c == "3") {
+            if (i == 3) {
                 System.Console.WriteLine("Change boat information:\n");
 				return Event.ChangeBoat;
 			}
-            if (c == "4") {
+            if (i == 4) {
                 System.Console.WriteLine("Remove boat from member:\n");
 				return Event.RemoveBoat;
 			}
-            if (c == "5") {
+            if (i == 5) {
                 System.Console.WriteLine("Remove member from register:\n");
 				return Event.RemoveMember;
 			}
-            if (c == "6") {
+            if (i == 6) {
 				return Event.GoBack;
 			}
 
@@ -164,12 +159,12 @@ namespace view
         {
             Console.WriteLine($"\n\n[1] Search for members by {focus}.");
             Console.WriteLine("[2] Go Back To Start Menu.\n");
-            string c = System.Console.ReadLine();
-            if (c == "1") {
+            int i = Convert.ToInt32(Console.ReadLine());
+            if (i == 1) {
                 System.Console.WriteLine("Search here:\n");
 				return Event.SearchWordGiven;
 			}
-            if (c == "2") {
+            if (i == 2) {
 				return Event.GoBack;
 			}
 

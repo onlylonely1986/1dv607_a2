@@ -33,7 +33,8 @@ namespace controller
                 if (e2 == view.Event.SearchWordGiven)
                 {
                     word = v.AskForSearchWord(focusName);
-                    m.SearchByName(word);
+                    string result = m.SearchByName(word);
+                    v.ShowMessage(result);
                 }
                 if (e2 == view.Event.GoBack)
                 {
@@ -49,7 +50,8 @@ namespace controller
                 if (e2 == view.Event.SearchWordGiven)
                 {
                     id = v.AskForSearchWord(focusId);
-                    m.SearchById(id);
+                    string result = m.SearchById(id);
+                    v.ShowMessage(result);
                     view.Event e3 = v.ShowMemberActivities();
                     if(e3 == view.Event.ChangeMember)
                     {
@@ -88,9 +90,9 @@ namespace controller
                         string boats = m.GetBoatInfo();
                         if (boats == "Sorry you have not added any boats to this member yet.")
                         {
-                            System.Console.WriteLine(boats);
-                            // return false;
-                        } else
+                            v.ShowMessage(boats);
+                        }
+                        else
                         {
                             string pickBoat = v.ShowBoatInfo(boats);
                             m.SetPickedBoat(pickBoat);
@@ -110,8 +112,8 @@ namespace controller
                         if (boats == "Sorry you have not added any boats to this member yet.")
                         {
                             v.ShowMessage(boats);
-                            // return false;
-                        } else
+                        }
+                        else
                         {
                             string pickBoat = v.ShowBoatInfo(boats);
                             m.SetPickedBoat(pickBoat);
@@ -124,23 +126,20 @@ namespace controller
                             {
                                 string respons =  m.RemoveBoat();
                                 v.ShowMessage(respons);
-                                // return true;
                             }
                         }
                     }
-                }
-                if (e2 == view.Event.GoBack)
-                {
-                    // return false;
-                }   
+                }  
             }
             if (e == view.Event.CompactList)
             {
-                m.PrintAllMembersCompact();
+                string all = m.PrintAllMembersCompact();
+                v.ShowMessage(all);
             }
             if (e == view.Event.VerboseList)
             {
-                m.PrintAllMembersVerbose();
+                string all = m.PrintAllMembersVerbose();
+                v.ShowMessage(all);
             }
             return true;
         }            

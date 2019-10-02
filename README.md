@@ -7,7 +7,7 @@ Download the files and follow this guide.
 Alt 1: 
 It is possible to run on Windows:
 
-Go to file bin -> Release -> netcoreapp.2.2 -> win10-x64
+Go to the directory bin -> Release -> netcoreapp.2.2 -> win10-x64
 
 dubbleclick at 1dv607_a2
 
