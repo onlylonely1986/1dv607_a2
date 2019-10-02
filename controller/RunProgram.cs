@@ -8,15 +8,15 @@ namespace controller
         {
             model.MemberRegister m = new model.MemberRegister();
             view.ConsoleView v = new view.ConsoleView();
-            view.ConsoleView.Event e;
+            view.Event e;
 
             v.ShowMenu();
             e = v.GetEvent();
-            if (e == view.ConsoleView.Event.Quit)
+            if (e == view.Event.Quit)
             {
                 return false;
             }
-            if (e == view.ConsoleView.Event.NewMember)
+            if (e == view.Event.NewMember)
             {
             string action = "new";
             string fName = v.AskForMemberDetailName(action);
@@ -24,34 +24,34 @@ namespace controller
             string persNum = v.AskForMemberDetailNum();
             m.RegistryMember(fName, lName, persNum);
             }
-            if (e == view.ConsoleView.Event.SearchMemberName)
+            if (e == view.Event.SearchMemberName)
             {
                 // TODO egen metod för dessa alternativ
                 string word;
                 string focusName = "name";
-                view.ConsoleView.Event e2 = v.ShowSearchMenu(focusName);
-                if (e2 == view.ConsoleView.Event.SearchWordGiven)
+                view.Event e2 = v.ShowSearchMenu(focusName);
+                if (e2 == view.Event.SearchWordGiven)
                 {
                     word = v.AskForSearchWord(focusName);
                     m.SearchByName(word);
                 }
-                if (e2 == view.ConsoleView.Event.GoBack)
+                if (e2 == view.Event.GoBack)
                 {
                     // return false;
                 }
             }
-            if (e == view.ConsoleView.Event.SearchMemberId)
+            if (e == view.Event.SearchMemberId)
             {
                 string id;
                 string focusId = "id";
                 string thing = "member";
-                view.ConsoleView.Event e2 = v.ShowSearchMenu(focusId);
-                if (e2 == view.ConsoleView.Event.SearchWordGiven)
+                view.Event e2 = v.ShowSearchMenu(focusId);
+                if (e2 == view.Event.SearchWordGiven)
                 {
                     id = v.AskForSearchWord(focusId);
                     m.SearchById(id);
-                    view.ConsoleView.Event e3 = v.ShowMemberActivities();
-                    if(e3 == view.ConsoleView.Event.ChangeMember)
+                    view.Event e3 = v.ShowMemberActivities();
+                    if(e3 == view.Event.ChangeMember)
                     {
                         string action = "change";
                         string fName = v.AskForMemberDetailName(action);
@@ -60,7 +60,7 @@ namespace controller
                         m.ChangeMember(fName, lName, persNum);
                     }
 
-                    if(e3 == view.ConsoleView.Event.RemoveMember)
+                    if(e3 == view.Event.RemoveMember)
                     {
                         bool ok = v.AskForOkey(thing);
                         if(ok == false)
@@ -72,7 +72,7 @@ namespace controller
                         }
                     }
 
-                    if(e3 == view.ConsoleView.Event.AddBoat)
+                    if(e3 == view.Event.AddBoat)
                     {
                         string t = m.GetBoatTypesListed();  
                         string pickedType = v.AskForBoatType(t);
@@ -81,7 +81,7 @@ namespace controller
                         v.ShowMessage(respons);
                     }
 
-                    if(e3 == view.ConsoleView.Event.ChangeBoat)
+                    if(e3 == view.Event.ChangeBoat)
                     {
                         string handle = "change";
                         v.AskForBoatToPickText(handle);
@@ -102,7 +102,7 @@ namespace controller
                         }
                     }
 
-                    if(e3 == view.ConsoleView.Event.RemoveBoat)
+                    if(e3 == view.Event.RemoveBoat)
                     {
                         string handle = "remove";
                         v.AskForBoatToPickText(handle);
@@ -129,16 +129,16 @@ namespace controller
                         }
                     }
                 }
-                if (e2 == view.ConsoleView.Event.GoBack)
+                if (e2 == view.Event.GoBack)
                 {
                     // return false;
                 }   
             }
-            if (e == view.ConsoleView.Event.CompactList)
+            if (e == view.Event.CompactList)
             {
                 m.PrintAllMembersCompact();
             }
-            if (e == view.ConsoleView.Event.VerboseList)
+            if (e == view.Event.VerboseList)
             {
                 m.PrintAllMembersVerbose();
             }
