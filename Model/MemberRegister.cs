@@ -139,11 +139,21 @@ namespace model
             }
         }
 
+        public string GetBoatTypesListed()
+        {
+            int i = 0;
+            string ret = "";
+            foreach(model.BoatType t in Enum.GetValues(typeof(model.BoatType)))
+            {
+                i++;
+                ret += $"[{i}] {t}\n";
+            }
+            return ret;
+        }
+
         public string RegistryBoat(string type, string length)
         {
             int l = Int32.Parse(length);
-            // Boat.BoatType t = 
-            //_boatRegister.PickBoatType(type);
             _pickedMember.AddBoat(type, l);
             _saveData.WriteToFile(Members);
             return "The boat was successfully registred.";

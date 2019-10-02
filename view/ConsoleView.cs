@@ -10,6 +10,7 @@ namespace view
     */
     public class ConsoleView
     {
+        private bool _programIsOn = true;
         public enum Event {
 			None,
 			NewMember,
@@ -28,7 +29,7 @@ namespace view
 
 		}
 
-        public void ShowConsole()
+        public void ShowMenu()
         {
             Console.WriteLine("\n\nWelcome to the boatclub register\n");
             Console.WriteLine("[1] Add a new member.");
@@ -39,36 +40,37 @@ namespace view
             Console.WriteLine("[6] Quit application.\n");
         }
 
-        public bool WantsToContinueProgram()
+        public bool GetBoolProgramIsOn()
         {
-            return System.Console.ReadLine() != "4";
+            return _programIsOn;
         }
 
         public Event GetEvent()
         {
-            string c = System.Console.ReadLine();
-			if (c == "6") {
+            int i = Convert.ToInt32(Console.ReadLine());
+			if (i == 6) {
                 System.Console.WriteLine("Good bye, have a nice day!");
+                this._programIsOn = false;
 				return Event.Quit;
 			}
-			if (c == "1")
+			if (i == 1)
 			{
 				return Event.NewMember;
 			}
-            if (c == "2")
+            if (i == 2)
 			{
 				return Event.SearchMemberName;
 			}
-            if (c == "3")
+            if (i == 3)
 			{
 				return Event.SearchMemberId;
 			}
-            if (c == "4")
+            if (i == 4)
 			{
                 System.Console.WriteLine("Compact list:\n");
 				return Event.CompactList;
 			}
-			if (c == "5")
+			if (i == 5)
 			{
                 System.Console.WriteLine("Verbose list:\n");
 				return Event.VerboseList;
@@ -204,13 +206,10 @@ namespace view
             return System.Console.ReadLine();
         }
 
-        public string AskForBoatType()
+        public string AskForBoatType(string types)
         {
             Console.WriteLine("\nPick your boattype, it must be one of these (pick by number):");
-            Console.WriteLine($"[1] {model.Boat.BoatType.Sailboat}");
-            Console.WriteLine($"[2] {model.Boat.BoatType.Motorsailer}");
-            Console.WriteLine($"[3] {model.Boat.BoatType.KayakorCanoe}");          
-            Console.WriteLine($"[4] {model.Boat.BoatType.Other}");
+            System.Console.WriteLine(types);
             string type = System.Console.ReadLine();
             return type;
         }
@@ -267,6 +266,11 @@ namespace view
         public void ShowMessage(string message)
         {
             System.Console.WriteLine(message);
+        }
+
+        public void ConsoleClear()
+        {
+            System.Console.Clear();
         }
     }
 }

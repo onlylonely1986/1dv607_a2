@@ -6,15 +6,15 @@ namespace register
         static void Main(string[] args)
         {
             controller.Controller c = new controller.Controller();
-            c.RunProgram();
+            while(c.RunProgram());
         }
     }
 }
     // TODO
     // Fel att lösa
 
-    // menyn ska fortsätta rulla till anv väljer quit               ->
-    // backa ett steg i menyn funkar ej                             ->
+    // menyn ska fortsätta rulla till anv väljer quit               -> Check
+    // backa ett steg i menyn funkar ej                             -> Check
     // båttyp visas ej i exe-filen                                  ->
     // personnr är fel typ                                          ->
 

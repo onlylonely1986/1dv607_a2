@@ -9,20 +9,20 @@ namespace controller
             model.MemberRegister m = new model.MemberRegister();
             view.ConsoleView v = new view.ConsoleView();
             view.ConsoleView.Event e;
-            
-            v.ShowConsole();
-            e = v.GetEvent();            
+
+            v.ShowMenu();
+            e = v.GetEvent();
             if (e == view.ConsoleView.Event.Quit)
             {
                 return false;
             }
             if (e == view.ConsoleView.Event.NewMember)
             {
-                string action = "new";
-                string fName = v.AskForMemberDetailName(action);
-                string lName = v.AskForMemberDetailLastName();
-                string persNum = v.AskForMemberDetailNum();
-                m.RegistryMember(fName, lName, persNum);
+            string action = "new";
+            string fName = v.AskForMemberDetailName(action);
+            string lName = v.AskForMemberDetailLastName();
+            string persNum = v.AskForMemberDetailNum();
+            m.RegistryMember(fName, lName, persNum);
             }
             if (e == view.ConsoleView.Event.SearchMemberName)
             {
@@ -37,7 +37,7 @@ namespace controller
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)
                 {
-                    return false;
+                    // return false;
                 }
             }
             if (e == view.ConsoleView.Event.SearchMemberId)
@@ -65,7 +65,7 @@ namespace controller
                         bool ok = v.AskForOkey(thing);
                         if(ok == false)
                         {
-                            return false; 
+                            // return false; 
                         } else
                         {
                             m.RemoveMember(id);
@@ -74,9 +74,10 @@ namespace controller
 
                     if(e3 == view.ConsoleView.Event.AddBoat)
                     {
-                        string type = v.AskForBoatType();
+                        string t = m.GetBoatTypesListed();  
+                        string pickedType = v.AskForBoatType(t);
                         string length = v.AskForBoatLength();
-                        string respons = m.RegistryBoat(type, length);
+                        string respons = m.RegistryBoat(pickedType, length);
                         v.ShowMessage(respons);
                     }
 
@@ -88,14 +89,15 @@ namespace controller
                         if (boats == "Sorry you have not added any boats to this member yet.")
                         {
                             System.Console.WriteLine(boats);
-                            return false;
+                            // return false;
                         } else
                         {
                             string pickBoat = v.ShowBoatInfo(boats);
                             m.SetPickedBoat(pickBoat);
-                            string type = v.AskForBoatType();
+                            string t = m.GetBoatTypesListed();  
+                            string pickedType = v.AskForBoatType(t);
                             string length = v.AskForBoatLength();
-                            string respons = m.ChangeBoat(type, length);
+                            string respons = m.ChangeBoat(pickedType, length);
                             v.ShowMessage(respons);
                         }
                     }
@@ -108,7 +110,7 @@ namespace controller
                         if (boats == "Sorry you have not added any boats to this member yet.")
                         {
                             v.ShowMessage(boats);
-                            return false;
+                            // return false;
                         } else
                         {
                             string pickBoat = v.ShowBoatInfo(boats);
@@ -117,19 +119,19 @@ namespace controller
                             bool ok = v.AskForOkey(thing);
                             if(ok == false)
                             {
-                                return false; 
+                                // return false; 
                             } else
                             {
                                 string respons =  m.RemoveBoat();
                                 v.ShowMessage(respons);
-                                return true;
+                                // return true;
                             }
                         }
                     }
                 }
                 if (e2 == view.ConsoleView.Event.GoBack)
                 {
-                    return false;
+                    // return false;
                 }   
             }
             if (e == view.ConsoleView.Event.CompactList)
@@ -141,6 +143,6 @@ namespace controller
                 m.PrintAllMembersVerbose();
             }
             return true;
-        }
+        }            
     }    
 }

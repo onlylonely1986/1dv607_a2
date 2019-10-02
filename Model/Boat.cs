@@ -5,16 +5,9 @@ namespace model
     /**
     * Represents the boat-object.
     *    
-     */
+    */
     class Boat
     {
-        public enum BoatType {
-			Sailboat,
-			Motorsailer,
-			KayakorCanoe,
-			Other
-		}
-
         private BoatType _boatType;
 
         private int _lengthInFeet;
@@ -40,22 +33,24 @@ namespace model
                 else throw new ArgumentOutOfRangeException();
             }
         }
+
+        // TODO: This method is not good.
         public BoatType PickBoatType(string input)
         {
             int typeNr = Int32.Parse(input);
-            Boat.BoatType t = Boat.BoatType.Other;
+            BoatType t = BoatType.Other;
             if (typeNr == 1)
             {
-                t = Boat.BoatType.Sailboat;
+                t = BoatType.Sailboat;
             } else if (typeNr == 2)
             {
-                t = Boat.BoatType.Motorsailer;
+                t = BoatType.Motorsailer;
             } else if (typeNr == 3)
             {
-                t = Boat.BoatType.KayakorCanoe;
+                t = BoatType.KayakorCanoe;
             } else if (typeNr == 4)
             {
-                t = Boat.BoatType.Other;
+                t = BoatType.Other;
             }
             return t;
         }

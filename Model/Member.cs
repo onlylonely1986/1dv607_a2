@@ -28,7 +28,7 @@ namespace model
         public void AddBoat(string t, int l)
         {
             Boat b = new Boat(l);
-            Boat.BoatType type = b.PickBoatType(t);
+            BoatType type = b.PickBoatType(t);
             b.Type = type;
             if (_boats.Count < 100)
             {
@@ -41,7 +41,7 @@ namespace model
 
         public void ChangeBoat(Boat b, string t, int l)
         {
-            Boat.BoatType type = b.PickBoatType(t);
+            BoatType type = b.PickBoatType(t);
             b.Type = type;
             b.LengthInFeet = l;
             
