@@ -1,0 +1,1 @@
+[{"MemberId":1,"Boats":[{"Type":0,"LengthInFeet":40}],"FirstName":"Hedda","LastName":"Andersson","PersNum":"880101-0101"},{"MemberId":2,"Boats":[{"Type":2,"LengthInFeet":14}],"FirstName":"Beata","LastName":"Börjesson","PersNum":"640101-0101"},{"MemberId":3,"Boats":[],"FirstName":"Daniel","LastName":"Didriksson","PersNum":"851212-0101"}]
