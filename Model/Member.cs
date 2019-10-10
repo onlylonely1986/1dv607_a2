@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace model
 {
-    class Member : Person
+    public class Member : Person
     {
         private int _memberId;
 

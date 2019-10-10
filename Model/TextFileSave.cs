@@ -8,7 +8,7 @@ namespace model
     /**
      * Represents the class handeling writing and reading from the textfile.
      */
-    class TextFileSave
+    public class TextFileSave
     {
         private string _fileName = "register.txt";
         public List<Member> ReadDataFromFile()

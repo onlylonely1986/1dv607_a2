@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace model
 {
-    class MemberRegister
+    public class MemberRegister
     {
         private int _indexPickedBoat;
         private List<Member> _members = new List<Member>();
@@ -23,7 +23,16 @@ namespace model
             }
         }
 
-        public void RegistryMember(string fName, string lName, string persNum)
+        /**
+        *   Constructor.
+        */
+        public MemberRegister(TextFileSave saveData)
+        {
+            _saveData = saveData;
+            _members = _saveData.ReadDataFromFile();
+        }
+
+        public void SaveNewMember(string fName, string lName, string persNum)
         {
             Member  m = new Member(fName, lName, persNum);
             
@@ -39,56 +48,6 @@ namespace model
             m.MemberId = mId;
             Members.Add(m);
             _saveData.WriteToFile(Members);
-        }
-
-        
-        // TODO : how to make this huge object smaller and split into other object with less responsibility?
-
-        // TODO: flytta till vyn, pga vyns ansvar att skriva ut saker, (tänk om man vill ändra UI?)
-        public string PrintAllMembersCompact()
-        {
-            string ret = "";
-            foreach(Member m in Members)
-            {
-                ret += $"{m.ToStringSmall()}\n";
-            }
-            return ret;
-        }
-
-        public string PrintAllMembersVerbose()
-        {
-            string ret = "";
-            foreach(Member m in Members)
-            {
-                ret += $"{m.ToString()}\n";
-            }
-            return ret;
-        }
-
-        public string SearchByName(string search)
-        {
-            List<Member> searchList = new List<Member>();
-            string ret = "";
-            foreach(Member m in Members)
-            {
-                if(m.FirstName.ToLower().Contains(search.ToLower()) || m.LastName.ToLower().Contains(search.ToLower()))
-                {
-                    searchList.Add(m);
-                }
-            }
-            if (searchList.Count != 0)
-            {
-                ret = $"This members with '{search}' in their name were found:";
-                foreach(Member m in searchList)
-                {
-                    ret += $"{m.ToStringSmall()}\n";
-                }                
-            }
-            else
-            {
-                ret = $"No member with {search} in their name was found:";
-            }
-            return ret;
         }
 
         public string SearchById(string searchNr)
@@ -227,12 +186,6 @@ namespace model
                 return  "The boat was successfully removed.";
             }
             return "";
-        }
-
-        public MemberRegister()
-        {
-            _saveData = new TextFileSave();
-            _members = _saveData.ReadDataFromFile();
         }
     }
 }

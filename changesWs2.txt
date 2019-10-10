@@ -1,0 +1,7 @@
+List of changes since last iteration:
+
+* move string-handling and UI-stuff to view
+* let controller generate the list from textfile
+* let controller take care of pickedMember and pickedBoat
+* update classdiagram with rolenames at associations and add dependecie-marks where it should be
+* update sequenzydiagram, change texttype and a couple of words and update so it matches code

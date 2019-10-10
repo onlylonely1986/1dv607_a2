@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace controller 
 {
@@ -9,10 +10,18 @@ namespace controller
 
         private string _result;
 
-        public bool RunProgram()
+        private model.TextFileSave _saveData;
+
+        private IEnumerable<model.Member> _enumMembers;
+
+        private List<model.Member> _members;
+
+        public bool RunProgram(model.TextFileSave t)
         {
-            // är det fel att skapa dessa instanser här, borde de skapas i program och skickas som parametrar?
-            model.MemberRegister m = new model.MemberRegister();
+            _saveData = t;
+            _members = _saveData.ReadDataFromFile();
+            _enumMembers = (IEnumerable<model.Member>)_members.AsEnumerable();
+            model.MemberRegister m = new model.MemberRegister(_saveData);
             view.ConsoleView v = new view.ConsoleView();
             view.Event e;
 
@@ -36,13 +45,13 @@ namespace controller
             }
             if (e == view.Event.CompactList)
             {
-                string all = m.PrintAllMembersCompact();
-                v.ShowMessage(all);
+                // dependencie to model
+                v.PrintCompactList(_enumMembers);
             }
             if (e == view.Event.VerboseList)
             {
-                string all = m.PrintAllMembersVerbose();
-                v.ShowMessage(all);
+                // dependencie to model
+                v.PrintVerboseList(_enumMembers);
             }
             return true;
         }
@@ -53,7 +62,7 @@ namespace controller
             string fName = v.AskForMemberDetailName(_action);
             string lName = v.AskForMemberDetailLastName();
             string persNum = v.AskForMemberDetailNum();
-            m.RegistryMember(fName, lName, persNum);
+            m.SaveNewMember(fName, lName, persNum);
         }
 
         private void EventSearchMemberName(model.MemberRegister m, view.ConsoleView v)
@@ -63,8 +72,8 @@ namespace controller
             if (e2 == view.Event.SearchWordGiven)
             {
                 string word = v.AskForSearchWord(_action);
-                _result = m.SearchByName(word);
-                v.ShowMessage(_result);
+                // _result = m.SearchByName(word);
+                v.SearchMemberByName(_enumMembers, word);
             }
         }
 

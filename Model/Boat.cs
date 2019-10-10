@@ -6,7 +6,7 @@ namespace model
     * Represents the boat-object.
     *    
     */
-    class Boat
+    public class Boat
     {
         private BoatType _boatType;
 

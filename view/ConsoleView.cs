@@ -253,9 +253,47 @@ namespace view
             System.Console.WriteLine(message);
         }
 
-        public void ConsoleClear()
+        public void PrintVerboseList(IEnumerable<model.Member> members)
         {
-            System.Console.Clear();
+            foreach(model.Member M in members)
+            {
+                System.Console.WriteLine(M);
+            }
+        }
+
+        public void PrintCompactList(IEnumerable<model.Member> members)
+        {
+            foreach(model.Member M in members)
+            {
+                System.Console.WriteLine($"Id: {M.MemberId}, Name: {M.FirstName} {M.LastName}, Boats: {M.Boats.Count}");
+            }
+        }
+
+
+        public void SearchMemberByName(IEnumerable<model.Member> members, string search)
+        {
+            List<model.Member> searchList = new List<model.Member>();
+            string ret = "";
+            foreach(model.Member m in members)
+            {
+                if(m.FirstName.ToLower().Contains(search.ToLower()) || m.LastName.ToLower().Contains(search.ToLower()))
+                {
+                    searchList.Add(m);
+                }
+            }
+            if (searchList.Count != 0)
+            {
+                ret = $"This members with '{search}' in their name were found:\n";
+                foreach(model.Member m in searchList)
+                {
+                    ret += $"{m.ToStringSmall()}\n";
+                }                
+            }
+            else
+            {
+                ret = $"No member with {search} in their name was found:";
+            }
+            System.Console.WriteLine(ret);
         }
     }
 }
