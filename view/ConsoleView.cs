@@ -22,7 +22,7 @@ namespace view
             Console.WriteLine("[6] Quit application.\n");
         }
 
-
+        // TODO: this object is responsible for much metodhs, is it possible to break into smaller piecies?
         public Event GetEvent()
         {
             int i = Convert.ToInt32(Console.ReadLine());

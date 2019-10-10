@@ -11,6 +11,7 @@ namespace controller
 
         public bool RunProgram()
         {
+            // är det fel att skapa dessa instanser här, borde de skapas i program och skickas som parametrar?
             model.MemberRegister m = new model.MemberRegister();
             view.ConsoleView v = new view.ConsoleView();
             view.Event e;
@@ -137,6 +138,7 @@ namespace controller
             _action = "change";
             v.AskForBoatToPickText(_action);
             string boats = m.GetBoatInfo();
+            // TODO: är detta fult att ha? 
             if (boats == "Sorry you have not added any boats to this member yet.")
             {
                 v.ShowMessage(boats);

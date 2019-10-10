@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
 
 namespace model
 {
@@ -13,7 +10,7 @@ namespace model
 
         private string _persNum;
 
-
+        // TODO: är det här korrekt inkapslat?
         public string FirstName
         {
             get { return _firstName;}
@@ -44,6 +41,7 @@ namespace model
             }
         }
 
+        // TODO: wrong type on this
          public string PersNum
         {
             get { return _persNum;}

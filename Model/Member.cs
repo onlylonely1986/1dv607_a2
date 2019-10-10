@@ -62,7 +62,8 @@ namespace model
         public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
         {
         }
-
+        
+        // TODO gör i vyn istället
         public override string ToString()
         {
              if (_boats != null)

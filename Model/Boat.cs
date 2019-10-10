@@ -34,7 +34,7 @@ namespace model
             }
         }
 
-        // TODO: This method is not good.
+        // TODO: This method is not good, is it a hidden dependecie?
         public BoatType PickBoatType(string input)
         {
             int typeNr = Int32.Parse(input);
@@ -60,6 +60,7 @@ namespace model
             _lengthInFeet = lengthInFeet;
         }
 
+        // TODO: is this bad to have in a model-object?
         public override string ToString()
         {
             return $"[ Boattype: {_boatType}, Length: {_lengthInFeet} feet. ]";

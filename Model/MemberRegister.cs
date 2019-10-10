@@ -42,7 +42,9 @@ namespace model
         }
 
         
+        // TODO : how to make this huge object smaller and split into other object with less responsibility?
 
+        // TODO: flytta till vyn, pga vyns ansvar att skriva ut saker, (tänk om man vill ändra UI?)
         public string PrintAllMembersCompact()
         {
             string ret = "";
@@ -110,6 +112,7 @@ namespace model
                 else
                 {
                     ret = $"No member with {searchNr} as id was found...";
+                    // TODO: handle the return so the next menu dont show up
                 }
 
             } catch (FormatException)
@@ -171,6 +174,7 @@ namespace model
 
         public string GetBoatInfo()
         {
+            // TODO pickedmember passar att ha i kontrollern
             if(_pickedMember != null)
             {
                 return _pickedMember.GetBoatInfo();
@@ -178,6 +182,7 @@ namespace model
             return "Sorry you have not added any boats to this member yet.";
         }
 
+        // TODO controller-ansvar!
         public string SetPickedBoat(string pickedBoat)
         {
 

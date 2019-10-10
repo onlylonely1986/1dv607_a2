@@ -1,5 +1,6 @@
 # 1dv607_a2
 
+TODO : update this!
 This is a consoleapplication for a simple memberregistry at a boatclub.
 
 Download the files and follow this guide.
