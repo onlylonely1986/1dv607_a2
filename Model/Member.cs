@@ -24,7 +24,6 @@ namespace model
             get { return _boats;}
         }
 
-
         public void AddBoat(string t, int l)
         {
             Boat b = new Boat(l);
@@ -61,30 +60,6 @@ namespace model
 
         public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
         {
-        }
-        
-        // TODO gör i vyn istället
-        public override string ToString()
-        {
-             if (_boats != null)
-            {
-                string boats = String.Concat(Boats.Select(b=>b.ToString()));
-                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats {Boats.Count}: {boats}";
-            } else
-            {
-                string boats = "No boats added yet";
-                return $"Id: {MemberId}, Name: {FirstName} {LastName}, Personal number: {PersNum}, Boats: {boats}";
-            }
-        }
-
-        public string ToStringSmall()
-        {
-            int b = 0;
-            if (_boats != null)
-            {
-                b = _boats.Count;
-            }
-            return $"Id: {MemberId}, Name: {FirstName} {LastName}, Boats: {b}";
         }
     }
 }

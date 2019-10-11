@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,22 +7,16 @@ namespace controller
     public class Controller
     {
 
-        private string _action;
-
+        IEnumerable<model.Member> _enumMembers;
         private string _result;
+        private model.TextFileSave _savedData;
 
-        private model.TextFileSave _saveData;
+        private model.Member _pickedMember;
 
-        private IEnumerable<model.Member> _enumMembers;
-
-        private List<model.Member> _members;
-
-        public bool RunProgram(model.TextFileSave t)
+        public bool RunProgram()
         {
-            _saveData = t;
-            _members = _saveData.ReadDataFromFile();
-            _enumMembers = (IEnumerable<model.Member>)_members.AsEnumerable();
-            model.MemberRegister m = new model.MemberRegister(_saveData);
+            _savedData = new model.TextFileSave();
+            model.MemberRegister m = new model.MemberRegister(_savedData);
             view.ConsoleView v = new view.ConsoleView();
             view.Event e;
 
@@ -45,21 +40,31 @@ namespace controller
             }
             if (e == view.Event.CompactList)
             {
-                // dependencie to model
-                v.PrintCompactList(_enumMembers);
+                v.PrintCompactList(m.GetMembersAsEnums(_savedData));
             }
             if (e == view.Event.VerboseList)
             {
-                // dependencie to model
-                v.PrintVerboseList(_enumMembers);
+                v.PrintVerboseList(m.GetMembersAsEnums(_savedData));
             }
             return true;
         }
 
+        private void SetPickedMember(string searchNr, model.MemberRegister m)
+        { 
+            int id = Int32.Parse(searchNr);
+            _enumMembers = m.GetMembersAsEnums(_savedData);
+            foreach(model.Member mem in _enumMembers)
+            {
+                if(mem.MemberId == id)
+                {
+                    _pickedMember = mem;
+                }
+            }
+        }
+
         private void EventNewMember(model.MemberRegister m, view.ConsoleView v)
         {
-            _action = "new";
-            string fName = v.AskForMemberDetailName(_action);
+            string fName = v.AskForMemberDetailName(Action.New);
             string lName = v.AskForMemberDetailLastName();
             string persNum = v.AskForMemberDetailNum();
             m.SaveNewMember(fName, lName, persNum);
@@ -67,26 +72,22 @@ namespace controller
 
         private void EventSearchMemberName(model.MemberRegister m, view.ConsoleView v)
         {
-            _action = "name";
-            view.Event e2 = v.ShowSearchMenu(_action);
+            view.Event e2 = v.ShowSearchMenu(Action.Name);
             if (e2 == view.Event.SearchWordGiven)
             {
-                string word = v.AskForSearchWord(_action);
-                // _result = m.SearchByName(word);
+                string word = v.AskForSearchWord(Action.Name);
                 v.SearchMemberByName(_enumMembers, word);
             }
         }
 
         private void EventSearchMemberId(model.MemberRegister m, view.ConsoleView v)
         {
-            _action = "id";
-            _action = "member";
-            view.Event e = v.ShowSearchMenu(_action);
+            view.Event e = v.ShowSearchMenu(Action.Id);
             if (e == view.Event.SearchWordGiven)
             {
-                string id = v.AskForSearchWord(_action);
-                _result = m.SearchById(id);
-                v.ShowMessage(_result);
+                string id = v.AskForSearchWord(Action.Id);
+                SetPickedMember(id, m);
+                v.SearchById(_pickedMember, id);
                 view.Event e3 = v.ShowMemberActivities();
                 if(e3 == view.Event.ChangeMember)
                 {
@@ -117,17 +118,15 @@ namespace controller
 
         private void EventChangeMember(model.MemberRegister m, view.ConsoleView v)
         {
-            _action = "change";
-            string fName = v.AskForMemberDetailName(_action);
+            string fName = v.AskForMemberDetailName(Action.Change);
             string lName = v.AskForMemberDetailLastName();
             string persNum = v.AskForMemberDetailNum();
             m.ChangeMember(fName, lName, persNum);
         }
-
         
         private void EventRemoveMember(model.MemberRegister m, view.ConsoleView v, string id)
         {
-            if(v.AskForOkey(_action))
+            if(v.AskForOkey(Action.Member))
             {
                 m.RemoveMember(id);
             }
@@ -144,10 +143,9 @@ namespace controller
  
         private void EventChangeBoat(model.MemberRegister m, view.ConsoleView v)
         {
-            _action = "change";
-            v.AskForBoatToPickText(_action);
-            string boats = m.GetBoatInfo();
-            // TODO: är detta fult att ha? 
+            v.AskForBoatToPickText(Action.Change);
+            string boats = m.GetBoatInfo(_pickedMember);
+
             if (boats == "Sorry you have not added any boats to this member yet.")
             {
                 v.ShowMessage(boats);
@@ -165,10 +163,8 @@ namespace controller
         }  
         private void EventRemoveBoat(model.MemberRegister m, view.ConsoleView v)
         {
-            _action = "remove";
-            string thing = "boat";
-            v.AskForBoatToPickText(_action);
-            string boats = m.GetBoatInfo();
+            v.AskForBoatToPickText(Action.Remove);
+            string boats = m.GetBoatInfo(_pickedMember);
             if (boats == "Sorry you have not added any boats to this member yet.")
             {
                 v.ShowMessage(boats);
@@ -177,7 +173,7 @@ namespace controller
             {
                 string pickBoat = v.ShowBoatInfo(boats);
                 m.SetPickedBoat(pickBoat);
-                if(v.AskForOkey(thing))
+                if(v.AskForOkey(Action.Boat))
                 {
                     _result =  m.RemoveBoat();
                     v.ShowMessage(_result);

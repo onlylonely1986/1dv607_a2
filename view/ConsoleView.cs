@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace view
 {
@@ -56,13 +57,13 @@ namespace view
 			return Event.None;
         }
 
-        public string AskForMemberDetailName(string action)
+        public string AskForMemberDetailName(Enum action)
         {
-            if (action == "new")
+            if (action.ToString() == "New")
             {
                 Console.WriteLine("Do you want to register a new member.");
             }
-            if (action == "change")
+            if (action.ToString() == "Change")
             {
                 Console.WriteLine("Do you want to change a members information.");
             }
@@ -70,7 +71,6 @@ namespace view
             Console.WriteLine("Please enter your first name.");
             string input = this.WrongHandelingNameInput();
             return input;
-            
         }
 
         public string AskForMemberDetailLastName()
@@ -155,9 +155,9 @@ namespace view
             return Event.None;
         }
 
-        public Event ShowSearchMenu(string focus)
+        public Event ShowSearchMenu(Enum focus)
         {
-            Console.WriteLine($"\n\n[1] Search for members by {focus}.");
+            Console.WriteLine($"\n\n[1] Search for members by {focus.ToString().ToLower()}.");
             Console.WriteLine("[2] Go Back To Start Menu.\n");
             string s = Console.ReadLine();
             try
@@ -178,13 +178,13 @@ namespace view
             }            
         }
 
-        public string AskForSearchWord(string focus)
+        public string AskForSearchWord(Enum focus)
         {
-            if (focus == "name")
+            if (focus.ToString() == "Name")
             {
                 Console.WriteLine("Write a name or a character in a name you want to find...\n");
             } 
-            if (focus == "id")
+            if (focus.ToString() == "Id")
             {
                 Console.WriteLine("Write a nr of an id to find a member...\n");
             }
@@ -217,9 +217,9 @@ namespace view
             }
         }
 
-        public void AskForBoatToPickText(string handle)
+        public void AskForBoatToPickText(Enum handle)
         {
-            System.Console.WriteLine($"Pick the boat to {handle}:");
+            System.Console.WriteLine($"Pick the boat to {handle.ToString().ToLower()}:");
         }
 
         public string ShowBoatInfo(string boats)
@@ -229,7 +229,7 @@ namespace view
             return boatNr;
         }
 
-        public bool AskForOkey(string thing)
+        public bool AskForOkey(Enum thing)
         {
             bool ok = false;
             System.Console.WriteLine($"Are you sure you want to remove the {thing}?");
@@ -257,7 +257,7 @@ namespace view
         {
             foreach(model.Member M in members)
             {
-                System.Console.WriteLine(M);
+                MemberToString(M);
             }
         }
 
@@ -265,7 +265,7 @@ namespace view
         {
             foreach(model.Member M in members)
             {
-                System.Console.WriteLine($"Id: {M.MemberId}, Name: {M.FirstName} {M.LastName}, Boats: {M.Boats.Count}");
+                MemberToStringSmall(M);
             }
         }
 
@@ -273,7 +273,6 @@ namespace view
         public void SearchMemberByName(IEnumerable<model.Member> members, string search)
         {
             List<model.Member> searchList = new List<model.Member>();
-            string ret = "";
             foreach(model.Member m in members)
             {
                 if(m.FirstName.ToLower().Contains(search.ToLower()) || m.LastName.ToLower().Contains(search.ToLower()))
@@ -283,17 +282,54 @@ namespace view
             }
             if (searchList.Count != 0)
             {
-                ret = $"This members with '{search}' in their name were found:\n";
+                System.Console.WriteLine($"This members with '{search}' in their name were found:\n");
                 foreach(model.Member m in searchList)
                 {
-                    ret += $"{m.ToStringSmall()}\n";
+                    MemberToStringSmall(m);
                 }                
             }
             else
             {
-                ret = $"No member with {search} in their name was found:";
+                System.Console.WriteLine($"No member with {search} in their name was found:");
             }
-            System.Console.WriteLine(ret);
+        }
+
+        public void SearchById(model.Member pickedMember, string searchNr)
+        {
+            if (pickedMember != null)
+            {
+                System.Console.WriteLine($"Members with the id: {searchNr} were found:\n");
+                MemberToString(pickedMember);
+            }
+            else
+            {
+                // TODO do not show next list in this case
+                System.Console.WriteLine($"No member with {searchNr} as id was found...");
+            }
+            ShowMemberActivities();
+        }
+
+        public void MemberToString(model.Member m)
+        {
+             if (m.Boats != null)
+            {
+                string boats = String.Concat(m.Boats.Select(b=>b.ToString()));
+                System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Personal number: {m.PersNum}, Boats {m.Boats.Count}: {boats}");
+            } else
+            {
+                string boats = "No boats added yet";
+                System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Personal number: {m.PersNum}, Boats: {boats}");
+            }
+        }
+
+        public void MemberToStringSmall(model.Member m)
+        {
+            int b = 0;
+            if (m.Boats != null)
+            {
+                b = m.Boats.Count;
+            }
+            System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Boats: {b}");
         }
     }
 }

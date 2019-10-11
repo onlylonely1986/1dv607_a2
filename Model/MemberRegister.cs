@@ -32,6 +32,12 @@ namespace model
             _members = _saveData.ReadDataFromFile();
         }
 
+        public IEnumerable<Member> GetMembersAsEnums(TextFileSave t)
+        {
+           IEnumerable<Member> enumMembers = (IEnumerable<model.Member>)t.ReadDataFromFile().AsEnumerable();
+           return enumMembers;
+        }
+
         public void SaveNewMember(string fName, string lName, string persNum)
         {
             Member  m = new Member(fName, lName, persNum);
@@ -50,36 +56,6 @@ namespace model
             _saveData.WriteToFile(Members);
         }
 
-        public string SearchById(string searchNr)
-        {
-            string ret = "";
-            try
-            {
-                int id = Int32.Parse(searchNr);
-                foreach(Member m in Members)
-                {
-                    if(m.MemberId == id)
-                    {
-                        _pickedMember = m;
-                    }
-                }
-                if (_pickedMember != null)
-                {
-                    ret = $"Members with the id: {searchNr} were found:\n";
-                    ret += _pickedMember.ToString();    
-                }
-                else
-                {
-                    ret = $"No member with {searchNr} as id was found...";
-                    // TODO: handle the return so the next menu dont show up
-                }
-
-            } catch (FormatException)
-            {
-                ret = "Something went wrong";
-            }
-            return ret;
-        }
 
         public string ChangeMember(string fName, string lName, string persNum)
         {
@@ -131,12 +107,11 @@ namespace model
             return "The boat was successfully registred.";
         }
 
-        public string GetBoatInfo()
+        public string GetBoatInfo(Member pickedMember)
         {
-            // TODO pickedmember passar att ha i kontrollern
-            if(_pickedMember != null)
+            if(pickedMember != null)
             {
-                return _pickedMember.GetBoatInfo();
+                return pickedMember.GetBoatInfo();
             } 
             return "Sorry you have not added any boats to this member yet.";
         }
