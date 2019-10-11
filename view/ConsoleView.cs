@@ -23,7 +23,6 @@ namespace view
             Console.WriteLine("[6] Quit application.\n");
         }
 
-        // TODO: this object is responsible for much metodhs, is it possible to break into smaller piecies?
         public Event GetEvent()
         {
             int i = Convert.ToInt32(Console.ReadLine());
@@ -290,30 +289,30 @@ namespace view
             }
             else
             {
-                System.Console.WriteLine($"No member with {search} in their name was found:");
+                System.Console.WriteLine($"No member with '{search}' in their name was found...\n");
             }
         }
 
-        public void SearchById(model.Member pickedMember, string searchNr)
+        public bool SearchById(model.Member pickedMember, string searchNr)
         {
             if (pickedMember != null)
             {
                 System.Console.WriteLine($"Members with the id: {searchNr} were found:\n");
                 MemberToString(pickedMember);
+                return true;
             }
             else
             {
-                // TODO do not show next list in this case
                 System.Console.WriteLine($"No member with {searchNr} as id was found...");
+                return false;
             }
-            ShowMemberActivities();
         }
 
         public void MemberToString(model.Member m)
         {
              if (m.Boats != null)
             {
-                string boats = String.Concat(m.Boats.Select(b=>b.ToString()));
+                string boats = String.Concat(m.Boats.Select(b => BoatToString(b)));
                 System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Personal number: {m.PersNum}, Boats {m.Boats.Count}: {boats}");
             } else
             {
@@ -330,6 +329,11 @@ namespace view
                 b = m.Boats.Count;
             }
             System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Boats: {b}");
+        }
+
+        public string BoatToString(model.Boat b)
+        {
+            return $"[ Boattype: {b.Type}, Length: {b.LengthInFeet} feet. ]";
         }
     }
 }

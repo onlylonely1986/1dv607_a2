@@ -4,11 +4,50 @@ using System.Linq;
 
 namespace model
 {
-    public class Member : Person
+    public class Member
     {
+        private string _firstName;
+
+        private string _lastName;
+
+        private string _persNum;
         private int _memberId;
 
         private List<Boat> _boats = new List<Boat>();
+
+        public List<Boat> Boats
+        {
+            get { return _boats;}
+        }
+        public string FirstName
+        {
+            get { return _firstName;}
+            set
+            {
+                if (value.Length < 2 || value.Length > 20)
+                {
+                    throw new ArgumentOutOfRangeException();
+                } else 
+                {
+                    _firstName = value;
+                }   
+            }
+        }
+
+        public string LastName
+        {
+            get { return _lastName;}
+            set
+            {
+                if (value.Length < 2 || value.Length > 20)
+                {
+                    throw new ArgumentOutOfRangeException();
+                } else 
+                {
+                    _lastName = value;
+                }
+            }
+        }
 
         public int MemberId
         {
@@ -19,9 +58,19 @@ namespace model
             }
         }
 
-        public List<Boat> Boats
+        
+        // TODO: wrong type on this
+        public string PersNum
         {
-            get { return _boats;}
+            get { return _persNum;}
+            set
+            {
+                // if (value.Length != 11)
+                // {
+                //     throw new ArgumentOutOfRangeException();
+                // }
+                _persNum = value;
+            }
         }
 
         public void AddBoat(string t, int l)
@@ -58,8 +107,11 @@ namespace model
             return boats;
         }
 
-        public Member(string firstName, string lastName, string personalNum) : base (firstName, lastName, personalNum)
+        public Member(string firstName, string lastName, string personalNum) 
         {
+            _firstName = firstName;
+            _lastName = lastName;
+            _persNum =  personalNum;
         }
     }
 }

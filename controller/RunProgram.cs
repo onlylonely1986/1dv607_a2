@@ -13,6 +13,10 @@ namespace controller
 
         private model.Member _pickedMember;
 
+        private model.Boat _pickedBoat;
+
+        private int _indexPickedBoat;
+
         public bool RunProgram()
         {
             _savedData = new model.TextFileSave();
@@ -62,12 +66,36 @@ namespace controller
             }
         }
 
+        private void SetPickedBoat(string pickedBoat)
+        {
+
+            int b = Int32.Parse(pickedBoat);
+            b--;
+            for (int i = 0; i < _pickedMember.Boats.Count; i++)
+            {
+                if(i == b)
+                {
+                    _pickedBoat = _pickedMember.Boats[i];
+                    _indexPickedBoat = i;
+                }
+            }
+            // TODO view ansvar
+            if (_pickedBoat != null)
+            {
+                // return _pickedBoat.ToString();
+            } else
+            {
+                throw new Exception("Something went wrong!");
+            }
+        }
+
         private void EventNewMember(model.MemberRegister m, view.ConsoleView v)
         {
             string fName = v.AskForMemberDetailName(Action.New);
             string lName = v.AskForMemberDetailLastName();
             string persNum = v.AskForMemberDetailNum();
             m.SaveNewMember(fName, lName, persNum);
+            _enumMembers = m.GetMembersAsEnums(_savedData);
         }
 
         private void EventSearchMemberName(model.MemberRegister m, view.ConsoleView v)
@@ -76,10 +104,11 @@ namespace controller
             if (e2 == view.Event.SearchWordGiven)
             {
                 string word = v.AskForSearchWord(Action.Name);
+                _enumMembers = m.GetMembersAsEnums(_savedData);
                 v.SearchMemberByName(_enumMembers, word);
             }
         }
-
+        // TODO kolla att listan uppdateras om man lägger till/ändrar båt/namn, hittar ej pickedboat tror jag...
         private void EventSearchMemberId(model.MemberRegister m, view.ConsoleView v)
         {
             view.Event e = v.ShowSearchMenu(Action.Id);
@@ -87,31 +116,33 @@ namespace controller
             {
                 string id = v.AskForSearchWord(Action.Id);
                 SetPickedMember(id, m);
-                v.SearchById(_pickedMember, id);
-                view.Event e3 = v.ShowMemberActivities();
-                if(e3 == view.Event.ChangeMember)
+                if (v.SearchById(_pickedMember, id))
                 {
-                    EventChangeMember(m, v);
-                }
+                    view.Event e3 = v.ShowMemberActivities();
+                    if(e3 == view.Event.ChangeMember)
+                    {
+                        EventChangeMember(m, v);
+                    }
 
-                if(e3 == view.Event.RemoveMember)
-                {
-                    EventRemoveMember(m, v, id);
-                }
+                    if(e3 == view.Event.RemoveMember)
+                    {
+                        EventRemoveMember(m, v, id);
+                    }
 
-                if(e3 == view.Event.AddBoat)
-                {
-                    EventAddBoat(m,v);
-                }
+                    if(e3 == view.Event.AddBoat)
+                    {
+                        EventAddBoat(m,v);
+                    }
 
-                if(e3 == view.Event.ChangeBoat)
-                {
-                    EventChangeBoat(m, v);
-                }
+                    if(e3 == view.Event.ChangeBoat)
+                    {
+                        EventChangeBoat(m, v);
+                    }
 
-                if(e3 == view.Event.RemoveBoat)
-                {
-                    EventRemoveBoat(m, v);
+                    if(e3 == view.Event.RemoveBoat)
+                    {
+                        EventRemoveBoat(m, v);
+                    }
                 }
             }  
         }
@@ -121,14 +152,17 @@ namespace controller
             string fName = v.AskForMemberDetailName(Action.Change);
             string lName = v.AskForMemberDetailLastName();
             string persNum = v.AskForMemberDetailNum();
-            m.ChangeMember(fName, lName, persNum);
+            m.ChangeMember(_pickedMember, fName, lName, persNum);
+            // TODO updateras inte .. måste kolla upp!
+            _enumMembers = m.GetMembersAsEnums(_savedData);
         }
         
         private void EventRemoveMember(model.MemberRegister m, view.ConsoleView v, string id)
         {
             if(v.AskForOkey(Action.Member))
             {
-                m.RemoveMember(id);
+                m.RemoveMember(_pickedMember, id);
+                _enumMembers = m.GetMembersAsEnums(_savedData);
             }
         }
 
@@ -137,7 +171,8 @@ namespace controller
             string t = m.GetBoatTypesListed();  
             string pickedType = v.AskForBoatType(t);
             string length = v.AskForBoatLength();
-            _result = m.RegistryBoat(pickedType, length);
+            _result = m.RegistryBoat(_pickedMember, pickedType, length);
+            _enumMembers = m.GetMembersAsEnums(_savedData);
             v.ShowMessage(_result);
         }
  
@@ -153,11 +188,12 @@ namespace controller
             else
             {
                 string pickBoat = v.ShowBoatInfo(boats);
-                m.SetPickedBoat(pickBoat);
+                SetPickedBoat(pickBoat);
                 string t = m.GetBoatTypesListed();  
                 string pickedType = v.AskForBoatType(t);
                 string length = v.AskForBoatLength();
-                _result = m.ChangeBoat(pickedType, length);
+                _result = m.ChangeBoat(_pickedMember, _pickedBoat, pickedType, length);
+                _enumMembers = m.GetMembersAsEnums(_savedData);
                 v.ShowMessage(_result);
             }
         }  
@@ -172,10 +208,11 @@ namespace controller
             else
             {
                 string pickBoat = v.ShowBoatInfo(boats);
-                m.SetPickedBoat(pickBoat);
+                SetPickedBoat(pickBoat);
                 if(v.AskForOkey(Action.Boat))
                 {
-                    _result =  m.RemoveBoat();
+                    _result =  m.RemoveBoat(_pickedMember, _pickedBoat);
+                    _enumMembers = m.GetMembersAsEnums(_savedData);
                     v.ShowMessage(_result);
                 }
             }
