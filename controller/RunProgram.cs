@@ -6,214 +6,199 @@ namespace controller
 {
     public class Controller
     {
-
-        IEnumerable<model.Member> _enumMembers;
-        private string _result;
+        
+        private view.BoatView _bView;
+        private view.ConsoleView _cView;
+        private view.Event _e;
+        IEnumerable<model.Member> _enumMembers;     
+        private model.MemberRegister _memberRegister;
+        private view.MemberView _mView;
+        private model.Member _pickedMember;
+        private int _pickedMemberId;
+        private model.Boat _pickedBoat;
+        private int _pickedBoatId;
         private model.TextFileSave _savedData;
 
-        private model.Member _pickedMember;
 
-        private model.Boat _pickedBoat;
-
-        private int _indexPickedBoat;
-
-        public bool RunProgram()
+        public Controller()
         {
             _savedData = new model.TextFileSave();
-            model.MemberRegister m = new model.MemberRegister(_savedData);
-            view.ConsoleView v = new view.ConsoleView();
-            view.Event e;
-
-            v.ShowMenu();
-            e = v.GetEvent();
-            if (e == view.Event.Quit)
+            _memberRegister = new model.MemberRegister(_savedData);
+            _cView = new view.ConsoleView();
+            _mView = new view.MemberView();
+            _bView = new view.BoatView();
+        }
+    
+        public bool RunProgram()
+        {
+            _cView.ShowMenu();
+            _e = _cView.GetEvent();
+            if (_e == view.Event.Quit)
             {
                 return false;
             }
-            if (e == view.Event.NewMember)
+            if (_e == view.Event.NewMember)
             {
-                EventNewMember(m, v);
+                EventNewMember();
             }
-            if (e == view.Event.SearchMemberName)
+            if (_e == view.Event.SearchMemberName)
             {
-                EventSearchMemberName(m, v);
+                EventSearchMemberName();
             }
-            if (e == view.Event.SearchMemberId)
+            if (_e == view.Event.SearchMemberId)
             {
-                EventSearchMemberId(m, v);
+                EventSearchMemberId();
             }
-            if (e == view.Event.CompactList)
+            if (_e == view.Event.CompactList)
             {
-                v.PrintCompactList(m.GetMembersAsEnums(_savedData));
+                _mView.PrintCompactList(_memberRegister.GetMembersAsEnums(_savedData));
             }
-            if (e == view.Event.VerboseList)
+            if (_e == view.Event.VerboseList)
             {
-                v.PrintVerboseList(m.GetMembersAsEnums(_savedData));
+                _mView.PrintVerboseList(_memberRegister.GetMembersAsEnums(_savedData), _bView);
             }
             return true;
         }
 
-        private void SetPickedMember(string searchNr, model.MemberRegister m)
+        private void SetPickedMember(string searchNr)
         { 
             int id = Int32.Parse(searchNr);
-            _enumMembers = m.GetMembersAsEnums(_savedData);
-            foreach(model.Member mem in _enumMembers)
+            _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
+            foreach (var mem in _enumMembers.Where(mem => mem.MemberId == id).Select(mem => mem))
             {
-                if(mem.MemberId == id)
-                {
-                    _pickedMember = mem;
-                }
+                _pickedMember = mem;
+                _pickedMemberId = mem.MemberId;
             }
         }
 
-        private void SetPickedBoat(string pickedBoat)
+        private void SetPickedBoat(int pickedBoat)
         {
-
-            int b = Int32.Parse(pickedBoat);
-            b--;
+            pickedBoat--;
             for (int i = 0; i < _pickedMember.Boats.Count; i++)
             {
-                if(i == b)
+                if(i == pickedBoat)
                 {
                     _pickedBoat = _pickedMember.Boats[i];
-                    _indexPickedBoat = i;
+                    _pickedBoatId = i;
                 }
             }
-            // TODO view ansvar
-            if (_pickedBoat != null)
-            {
-                // return _pickedBoat.ToString();
-            } else
-            {
-                throw new Exception("Something went wrong!");
-            }
         }
 
-        private void EventNewMember(model.MemberRegister m, view.ConsoleView v)
+        private void EventNewMember()
         {
-            string fName = v.AskForMemberDetailName(Action.New);
-            string lName = v.AskForMemberDetailLastName();
-            string persNum = v.AskForMemberDetailNum();
-            m.SaveNewMember(fName, lName, persNum);
-            _enumMembers = m.GetMembersAsEnums(_savedData);
+            string fName = _mView.AskForMemberDetailName(Action.New);
+            string lName = _mView.AskForMemberDetailLastName();
+            string persNum = _mView.AskForMemberDetailNum();
+            _memberRegister.SaveNewMember(fName, lName, persNum);
+            _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
         }
 
-        private void EventSearchMemberName(model.MemberRegister m, view.ConsoleView v)
+        private void EventSearchMemberName()
         {
-            view.Event e2 = v.ShowSearchMenu(Action.Name);
+            view.Event e2 = _mView.ShowSearchMenu(Action.Name);
             if (e2 == view.Event.SearchWordGiven)
             {
-                string word = v.AskForSearchWord(Action.Name);
-                _enumMembers = m.GetMembersAsEnums(_savedData);
-                v.SearchMemberByName(_enumMembers, word);
+                string word = _mView.AskForSearchWord(Action.Name);
+                _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
+                _mView.SearchMemberByName(_enumMembers, word);
             }
         }
-        // TODO kolla att listan uppdateras om man lägger till/ändrar båt/namn, hittar ej pickedboat tror jag...
-        private void EventSearchMemberId(model.MemberRegister m, view.ConsoleView v)
+
+        private void EventSearchMemberId()
         {
-            view.Event e = v.ShowSearchMenu(Action.Id);
+            view.Event e = _mView.ShowSearchMenu(Action.Id);
             if (e == view.Event.SearchWordGiven)
             {
-                string id = v.AskForSearchWord(Action.Id);
-                SetPickedMember(id, m);
-                if (v.SearchById(_pickedMember, id))
+                string id = _mView.AskForSearchWord(Action.Id);
+                SetPickedMember(id);
+                if (_mView.SearchById(_pickedMember, id, _bView))
                 {
-                    view.Event e3 = v.ShowMemberActivities();
+                    view.Event e3 = _mView.ShowMemberActivities();
                     if(e3 == view.Event.ChangeMember)
                     {
-                        EventChangeMember(m, v);
+                        EventChangeMember();
                     }
 
                     if(e3 == view.Event.RemoveMember)
                     {
-                        EventRemoveMember(m, v, id);
+                        EventRemoveMember(id);
                     }
 
                     if(e3 == view.Event.AddBoat)
                     {
-                        EventAddBoat(m,v);
+                        EventAddBoat();
                     }
 
                     if(e3 == view.Event.ChangeBoat)
                     {
-                        EventChangeBoat(m, v);
+                        EventChangeBoat();
                     }
 
                     if(e3 == view.Event.RemoveBoat)
                     {
-                        EventRemoveBoat(m, v);
+                        EventRemoveBoat();
                     }
+                    _pickedMember = null;
+                    _pickedMemberId = 1000;
                 }
             }  
         }
 
-        private void EventChangeMember(model.MemberRegister m, view.ConsoleView v)
+        private void EventChangeMember()
         {
-            string fName = v.AskForMemberDetailName(Action.Change);
-            string lName = v.AskForMemberDetailLastName();
-            string persNum = v.AskForMemberDetailNum();
-            m.ChangeMember(_pickedMember, fName, lName, persNum);
-            // TODO updateras inte .. måste kolla upp!
-            _enumMembers = m.GetMembersAsEnums(_savedData);
+            string fName = _mView.AskForMemberDetailName(Action.Change);
+            string lName = _mView.AskForMemberDetailLastName();
+            string persNum = _mView.AskForMemberDetailNum();
+            _memberRegister.ChangeMember(_pickedMemberId, fName, lName, persNum);
+            _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
         }
         
-        private void EventRemoveMember(model.MemberRegister m, view.ConsoleView v, string id)
+        private void EventRemoveMember(string id)
         {
-            if(v.AskForOkey(Action.Member))
+            if(_cView.AskForOkey(Action.Member))
             {
-                m.RemoveMember(_pickedMember, id);
-                _enumMembers = m.GetMembersAsEnums(_savedData);
+                _memberRegister.RemoveMember(_pickedMember, id);
+                _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
             }
         }
 
-        private void EventAddBoat(model.MemberRegister m, view.ConsoleView v)
+        private void EventAddBoat()
         {
-            string t = m.GetBoatTypesListed();  
-            string pickedType = v.AskForBoatType(t);
-            string length = v.AskForBoatLength();
-            _result = m.RegistryBoat(_pickedMember, pickedType, length);
-            _enumMembers = m.GetMembersAsEnums(_savedData);
-            v.ShowMessage(_result);
+            string t = _bView.GetBoatTypesListed();  
+            string pickedType = _bView.AskForBoatType(t);
+            string length = _bView.AskForBoatLength();
+            _memberRegister.RegistryBoat(_pickedMemberId, pickedType, length);
+            _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
         }
  
-        private void EventChangeBoat(model.MemberRegister m, view.ConsoleView v)
+        private void EventChangeBoat()
         {
-            v.AskForBoatToPickText(Action.Change);
-            string boats = m.GetBoatInfo(_pickedMember);
+            _bView.AskForBoatToPickText(Action.Change);
+            _bView.PrintBoatInfo(_pickedMember);
+            int pickBoat = _bView.PickBoatToHandle(_pickedMember);
+            if (pickBoat != 0)
+            {
+                SetPickedBoat(pickBoat);
+                string t = _bView.GetBoatTypesListed();
+                string pickedType = _bView.AskForBoatType(t);
+                string length = _bView.AskForBoatLength();
+                _memberRegister.ChangeBoat(_pickedMemberId, _pickedBoatId, pickedType, length);
+                _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
+            }
+        }
 
-            if (boats == "Sorry you have not added any boats to this member yet.")
-            {
-                v.ShowMessage(boats);
-            }
-            else
-            {
-                string pickBoat = v.ShowBoatInfo(boats);
-                SetPickedBoat(pickBoat);
-                string t = m.GetBoatTypesListed();  
-                string pickedType = v.AskForBoatType(t);
-                string length = v.AskForBoatLength();
-                _result = m.ChangeBoat(_pickedMember, _pickedBoat, pickedType, length);
-                _enumMembers = m.GetMembersAsEnums(_savedData);
-                v.ShowMessage(_result);
-            }
-        }  
-        private void EventRemoveBoat(model.MemberRegister m, view.ConsoleView v)
+        private void EventRemoveBoat()
         {
-            v.AskForBoatToPickText(Action.Remove);
-            string boats = m.GetBoatInfo(_pickedMember);
-            if (boats == "Sorry you have not added any boats to this member yet.")
+            _bView.AskForBoatToPickText(Action.Remove);
+            _bView.PrintBoatInfo(_pickedMember);
+            int pickBoat = _bView.PickBoatToHandle(_pickedMember);
+            if (pickBoat != 0)
             {
-                v.ShowMessage(boats);
-            }
-            else
-            {
-                string pickBoat = v.ShowBoatInfo(boats);
                 SetPickedBoat(pickBoat);
-                if(v.AskForOkey(Action.Boat))
+                if(_cView.AskForOkey(Action.Boat))
                 {
-                    _result =  m.RemoveBoat(_pickedMember, _pickedBoat);
-                    _enumMembers = m.GetMembersAsEnums(_savedData);
-                    v.ShowMessage(_result);
+                    _memberRegister.RemoveBoat(_pickedMemberId, _pickedBoatId);
+                    _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
                 }
             }
         }  

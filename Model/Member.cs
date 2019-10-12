@@ -92,12 +92,11 @@ namespace model
             BoatType type = b.PickBoatType(t);
             b.Type = type;
             b.LengthInFeet = l;
-            
         }
 
-        public void RemoveBoat(Boat b)
+        public void RemoveBoat(int boatId)
         {
-            _boats.Remove(b);   
+            _boats.RemoveAt(boatId); 
         }
 
         public string GetBoatInfo()

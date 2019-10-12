@@ -10,6 +10,8 @@ namespace model
 
         private TextFileSave _saveData;
 
+        private Member _pickedMember;
+
         public List<Member> Members
         {
             get {return _members;}
@@ -51,89 +53,78 @@ namespace model
             _saveData.WriteToFile(Members);
         }
 
-
-        public string ChangeMember(Member pickedMember, string fName, string lName, string persNum)
+        public void SetPickedMember(int pickedMemberId)
         {
-            pickedMember.FirstName = fName;
-            pickedMember.LastName = lName;
-            pickedMember.PersNum = persNum;
-    
+             foreach(Member mem in Members)
+            {
+                if(mem.MemberId == pickedMemberId)
+                {
+                    _pickedMember = mem;
+                }
+            }
+        }
+
+
+        public void ChangeMember(int pickedMemberId, string fName, string lName, string persNum)
+        {
+            SetPickedMember(pickedMemberId);
+            _pickedMember.FirstName = fName;
+            _pickedMember.LastName = lName;
+            _pickedMember.PersNum = persNum;
             _saveData.WriteToFile(Members);
-            return "The members information is updated in the register.";
         }
 
         public void RemoveMember(Member pickedMember, string searchNr)
         {
+            // TODO validate this in view
             int id = Int32.Parse(searchNr);
-            // string ret = "";
+            pickedMember = Members.SingleOrDefault(x => x.MemberId == id);
+            Members.Remove(pickedMember);
+
+            _saveData.WriteToFile(Members);
+        }
+
+        public bool GetBoatInfo(model.Member pickedMember)
+        {
             if(pickedMember != null)
             {
-                // ret = "Member was found\n";
-                pickedMember = Members.SingleOrDefault(x => x.MemberId == id);
-                Members.Remove(pickedMember);
-
-                _saveData.WriteToFile(Members);
-                // ret += "The member is removed from register.";
+                return true;
+                // pickedMember.GetBoatInfo();
             }
-            else
-            {
-                throw new Exception("Something went wrong");
-            }
-            // return ret;
+            return false;
+            // "Sorry you have not added any boats to this member yet.";
         }
 
-        public string GetBoatTypesListed()
-        {
-            int i = 0;
-            string ret = "";
-            foreach(model.BoatType t in Enum.GetValues(typeof(model.BoatType)))
-            {
-                i++;
-                ret += $"[{i}] {t}\n";
-            }
-            return ret;
-        }
-
-        public string RegistryBoat(Member pickedMember, string type, string length)
+        public void RegistryBoat(int pickedMemberId, string type, string length)
         {
             int l = Int32.Parse(length);
-            pickedMember.AddBoat(type, l);
+            SetPickedMember(pickedMemberId);
+            _pickedMember.AddBoat(type, l);
             _saveData.WriteToFile(Members);
-            return "The boat was successfully registred.";
         }
 
-        public string GetBoatInfo(Member pickedMember)
+        public void ChangeBoat(int pickedMemberId, int pickedBoatId, string type, string length)
         {
-            if(pickedMember != null)
+            SetPickedMember(pickedMemberId);
+            // TODO ändra detta i view
+            int l = Int32.Parse(length);
+            Boat boat;
+            for (int i = 0; i < _pickedMember.Boats.Count; i++)
             {
-                return pickedMember.GetBoatInfo();
-            } 
-            return "Sorry you have not added any boats to this member yet.";
-        }
-
-        public string ChangeBoat(Member pickedMember, Boat pickedBoat, string type, string length)
-        {
-            if (pickedBoat != null)
-            {
-                int l = Int32.Parse(length);
-                pickedMember.ChangeBoat(pickedBoat, type, l);
-                _saveData.WriteToFile(Members);
-                // TODO view ansvar
-                return  "The boat was updated.";
-            } 
-            return "";
-        }
-
-        public string RemoveBoat(Member pickedMember, Boat pickedBoat)
-        {
-            if (pickedBoat != null)
-            {
-                pickedMember.RemoveBoat(pickedBoat);
-                _saveData.WriteToFile(Members);
-                // TODO view ansvar
-                return  "The boat was successfully removed.";
+                if (i == pickedBoatId)
+                {
+                    boat = _pickedMember.Boats[i]; 
+                    _pickedMember.ChangeBoat(boat, type, l);
+                }
             }
-            return "";
+                _saveData.WriteToFile(Members);
+        }
+
+        public void RemoveBoat(int pickedMemberId, int pickedBoatId)
+        {
+            SetPickedMember(pickedMemberId);
+            _pickedMember.RemoveBoat(pickedBoatId);
+            _saveData.WriteToFile(Members);
         }
     }
 }
