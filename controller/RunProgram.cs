@@ -88,7 +88,7 @@ namespace controller
         {
             string fName = _mView.AskForMemberDetailName(Action.New);
             string lName = _mView.AskForMemberDetailLastName();
-            string persNum = _mView.AskForMemberDetailNum();
+            long persNum = _mView.AskForMemberDetailNum();
             _memberRegister.SaveNewMember(fName, lName, persNum);
             _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
         }
@@ -148,7 +148,7 @@ namespace controller
         {
             string fName = _mView.AskForMemberDetailName(Action.Change);
             string lName = _mView.AskForMemberDetailLastName();
-            string persNum = _mView.AskForMemberDetailNum();
+            long persNum = _mView.AskForMemberDetailNum();
             _memberRegister.ChangeMember(_pickedMemberId, fName, lName, persNum);
             _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
         }
@@ -165,8 +165,8 @@ namespace controller
         private void EventAddBoat()
         {
             string t = _bView.GetBoatTypesListed();  
-            string pickedType = _bView.AskForBoatType(t);
-            string length = _bView.AskForBoatLength();
+            int pickedType = _bView.AskForBoatType(t);
+            int length = _bView.AskForBoatLength();
             _memberRegister.RegistryBoat(_pickedMemberId, pickedType, length);
             _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
         }
@@ -180,8 +180,8 @@ namespace controller
             {
                 SetPickedBoat(pickBoat);
                 string t = _bView.GetBoatTypesListed();
-                string pickedType = _bView.AskForBoatType(t);
-                string length = _bView.AskForBoatLength();
+                int pickedType = _bView.AskForBoatType(t);
+                int length = _bView.AskForBoatLength();
                 _memberRegister.ChangeBoat(_pickedMemberId, _pickedBoatId, pickedType, length);
                 _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
             }

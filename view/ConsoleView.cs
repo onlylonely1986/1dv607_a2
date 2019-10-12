@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace view
 {
@@ -13,13 +11,15 @@ namespace view
     {
         public void ShowMenu()
         {
-            Console.WriteLine("\n\nWelcome to the boatclub register\n");
+            System.Console.WriteLine("\n\n******************************************************************************");
+            Console.WriteLine("\nWelcome to the boatclub register\n");
             Console.WriteLine("[1] Add a new member.");
             Console.WriteLine("[2] Search member by name.");
             Console.WriteLine("[3] Search member by member-id to change, remove or handle boats.");
             Console.WriteLine("[4] Show compact list of all members.");
             Console.WriteLine("[5] Show verbose list of all members.");
             Console.WriteLine("[6] Quit application.\n");
+            System.Console.WriteLine("******************************************************************************");
         }
 
         public Event GetEvent()
@@ -43,12 +43,10 @@ namespace view
 			}
             if (i == 4)
 			{
-                System.Console.WriteLine("Compact list:\n");
 				return Event.CompactList;
 			}
 			if (i == 5)
 			{
-                System.Console.WriteLine("Verbose list:\n");
 				return Event.VerboseList;
 			}
 			
@@ -58,7 +56,7 @@ namespace view
         public bool AskForOkey(Enum thing)
         {
             bool ok = false;
-            System.Console.WriteLine($"Are you sure you want to remove the {thing}?");
+            System.Console.WriteLine($"Do you really want to remove the {thing}?");
             System.Console.WriteLine("Press enter if you are sure to remove, else press anything else.");
             ConsoleKeyInfo info = Console.ReadKey();
             if (info.Key != ConsoleKey.Enter)
@@ -73,12 +71,5 @@ namespace view
                 return ok;
             }
         }
-
-        public void ShowMessage(string message)
-        {
-            System.Console.WriteLine(message);
-        }
-
-       
     }
 }

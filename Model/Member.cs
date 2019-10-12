@@ -10,7 +10,7 @@ namespace model
 
         private string _lastName;
 
-        private string _persNum;
+        private long _persNum;
         private int _memberId;
 
         private List<Boat> _boats = new List<Boat>();
@@ -58,22 +58,16 @@ namespace model
             }
         }
 
-        
-        // TODO: wrong type on this
-        public string PersNum
+        public long PersNum
         {
             get { return _persNum;}
             set
             {
-                // if (value.Length != 11)
-                // {
-                //     throw new ArgumentOutOfRangeException();
-                // }
                 _persNum = value;
             }
         }
 
-        public void AddBoat(string t, int l)
+        public void AddBoat(int t, int l)
         {
             Boat b = new Boat(l);
             BoatType type = b.PickBoatType(t);
@@ -87,7 +81,7 @@ namespace model
             }
         }
 
-        public void ChangeBoat(Boat b, string t, int l)
+        public void ChangeBoat(Boat b, int t, int l)
         {
             BoatType type = b.PickBoatType(t);
             b.Type = type;
@@ -106,7 +100,7 @@ namespace model
             return boats;
         }
 
-        public Member(string firstName, string lastName, string personalNum) 
+        public Member(string firstName, string lastName, long personalNum) 
         {
             _firstName = firstName;
             _lastName = lastName;

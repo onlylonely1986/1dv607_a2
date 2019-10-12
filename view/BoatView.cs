@@ -23,7 +23,7 @@ namespace view
 
         public string BoatToString(model.Boat b)
         {
-            return $"[ Boattype: {b.Type}, Length: {b.LengthInFeet} feet. ]";
+            return $"[ Boattype: {b.Type},  Length: {b.LengthInFeet} feet. ]";
         }   
 
         public string GetBoatTypesListed()
@@ -38,31 +38,33 @@ namespace view
             return ret;
         }
 
-        
-        public string AskForBoatType(string types)
+        public int AskForBoatType(string types)
         {
             Console.WriteLine("\nPick your boattype, it must be one of these (pick by number):");
             System.Console.WriteLine(types);
-            string type = System.Console.ReadLine();
-            return type;
+            string typeStr = System.Console.ReadLine();
+            int typeInt;
+            while (!int.TryParse(typeStr, out typeInt) || !(typeInt <= 4 && typeInt >= 1))
+            {
+                System.Console.WriteLine("Please enter a nr of a type");
+                typeStr = System.Console.ReadLine();
+            }            
+            typeInt = Int32.Parse(typeStr);
+            return typeInt;
         }
 
-        public string AskForBoatLength()
+        public int AskForBoatLength()
         {
             Console.WriteLine("\nPlease enter your boat length in feet:");
-            string length = System.Console.ReadLine();
-            if (length.Length > 2 && length.Length < 100)
+            string lengthStr = System.Console.ReadLine();
+            int length;
+            while (!int.TryParse(lengthStr, out length) || !(length > 2 && length < 100))
             {
-                return length;   
-            } else
-            {
-                while(length.Length < 2 || length.Length > 100)
-                {
-                    Console.WriteLine("You have to a enter reasonable length on your boat.");
-                    length = Console.ReadLine();
-                }
-                return length;
+                Console.WriteLine("You have to a enter reasonable length on your boat.");
+                lengthStr = Console.ReadLine();
             }
+            length = Int32.Parse(lengthStr);
+            return length;
         }
 
         public void AskForBoatToPickText(Enum handle)
@@ -83,11 +85,10 @@ namespace view
             {
                 while (!int.TryParse(boatNrAsStr, out boatNr) || !(boatNr <= pickedMember.Boats.Count))
                 {
-                    System.Console.WriteLine("Please write a boat nr...");
+                    System.Console.WriteLine("Please write a boat nr... Write 0 to go back to main menu.");
                     boatNrAsStr = System.Console.ReadLine();
                 }
-                // TODO kollar ej för långa ints
-                // kollar ej för att ange en 0
+
                 boatNr = Int32.Parse(boatNrAsStr);
                 return boatNr;
             }

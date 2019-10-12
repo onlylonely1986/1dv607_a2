@@ -34,9 +34,8 @@ namespace model
             }
         }
 
-        public BoatType PickBoatType(string input)
+        public BoatType PickBoatType(int typeNr)
         {
-            int typeNr = Int32.Parse(input);
             BoatType t = BoatType.Other;
             if (typeNr == 1)
             {

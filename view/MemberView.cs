@@ -120,22 +120,23 @@ namespace view
             }
         }
 
-        public string AskForMemberDetailNum()
+        public long AskForMemberDetailNum()
         {
             Console.WriteLine("Please enter your personal number.");
             string input = Console.ReadLine();
+            long persNr;
+            while (!long.TryParse(input, out persNr) || input.Length != 10)
+            {
+                System.Console.WriteLine("Please enter a personal num with 10 numbers (this format: YYMMDDXXXX).");
+                input = System.Console.ReadLine();
+            }
             if (input.Length == 11)
             {
-                return input;   
-            } else
-            {
-                while(input.Length != 11)
-                {
-                    Console.WriteLine("Please enter a personal num with 10 numbers (this format: XXXXXX-XXXX).");
-                    input = Console.ReadLine();
-                }
-                return input;
+                persNr = Int64.Parse(input);
+                return persNr;   
             }
+            // TODO denna är ju inget??
+            return persNr;
         }
 
         public void SearchMemberByName(IEnumerable<model.Member> members, string search)
@@ -195,14 +196,14 @@ namespace view
 
         public void MemberToString(model.Member m, BoatView v)
         {
-             if (m.Boats != null)
+             if (m.Boats.Count > 0)
             {
                 string boats = String.Concat(m.Boats.Select(b => v.BoatToString(b)));
-                System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Personal number: {m.PersNum}, Boats {m.Boats.Count}: {boats}");
+                System.Console.WriteLine("Id: {0}, Name: {1}, {2} Personal number: {3}, Boats: {4}", m.MemberId, m.FirstName, m.LastName, m.PersNum, boats);
             } else
             {
                 string boats = "No boats added yet";
-                System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Personal number: {m.PersNum}, Boats: {boats}");
+                System.Console.WriteLine("Id: {0}, Name: {1}, {2} Personal number: {3}, Boats: {4}", m.MemberId, m.FirstName, m.LastName, m.PersNum, boats);
             }
         }
 
@@ -213,7 +214,7 @@ namespace view
             {
                 b = m.Boats.Count;
             }
-            System.Console.WriteLine($"Id: {m.MemberId}, Name: {m.FirstName} {m.LastName}, Boats: {b}");
+            System.Console.WriteLine("Id: {0}, Name: {1}, {2}, Boats: {3}", m.MemberId, m.FirstName, m.LastName, b);
         }
     }
 }

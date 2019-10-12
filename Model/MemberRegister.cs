@@ -35,7 +35,7 @@ namespace model
            return enumMembers;
         }
 
-        public void SaveNewMember(string fName, string lName, string persNum)
+        public void SaveNewMember(string fName, string lName, long persNum)
         {
             Member  m = new Member(fName, lName, persNum);
             
@@ -65,7 +65,7 @@ namespace model
         }
 
 
-        public void ChangeMember(int pickedMemberId, string fName, string lName, string persNum)
+        public void ChangeMember(int pickedMemberId, string fName, string lName, long persNum)
         {
             SetPickedMember(pickedMemberId);
             _pickedMember.FirstName = fName;
@@ -95,26 +95,23 @@ namespace model
             // "Sorry you have not added any boats to this member yet.";
         }
 
-        public void RegistryBoat(int pickedMemberId, string type, string length)
+        public void RegistryBoat(int pickedMemberId, int type, int length)
         {
-            int l = Int32.Parse(length);
             SetPickedMember(pickedMemberId);
-            _pickedMember.AddBoat(type, l);
+            _pickedMember.AddBoat(type, length);
             _saveData.WriteToFile(Members);
         }
 
-        public void ChangeBoat(int pickedMemberId, int pickedBoatId, string type, string length)
+        public void ChangeBoat(int pickedMemberId, int pickedBoatId, int type, int length)
         {
             SetPickedMember(pickedMemberId);
-            // TODO ändra detta i view
-            int l = Int32.Parse(length);
             Boat boat;
             for (int i = 0; i < _pickedMember.Boats.Count; i++)
             {
                 if (i == pickedBoatId)
                 {
                     boat = _pickedMember.Boats[i]; 
-                    _pickedMember.ChangeBoat(boat, type, l);
+                    _pickedMember.ChangeBoat(boat, type, length);
                 }
             }
                 _saveData.WriteToFile(Members);
