@@ -113,9 +113,9 @@ namespace view
             {
                 while(input.Length < 2 || input.Length > 20)
                 {
-                    Console.WriteLine("Please enter a name between 2 and 20 characters length.");
-                    input = Console.ReadLine();
-                }
+                Console.WriteLine("Please enter a name between 2 and 20 characters length.");
+                input = Console.ReadLine();
+            }
                 return input;
             }
         }
