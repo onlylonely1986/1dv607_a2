@@ -74,25 +74,12 @@ namespace model
             _saveData.WriteToFile(Members);
         }
 
-        public void RemoveMember(Member pickedMember, string searchNr)
+        public void RemoveMember(Member pickedMember, int id)
         {
-            // TODO validate this in view
-            int id = Int32.Parse(searchNr);
             pickedMember = Members.SingleOrDefault(x => x.MemberId == id);
             Members.Remove(pickedMember);
 
             _saveData.WriteToFile(Members);
-        }
-
-        public bool GetBoatInfo(model.Member pickedMember)
-        {
-            if(pickedMember != null)
-            {
-                return true;
-                // pickedMember.GetBoatInfo();
-            }
-            return false;
-            // "Sorry you have not added any boats to this member yet.";
         }
 
         public void RegistryBoat(int pickedMemberId, int type, int length)

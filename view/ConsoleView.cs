@@ -22,9 +22,9 @@ namespace view
             System.Console.WriteLine("******************************************************************************");
         }
 
-        public Event GetEvent()
+        public Event GetEvent(ValidationView v)
         {
-            int i = Convert.ToInt32(Console.ReadLine());
+            int i = v.ValidateMenuInput();
 			if (i == 6) {
                 System.Console.WriteLine("Good bye, have a nice day!");
 				return Event.Quit;
@@ -59,6 +59,7 @@ namespace view
             System.Console.WriteLine($"Do you really want to remove the {thing}?");
             System.Console.WriteLine("Press enter if you are sure to remove, else press anything else.");
             ConsoleKeyInfo info = Console.ReadKey();
+            // TODO behövs detta valideras nåt mer?
             if (info.Key != ConsoleKey.Enter)
             {
                 System.Console.WriteLine("Ups, let's go back...");

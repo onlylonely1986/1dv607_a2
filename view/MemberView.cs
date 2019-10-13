@@ -11,7 +11,7 @@ namespace view
     */
     public class MemberView
     {
-        public Event ShowMemberActivities()
+        public Event ShowMemberActivities(ValidationView v)
         {
             Console.WriteLine("\n\n[1] Change member information.");
             Console.WriteLine("[2] Add a new boat to member.");
@@ -20,7 +20,7 @@ namespace view
             Console.WriteLine("[5] Remove member from register.");
             Console.WriteLine("[6] Go back to main menu.\n");
 
-            int i = Convert.ToInt32(Console.ReadLine());
+            int i = v.ValidateMenuInput();
             if (i == 1) {
                 System.Console.WriteLine("Change member information:\n");
 				return Event.ChangeMember;
@@ -67,19 +67,41 @@ namespace view
             }          
         }
 
-        public string AskForSearchWord(Enum focus)
+        public int AskForSearchId(ValidationView v)
         {
-            if (focus.ToString() == "Name")
-            {
-                Console.WriteLine("Write a name or a character in a name you want to find...\n");
-            } 
-            if (focus.ToString() == "Id")
-            {
-                Console.WriteLine("Write a nr of an id to find a member...\n");
-            }
-            return System.Console.ReadLine();
+            Console.WriteLine("Write a nr of an id to find a member...\n");
+            return v.ValidateStringInputAsInt();
         }
-        public string AskForMemberDetailName(Enum action)
+
+        public string AskForSearchName()
+        {
+            Console.WriteLine("Write a name or a character in a name you want to find...\n");
+            string input = Console.ReadLine();
+            List<string> invalidChars = new List<string>() { "!", "?", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-" };
+            while(input.Any(char.IsDigit) || (input.Length < 1 && input.Length > 10))
+            {
+                foreach(string s in invalidChars)
+                {
+                    if(input.Contains(s))
+                    {
+                        Console.WriteLine($"Invalid characters: {s}");
+                    }
+                }
+                if(input.Length < 2 && input.Length > 20)
+                {
+                    Console.WriteLine("Please enter a name between 2 and 20 characters length.");
+                }
+                if(input.Any(char.IsDigit))
+                {
+                    Console.WriteLine("Please don't mix up with numbers.");
+                }
+                
+                input = Console.ReadLine();
+            }            
+            return input;
+        }
+
+        public string AskForMemberDetailName(Enum action, ValidationView v)
         {
             if (action.ToString() == "New")
             {
@@ -91,33 +113,16 @@ namespace view
             }
             System.Console.WriteLine("  ");
             Console.WriteLine("Please enter your first name.");
-            string input = this.WrongHandelingNameInput();
+            string input = v.ValidateStringInput();
             return input;
         }
 
-        public string AskForMemberDetailLastName()
+        public string AskForMemberDetailLastName(ValidationView v)
         {
             System.Console.WriteLine("  ");
             Console.WriteLine("Please enter your last name.");
-            string input = this.WrongHandelingNameInput();
+            string input = v.ValidateStringInput();
             return input; 
-        }
-
-        private string WrongHandelingNameInput()
-        {
-            string input = Console.ReadLine();
-            if (input.Length > 2 && input.Length < 20)
-            {
-                return input;   
-            } else
-            {
-                while(input.Length < 2 || input.Length > 20)
-                {
-                Console.WriteLine("Please enter a name between 2 and 20 characters length.");
-                input = Console.ReadLine();
-            }
-                return input;
-            }
         }
 
         public long AskForMemberDetailNum()
@@ -125,17 +130,12 @@ namespace view
             Console.WriteLine("Please enter your personal number.");
             string input = Console.ReadLine();
             long persNr;
-            while (!long.TryParse(input, out persNr) || input.Length != 10)
+            while (!long.TryParse(input, out persNr) || input.Length != 6)
             {
-                System.Console.WriteLine("Please enter a personal num with 10 numbers (this format: YYMMDDXXXX).");
+                System.Console.WriteLine("Please enter a personal num with 10 numbers (this format: YYMMDD).");
                 input = System.Console.ReadLine();
             }
-            if (input.Length == 11)
-            {
-                persNr = Int64.Parse(input);
-                return persNr;   
-            }
-            // TODO denna är ju inget??
+            persNr = Int64.Parse(input);
             return persNr;
         }
 
@@ -163,7 +163,7 @@ namespace view
             }
         }
 
-        public bool SearchById(model.Member pickedMember, string searchNr, BoatView v)
+        public bool SearchById(model.Member pickedMember, int searchNr, BoatView v)
         {
             if (pickedMember != null)
             {
@@ -199,11 +199,11 @@ namespace view
              if (m.Boats.Count > 0)
             {
                 string boats = String.Concat(m.Boats.Select(b => v.BoatToString(b)));
-                System.Console.WriteLine("Id: {0}, Name: {1}, {2} Personal number: {3}, Boats: {4}", m.MemberId, m.FirstName, m.LastName, m.PersNum, boats);
+                System.Console.WriteLine("Id: {0}, Name: {1} {2}, Personal number: {3}, Boats: {4}", m.MemberId, m.FirstName, m.LastName, m.PersNum, boats);
             } else
             {
                 string boats = "No boats added yet";
-                System.Console.WriteLine("Id: {0}, Name: {1}, {2} Personal number: {3}, Boats: {4}", m.MemberId, m.FirstName, m.LastName, m.PersNum, boats);
+                System.Console.WriteLine("Id: {0}, Name: {1} {2}, Personal number: {3}, Boats: {4}", m.MemberId, m.FirstName, m.LastName, m.PersNum, boats);
             }
         }
 
@@ -214,7 +214,7 @@ namespace view
             {
                 b = m.Boats.Count;
             }
-            System.Console.WriteLine("Id: {0}, Name: {1}, {2}, Boats: {3}", m.MemberId, m.FirstName, m.LastName, b);
+            System.Console.WriteLine("Id: {0}, Name: {1} {2}, Boats: {3}", m.MemberId, m.FirstName, m.LastName, b);
         }
     }
 }

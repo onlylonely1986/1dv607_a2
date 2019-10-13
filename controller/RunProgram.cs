@@ -6,7 +6,6 @@ namespace controller
 {
     public class Controller
     {
-        
         private view.BoatView _bView;
         private view.ConsoleView _cView;
         private view.Event _e;
@@ -19,6 +18,7 @@ namespace controller
         private int _pickedBoatId;
         private model.TextFileSave _savedData;
 
+        private view.ValidationView _vView;
 
         public Controller()
         {
@@ -27,12 +27,13 @@ namespace controller
             _cView = new view.ConsoleView();
             _mView = new view.MemberView();
             _bView = new view.BoatView();
+            _vView = new view.ValidationView();
         }
     
         public bool RunProgram()
         {
             _cView.ShowMenu();
-            _e = _cView.GetEvent();
+            _e = _cView.GetEvent(_vView);
             if (_e == view.Event.Quit)
             {
                 return false;
@@ -60,9 +61,8 @@ namespace controller
             return true;
         }
 
-        private void SetPickedMember(string searchNr)
-        { 
-            int id = Int32.Parse(searchNr);
+        private void SetPickedMember(int id)
+        {
             _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
             foreach (var mem in _enumMembers.Where(mem => mem.MemberId == id).Select(mem => mem))
             {
@@ -86,8 +86,8 @@ namespace controller
 
         private void EventNewMember()
         {
-            string fName = _mView.AskForMemberDetailName(Action.New);
-            string lName = _mView.AskForMemberDetailLastName();
+            string fName = _mView.AskForMemberDetailName(Action.New, _vView);
+            string lName = _mView.AskForMemberDetailLastName(_vView);
             long persNum = _mView.AskForMemberDetailNum();
             _memberRegister.SaveNewMember(fName, lName, persNum);
             _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
@@ -98,7 +98,7 @@ namespace controller
             view.Event e2 = _mView.ShowSearchMenu(Action.Name);
             if (e2 == view.Event.SearchWordGiven)
             {
-                string word = _mView.AskForSearchWord(Action.Name);
+                string word = _mView.AskForSearchName();
                 _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
                 _mView.SearchMemberByName(_enumMembers, word);
             }
@@ -109,11 +109,11 @@ namespace controller
             view.Event e = _mView.ShowSearchMenu(Action.Id);
             if (e == view.Event.SearchWordGiven)
             {
-                string id = _mView.AskForSearchWord(Action.Id);
+                int id = _mView.AskForSearchId(_vView);
                 SetPickedMember(id);
                 if (_mView.SearchById(_pickedMember, id, _bView))
                 {
-                    view.Event e3 = _mView.ShowMemberActivities();
+                    view.Event e3 = _mView.ShowMemberActivities(_vView);
                     if(e3 == view.Event.ChangeMember)
                     {
                         EventChangeMember();
@@ -146,14 +146,14 @@ namespace controller
 
         private void EventChangeMember()
         {
-            string fName = _mView.AskForMemberDetailName(Action.Change);
-            string lName = _mView.AskForMemberDetailLastName();
+            string fName = _mView.AskForMemberDetailName(Action.Change, _vView);
+            string lName = _mView.AskForMemberDetailLastName(_vView);
             long persNum = _mView.AskForMemberDetailNum();
             _memberRegister.ChangeMember(_pickedMemberId, fName, lName, persNum);
             _enumMembers = _memberRegister.GetMembersAsEnums(_savedData);
         }
         
-        private void EventRemoveMember(string id)
+        private void EventRemoveMember(int id)
         {
             if(_cView.AskForOkey(Action.Member))
             {
