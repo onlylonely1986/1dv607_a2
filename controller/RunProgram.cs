@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace controller 
+namespace controller
 {
     public class Controller
     {
@@ -17,7 +16,6 @@ namespace controller
         private model.Boat _pickedBoat;
         private int _pickedBoatId;
         private model.TextFileSave _savedData;
-
         private view.ValidationView _vView;
 
         public Controller()
@@ -95,7 +93,7 @@ namespace controller
 
         private void EventSearchMemberName()
         {
-            view.Event e2 = _mView.ShowSearchMenu(Action.Name);
+            view.Event e2 = _mView.ShowSearchMenu(Action.Name, _vView);
             if (e2 == view.Event.SearchWordGiven)
             {
                 string word = _mView.AskForSearchName();
@@ -104,9 +102,9 @@ namespace controller
             }
         }
 
-        private void EventSearchMemberId()
+        private bool EventSearchMemberId()
         {
-            view.Event e = _mView.ShowSearchMenu(Action.Id);
+            view.Event e = _mView.ShowSearchMenu(Action.Id, _vView);
             if (e == view.Event.SearchWordGiven)
             {
                 int id = _mView.AskForSearchId(_vView);
@@ -138,10 +136,19 @@ namespace controller
                     {
                         EventRemoveBoat();
                     }
+                    if (e3 == view.Event.GoBack)
+                    {
+                        return false;
+                    }
                     _pickedMember = null;
                     _pickedMemberId = 1000;
                 }
-            }  
+            }
+            if (e == view.Event.GoBack)
+            {
+                return false;
+            }
+            return true;
         }
 
         private void EventChangeMember()

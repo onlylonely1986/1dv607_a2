@@ -64,7 +64,6 @@ namespace model
             }
         }
 
-
         public void ChangeMember(int pickedMemberId, string fName, string lName, long persNum)
         {
             SetPickedMember(pickedMemberId);

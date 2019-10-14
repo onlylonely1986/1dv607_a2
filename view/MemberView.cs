@@ -20,51 +20,60 @@ namespace view
             Console.WriteLine("[5] Remove member from register.");
             Console.WriteLine("[6] Go back to main menu.\n");
 
-            int i = v.ValidateMenuInput();
-            if (i == 1) {
+            int i = v.ValidateMenuInput(7);
+            if (i == 1) 
+            {
                 System.Console.WriteLine("Change member information:\n");
 				return Event.ChangeMember;
 			}
 
-            if (i == 2) {
+            if (i == 2) 
+            {
                 System.Console.WriteLine("Add new boat to member:\n");
 				return Event.AddBoat;
 			}
 
-            if (i == 3) {
+            if (i == 3) 
+            {
                 System.Console.WriteLine("Change boat information:\n");
 				return Event.ChangeBoat;
 			}
-            if (i == 4) {
+            if (i == 4) 
+            {
                 System.Console.WriteLine("Remove boat from member:\n");
 				return Event.RemoveBoat;
 			}
-            if (i == 5) {
+            if (i == 5) 
+            {
                 System.Console.WriteLine("Remove member from register:\n");
 				return Event.RemoveMember;
 			}
-            if (i == 6) {
+            if (i == 6) 
+            {
 				return Event.GoBack;
 			}
 
             return Event.None;
         }
 
-        public Event ShowSearchMenu(Enum focus)
+        public Event ShowSearchMenu(Enum focus, ValidationView v)
         {
             Console.WriteLine($"\n\n[1] Search for members by {focus.ToString().ToLower()}.");
             Console.WriteLine("[2] Go Back To Start Menu.\n");
-            string s = Console.ReadLine();
 
-            int i = Convert.ToInt32(s);     
+            int i = v.ValidateMenuInput(3);    
             if (i == 1)
             {
                 System.Console.WriteLine("Search here:\n");
                 return Event.SearchWordGiven;
-            } else
+            }
+            if (i == 2)
             {
-                return Event.GoBack;
-            }          
+                System.Console.WriteLine("Back to main menu.");
+				return Event.GoBack;
+			} 
+            
+            return Event.None;         
         }
 
         public int AskForSearchId(ValidationView v)

@@ -11,11 +11,11 @@ namespace view
     */
     public class ValidationView
     {
-        public int ValidateMenuInput()
+        public int ValidateMenuInput(int maxVal)
         {
             string inputStr = Console.ReadLine();
             int i;
-            while (!int.TryParse(inputStr, out i) || !(i > 0 && i < 7))
+            while (!int.TryParse(inputStr, out i) || !(i > 0 && i < maxVal))
             {
                 System.Console.WriteLine("Try again :)");
                 inputStr = Console.ReadLine();

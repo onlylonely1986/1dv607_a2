@@ -2,7 +2,6 @@ using System;
 
 namespace view
 {
-
     /**
     * Represents the console view.
     *  
@@ -24,7 +23,7 @@ namespace view
 
         public Event GetEvent(ValidationView v)
         {
-            int i = v.ValidateMenuInput();
+            int i = v.ValidateMenuInput(7);
 			if (i == 6) {
                 System.Console.WriteLine("Good bye, have a nice day!");
 				return Event.Quit;
@@ -57,9 +56,9 @@ namespace view
         {
             bool ok = false;
             System.Console.WriteLine($"Do you really want to remove the {thing}?");
-            System.Console.WriteLine("Press enter if you are sure to remove, else press anything else.");
+            System.Console.WriteLine("Press enter if you are sure to remove, if not press anything else.");
             ConsoleKeyInfo info = Console.ReadKey();
-            // TODO behövs detta valideras nåt mer?
+
             if (info.Key != ConsoleKey.Enter)
             {
                 System.Console.WriteLine("Ups, let's go back...");
